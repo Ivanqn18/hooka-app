@@ -1,0 +1,371 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 2. USUARIOS
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  nombre    String
+  password  String
+  avatarUrl String?  @map("avatar_url")
+  bio       String?  @db.Text
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  mixes         Mix[]
+  mixLikes      MixLike[]
+  mixDislikes   MixDislike[]
+  products      Product[]
+  chatsAsBuyer  Chat[]      @relation("BuyerChats")
+
+  // In SQL: Chat -> Product (vendedor is in Product), Chat -> Interesado (User)
+  // Product -> Vendedor (User)
+  // Chat -> Mensajes (Emisor can be user)
+  sentMessages  Message[]
+  barReviews    BarReview[]
+  baresSolicitados Bar[]          @relation("SolicitanteBar")
+  notifications Notification[]
+  stash         UserStash[]
+  mixComments   MixComment[]
+  
+  // Market Reviews
+  reviewsReceived SellerReview[]  @relation("SellerReviews")
+  reviewsGiven    SellerReview[]  @relation("BuyerReviews")
+
+  following UserFollow[] @relation("Following")
+  followers UserFollow[] @relation("Followers")
+
+  @@map("Usuarios")
+}
+
+model UserFollow {
+  followerId  Int      @map("follower_id")
+  followingId Int      @map("following_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  follower  User @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@map("UserFollows")
+}
+
+// 3. ZONA DE MEZCLAS
+model Mix {
+  id                   Int      @id @default(autoincrement())
+  autorId              Int?     @map("autor_id")
+  titulo               String
+  descripcion          String?  @db.Text
+  cazoletaRecomendada  String?  @map("cazoleta_recomendada")
+  imagenUrl            String?  @map("imagen_url")
+  privada              Boolean  @default(false)
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  // Relations
+  author      User?           @relation(fields: [autorId], references: [id], onDelete: SetNull)
+  ingredients MixIngredient[]
+  likes       MixLike[]
+  dislikes    MixDislike[]
+  comments    MixComment[]
+  tags        MixTag[]
+
+  @@map("Mezclas")
+}
+
+model MixIngredient {
+  id           Int     @id @default(autoincrement())
+  mezclaId     Int     @map("mezcla_id")
+  nombreTabaco String  @map("nombre_tabaco")
+  marca        String?
+  porcentaje   Int
+
+  // Relations
+  mix Mix @relation(fields: [mezclaId], references: [id], onDelete: Cascade)
+
+  @@map("MezclaIngredientes")
+}
+
+model MixLike {
+  usuarioId Int      @map("usuario_id")
+  mezclaId  Int      @map("mezcla_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  mix  Mix  @relation(fields: [mezclaId], references: [id], onDelete: Cascade)
+
+  @@id([usuarioId, mezclaId])
+  @@map("MezclaLikes")
+}
+
+model MixDislike {
+  usuarioId Int      @map("usuario_id")
+  mezclaId  Int      @map("mezcla_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  mix  Mix  @relation(fields: [mezclaId], references: [id], onDelete: Cascade)
+
+  @@id([usuarioId, mezclaId])
+  @@map("MezclaDislikes")
+}
+
+// 4. MARKETPLACE (Ventas)
+model Product {
+  id          Int             @id @default(autoincrement())
+  vendedorId  Int             @map("vendedor_id")
+  titulo      String
+  descripcion String          @db.Text
+  precio      Decimal         @db.Decimal(10, 2)
+  categoria   ProductCategory
+  estado      ProductStatus   @default(DISPONIBLE)
+  imagenUrl   String?         @map("imagen_url")
+  ubicacion   String?
+  latitud     Decimal?        @db.Decimal(10, 8)
+  longitud    Decimal?        @db.Decimal(11, 8)
+  createdAt   DateTime        @default(now()) @map("created_at")
+
+  // Relations
+  seller User   @relation(fields: [vendedorId], references: [id], onDelete: Cascade)
+  chats  Chat[]
+
+  @@map("Productos")
+}
+
+enum ProductCategory {
+  CACHIMBA
+  CAZOLETA
+  MANGUERA
+  GESTOR_CALOR
+  ACCESORIO
+  BASE
+  CARBON
+}
+
+enum ProductStatus {
+  DISPONIBLE
+  RESERVADO
+  VENDIDO
+}
+
+model SellerReview {
+  id           Int      @id @default(autoincrement())
+  vendedorId   Int      @map("vendedor_id")
+  compradorId  Int      @map("comprador_id")
+  puntuacion   Int      // 1-5 estrellas
+  comentario   String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relations
+  vendedor     User     @relation("SellerReviews", fields: [vendedorId], references: [id], onDelete: Cascade)
+  comprador    User     @relation("BuyerReviews", fields: [compradorId], references: [id], onDelete: Cascade)
+
+  @@map("SellerReviews")
+}
+
+// 5. CHAT
+model Chat {
+  id           Int      @id @default(autoincrement())
+  productoId   Int      @map("producto_id")
+  interesadoId Int      @map("interesado_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  product Product   @relation(fields: [productoId], references: [id], onDelete: Cascade)
+  buyer   User      @relation("BuyerChats", fields: [interesadoId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@map("Chats")
+}
+
+// NOTE: Chat logic needs careful consideration. 
+// A Chat is usually between a Buyer (interesado) and the Product Owner (seller).
+// The Product has a relation to User (seller).
+// So User has relation to Product (as seller).
+// Chat has relation to Product.
+// Through Product, we can get the seller.
+// But we might want a direct relation or just rely on Product.
+// The SQL defines: `fk_chat_producto` -> Productos(id), `fk_chat_interesado` -> Users(id).
+// So Seller is implicit via Product. Buyer is explicit via `interesado_id`.
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  chatId    Int      @map("chat_id")
+  emisorId  Int?     @map("emisor_id")
+  texto     String   @db.Text
+  leido     Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  chat   Chat  @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender User? @relation(fields: [emisorId], references: [id], onDelete: SetNull)
+
+  @@map("Mensajes")
+}
+
+// 6. MAPA DE BARES
+model Bar {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  descripcion String?  @db.Text
+  direccion   String
+  latitud     Decimal  @db.Decimal(10, 8)
+  longitud    Decimal  @db.Decimal(11, 8)
+  imagenUrl   String?  @map("imagen_url")
+  solicitanteId Int?   @map("solicitante_id")
+  status      BarStatus @default(PENDING)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  reviews BarReview[]
+  solicitante User? @relation("SolicitanteBar", fields: [solicitanteId], references: [id], onDelete: SetNull)
+
+  @@map("Bares")
+}
+
+enum BarStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model BarReview {
+  id         Int      @id @default(autoincrement())
+  barId      Int      @map("bar_id")
+  usuarioId  Int?     @map("usuario_id")
+  puntuacion Int
+  comentario String?  @db.Text
+  imagenUrl  String?  @map("imagen_url")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  bar  Bar   @relation(fields: [barId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+
+  @@map("BarResenas")
+}
+
+// 7. NOTIFICACIONES
+model Notification {
+  id        Int              @id @default(autoincrement())
+  usuarioId Int              @map("usuario_id")
+  tipo      NotificationType
+  mensaje   String           @db.Text
+  leido     Boolean          @default(false)
+  recursoId Int?             @map("recurso_id")
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("Notificaciones")
+}
+
+enum NotificationType {
+  LIKE_MEZCLA
+  COMENTARIO_MEZCLA
+  NUEVO_MENSAJE
+  SISTEMA
+}
+
+// 8. INVENTARIO Y WISHLIST
+model UserStash {
+  id           Int        @id @default(autoincrement())
+  usuarioId    Int        @map("usuario_id")
+  nombreTabaco String     @map("nombre_tabaco")
+  marca        String?
+  tipo         StashType  @default(HAVE)
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("UserStash")
+}
+
+enum StashType {
+  HAVE
+  WANT
+}
+
+// 7. CATALOGO OFICIAL DE TABACOS (Scraper de España)
+model Brand {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  tastes    Taste[]
+
+  @@map("Brands")
+}
+
+model Taste {
+  id          Int      @id @default(autoincrement())
+  name        String
+  linea       String?
+  descripcion String?  @db.Text
+  brandId     Int
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  brand       Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  formats     TasteFormat[]
+
+  @@unique([name, brandId])
+  @@map("Tastes")
+}
+
+model TasteFormat {
+  id        Int      @id @default(autoincrement())
+  tasteId   Int      @map("taste_id")
+  formato   String   // Ejemplo: "50g", "200g", "1000g"
+  precio    Decimal  @db.Decimal(10,2)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  taste     Taste    @relation(fields: [tasteId], references: [id], onDelete: Cascade)
+
+  @@unique([tasteId, formato])
+  @@map("TasteFormats")
+}
+
+// 9. COMENTARIOS EN MEZCLAS
+model MixComment {
+  id        Int      @id @default(autoincrement())
+  mezclaId  Int      @map("mezcla_id")
+  usuarioId Int      @map("usuario_id")
+  texto     String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  mix  Mix  @relation(fields: [mezclaId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("MezclaComentarios")
+}
+
+// 10. TAGS / ETIQUETAS
+model Tag {
+  id     Int      @id @default(autoincrement())
+  nombre String   @unique
+  mixes  MixTag[]
+
+  @@map("Tags")
+}
+
+model MixTag {
+  mezclaId Int @map("mezcla_id")
+  tagId    Int @map("tag_id")
+
+  mix Mix @relation(fields: [mezclaId], references: [id], onDelete: Cascade)
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([mezclaId, tagId])
+  @@map("MezclaTags")
+}

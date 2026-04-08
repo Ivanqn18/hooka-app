@@ -1,0 +1,2303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shisha_tobaccos>
+	<brand name="187">
+		<product name="187 #S04 Quelle (200 g)" price="17,50" />
+		<product name="187 #S04 Quelle (50 g)" price="4,55" />
+		<product name="187 040 (200 g)" price="17,50" />
+		<product name="187 040 (50 g)" price="4,55" />
+		<product name="187 Beach Vibez (200 g)" price="17,50" />
+		<product name="187 Beach Vibez (50 g)" price="4,55" />
+		<product name="187 Blue Devil (200 g)" price="17,50" />
+		<product name="187 Blue Devil (50 g)" price="4,55" />
+		<product name="187 Dd Music (200 g)" price="17,50" />
+		<product name="187 Dd Music (50 g)" price="4,55" />
+		<product name="187 Ello&amp;Raffa (200 g)" price="17,50" />
+		<product name="187 Ello&amp;Raffa (50 g)" price="4,55" />
+		<product name="187 Happy Caztuz (200 g)" price="17,50" />
+		<product name="187 Happy Caztuz (50 g)" price="4,55" />
+		<product name="187 Holy Tropical (200 g)" price="17,50" />
+		<product name="187 Holy Tropical (50 g)" price="4,55" />
+		<product name="187 I Love Hamburg (200 g)" price="17,50" />
+		<product name="187 I Love Hamburg (50 g)" price="4,55" />
+		<product name="187 Iscrea Pistoco (200 g)" price="17,50" />
+		<product name="187 Iscrea Pistoco (50 g)" price="4,55" />
+		<product name="187 Jucy Puzzy (200 g)" price="17,50" />
+		<product name="187 Jucy Puzzy (50 g)" price="4,55" />
+		<product name="187 Kool Bitch (200 g)" price="17,50" />
+		<product name="187 Kool Bitch (50 g)" price="4,55" />
+		<product name="187 Kool Wave (200 g)" price="17,50" />
+		<product name="187 Kool Wave (50 g)" price="4,55" />
+		<product name="187 Mama Canny (200 g)" price="17,50" />
+		<product name="187 Mama Canny (50 g)" price="4,55" />
+		<product name="187 Mts Greens (200 g)" price="17,50" />
+		<product name="187 Mts Greens (50 g)" price="4,55" />
+		<product name="187 New Flash (200 g)" price="17,50" />
+		<product name="187 New Flash (50 g)" price="4,55" />
+		<product name="187 Pink Mellow (200 g)" price="17,50" />
+		<product name="187 Pink Mellow (50 g)" price="4,55" />
+		<product name="187 Purple Drank (200 g)" price="17,50" />
+		<product name="187 Purple Drank (50 g)" price="4,55" />
+		<product name="187 Red Light District (200 g)" price="17,50" />
+		<product name="187 Red Light District (50 g)" price="4,55" />
+		<product name="187 Skittlez (200 g)" price="17,50" />
+		<product name="187 Skittlez (50 g)" price="4,55" />
+		<product name="187 Sparkling Izet (200 g)" price="17,50" />
+		<product name="187 Sparkling Izet (50 g)" price="4,55" />
+		<product name="187 Sparkling Peaz (200 g)" price="17,50" />
+		<product name="187 Sparkling Peaz (50 g)" price="4,55" />
+		<product name="187 Sweem Cactus (200 g)" price="17,50" />
+		<product name="187 Sweem Cactus (50 g)" price="4,55" />
+		<product name="187 Wallynelom (200 g)" price="17,50" />
+		<product name="187 Wallynelom (50 g)" price="4,55" />
+		<product name="187 Women To Go (200 g)" price="17,50" />
+		<product name="187 Women To Go (50 g)" price="4,55" />
+		<product name="187 Zafari (200 g)" price="17,50" />
+		<product name="187 Zafari (50 g)" price="4,55" />
+	</brand>
+	<brand name="Adalya">
+		<product name="Adalya Adalya Power (50 g)" price="3,85" />
+		<product name="Adalya AppGrade (50 g)" price="3,85" />
+		<product name="Adalya Bagdadi (50 g)" price="3,85" />
+		<product name="Adalya Berlin Nights (1000 g)" price="65,00" />
+		<product name="Adalya Berlin Nights (990 g)" price="65,00" />
+		<product name="Adalya Berlin Nights (50 g)" price="3,85" />
+		<product name="Adalya Billionaire (50 g)" price="3,85" />
+		<product name="Adalya Black Cane Mnt (50 g)" price="3,85" />
+		<product name="Adalya Black Dragon (50 g)" price="3,30" />
+		<product name="Adalya Black Horchachi (50 g)" price="3,30" />
+		<product name="Adalya Black Lem Bry (50 g)" price="3,85" />
+		<product name="Adalya Black Pych (50 g)" price="3,85" />
+		<product name="Adalya Black Voodoo (50 g)" price="3,30" />
+		<product name="Adalya Blue Dragan (50 g)" price="3,85" />
+		<product name="Adalya Blue I'ss (1000 g)" price="65,00" />
+		<product name="Adalya Blue I'ss (990 g)" price="65,00" />
+		<product name="Adalya Blue I'ss (200 g)" price="14,00" />
+		<product name="Adalya Blue I'ss (50 g)" price="3,85" />
+		<product name="Adalya Blue Lych (50 g)" price="3,85" />
+		<product name="Adalya Blue Yellow (200 g)" price="14,00" />
+		<product name="Adalya Blue Yellow (50 g)" price="3,85" />
+		<product name="Adalya Chwng Kizz (1000 g)" price="54,95" />
+		<product name="Adalya Chwng Waterloo (50 g)" price="3,85" />
+		<product name="Adalya Chwng Wood Kizz (1000 g)" price="54,95" />
+		<product name="Adalya Chwng Wood Kizz (200 g)" price="14,00" />
+		<product name="Adalya Chwng Wood Kizz (50 g)" price="3,85" />
+		<product name="Adalya Cindy's (50 g)" price="3,85" />
+		<product name="Adalya Desperado (50 g)" price="3,85" />
+		<product name="Adalya Dragan Code (50 g)" price="3,85" />
+		<product name="Adalya Dulcinea (50 g)" price="3,85" />
+		<product name="Adalya Eskimo Leon (50 g)" price="3,85" />
+		<product name="Adalya Esmeralda (50 g)" price="3,85" />
+		<product name="Adalya Exotic Rush (50 g)" price="3,85" />
+		<product name="Adalya Gipsy Kings (200 g)" price="14,00" />
+		<product name="Adalya Gipsy Kings (50 g)" price="3,85" />
+		<product name="Adalya Green Leon Kizz (50 g)" price="3,85" />
+		<product name="Adalya Hawaii (1000 g)" price="65,00" />
+		<product name="Adalya Hawaii (990 g)" price="65,00" />
+		<product name="Adalya Hawaii (200 g)" price="14,00" />
+		<product name="Adalya Hawaii (50 g)" price="3,85" />
+		<product name="Adalya I'ss (50 g)" price="3,85" />
+		<product name="Adalya I'ss Boni (50 g)" price="3,85" />
+		<product name="Adalya I'ss Kaktu (50 g)" price="3,85" />
+		<product name="Adalya I'ss Lie on the Rocks (1000 g)" price="65,00" />
+		<product name="Adalya I'ss Lie on the Rocks (990 g)" price="65,00" />
+		<product name="Adalya I'ss Lie on the Rocks (50 g)" price="3,85" />
+		<product name="Adalya Jungle Jungle (50 g)" price="3,85" />
+		<product name="Adalya Kizz (1000 g)" price="65,00" />
+		<product name="Adalya Kizz (200 g)" price="14,00" />
+		<product name="Adalya Kizz (50 g)" price="3,85" />
+		<product name="Adalya Kizz 2.0 (990 g)" price="65,00" />
+		<product name="Adalya Krosty App (50 g)" price="3,30" />
+		<product name="Adalya L. Kill (1000 g)" price="65,00" />
+		<product name="Adalya L. Kill (200 g)" price="14,00" />
+		<product name="Adalya L. Kill (50 g)" price="3,85" />
+		<product name="Adalya L. Kill 2.0 (990 g)" price="65,00" />
+		<product name="Adalya La Bonita (50 g)" price="3,85" />
+		<product name="Adalya Leon Pi (50 g)" price="3,85" />
+		<product name="Adalya Love66 (1000 g)" price="65,00" />
+		<product name="Adalya Love66 (990 g)" price="65,00" />
+		<product name="Adalya Love66 (200 g)" price="14,00" />
+		<product name="Adalya Love66 (50 g)" price="3,85" />
+		<product name="Adalya M.M. (50 g)" price="3,30" />
+		<product name="Adalya Manko Tanko (50 g)" price="3,85" />
+		<product name="Adalya Manko Tanko I'ss (1000 g)" price="65,00" />
+		<product name="Adalya Manko Tanko I'ss (990 g)" price="65,00" />
+		<product name="Adalya Manko Tanko I'ss (200 g)" price="14,00" />
+		<product name="Adalya Manko Tanko I'ss (50 g)" price="3,85" />
+		<product name="Adalya Moon Dream (200 g)" price="14,00" />
+		<product name="Adalya Moon Dream (50 g)" price="3,85" />
+		<product name="Adalya Pair Kizz (50 g)" price="3,85" />
+		<product name="Adalya Paradiso I'ss (50 g)" price="3,85" />
+		<product name="Adalya Passion Kizz (50 g)" price="3,85" />
+		<product name="Adalya Punkman (50 g)" price="3,85" />
+		<product name="Adalya Pych Blue Kizz (50 g)" price="3,85" />
+		<product name="Adalya Red Alert I'ss (1000 g)" price="54,95" />
+		<product name="Adalya Red Alert l'ss (50 g)" price="3,85" />
+		<product name="Adalya Rhapsody (50 g)" price="3,85" />
+		<product name="Adalya Skyfall (50 g)" price="3,85" />
+		<product name="Adalya Sweess Boom (1000 g)" price="65,00" />
+		<product name="Adalya Sweess Boom (990 g)" price="65,00" />
+		<product name="Adalya Sweess Boom (200 g)" price="14,00" />
+		<product name="Adalya Sweess Boom (50 g)" price="3,85" />
+		<product name="Adalya Three Angels (50 g)" price="3,85" />
+		<product name="Adalya Tony´s Destiny (50 g)" price="3,85" />
+		<product name="Adalya Twist Pi (50 g)" price="3,30" />
+		<product name="Adalya Two App (50 g)" price="3,85" />
+		<product name="Adalya Two Yellow I´ss (50 g)" price="3,85" />
+		<product name="Adalya Tynky Wynky (200 g)" price="14,00" />
+		<product name="Adalya Tynky Wynky (50 g)" price="3,85" />
+		<product name="Adalya Van (50 g)" price="3,85" />
+		<product name="Adalya Waterlon Kizz (50 g)" price="3,85" />
+		<product name="Adalya Waterloo Kizz (200 g)" price="14,00" />
+	</brand>
+	<brand name="Afendi">
+		<product name="Afendi Amorita (950 g)" price="75,00" />
+		<product name="Afendi Amorita (200 g)" price="17,60" />
+		<product name="Afendi Amorita (50 g)" price="4,85" />
+		<product name="Afendi Applionnaire (950 g)" price="75,00" />
+		<product name="Afendi Applionnaire (200 g)" price="17,60" />
+		<product name="Afendi Applionnaire (50 g)" price="4,85" />
+		<product name="Afendi Bae (950 g)" price="75,00" />
+		<product name="Afendi Bae (200 g)" price="17,60" />
+		<product name="Afendi Bae (50 g)" price="4,85" />
+		<product name="Afendi Bloo Ghost (950 g)" price="75,00" />
+		<product name="Afendi Bloo Ghost (200 g)" price="17,60" />
+		<product name="Afendi Bloo Ghost (50 g)" price="4,85" />
+		<product name="Afendi Habibty (950 g)" price="75,00" />
+		<product name="Afendi Habibty (200 g)" price="17,60" />
+		<product name="Afendi Habibty (50 g)" price="4,85" />
+		<product name="Afendi Hermosa (950 g)" price="75,00" />
+		<product name="Afendi Hermosa (200 g)" price="17,60" />
+		<product name="Afendi Hermosa (50 g)" price="4,85" />
+		<product name="Afendi Lover Boy (950 g)" price="75,00" />
+		<product name="Afendi Lover Boy (200 g)" price="17,60" />
+		<product name="Afendi Lover Boy (50 g)" price="4,85" />
+		<product name="Afendi Marrakesh Breeze (950 g)" price="75,00" />
+		<product name="Afendi Marrakesh Breeze (200 g)" price="17,60" />
+		<product name="Afendi Marrakesh Breeze (50 g)" price="4,85" />
+		<product name="Afendi Sicilian Breeze (950 g)" price="75,00" />
+		<product name="Afendi Sicilian Breeze (200 g)" price="17,60" />
+		<product name="Afendi Sicilian Breeze (50 g)" price="4,85" />
+		<product name="Afendi Sinful (950 g)" price="75,00" />
+		<product name="Afendi Sinful (200 g)" price="17,60" />
+		<product name="Afendi Sinful (50 g)" price="4,85" />
+		<product name="Afendi Tango Splash (950 g)" price="75,00" />
+		<product name="Afendi Tango Splash (200 g)" price="17,60" />
+		<product name="Afendi Tango Splash (50 g)" price="4,85" />
+		<product name="Afendi The Hilands (950 g)" price="75,00" />
+		<product name="Afendi The Hilands (200 g)" price="17,60" />
+		<product name="Afendi The Hilands (50 g)" price="4,85" />
+		<product name="Afendi Tuscany Breeze (200 g)" price="17,60" />
+		<product name="Afendi Tuscany Breeze (50 g)" price="4,85" />
+	</brand>
+	<brand name="Al Fakher">
+		<product name="Al Fakher Amber Rise (100 g)" price="9,95" />
+		<product name="Al Fakher Big Blue (250 g)" price="19,95" />
+		<product name="Al Fakher Big Blue (200 g)" price="17,50" />
+		<product name="Al Fakher Big Blue (50 g)" price="4,70" />
+		<product name="Al Fakher Big Blue Green (50 g)" price="4,70" />
+		<product name="Al Fakher Big Coral (50 g)" price="4,70" />
+		<product name="Al Fakher Big Green (5000 g)" price="225,00" />
+		<product name="Al Fakher Big Green (1000 g)" price="73,95" />
+		<product name="Al Fakher Big Green TPD (900 g)" price="69,95" />
+		<product name="Al Fakher Big Green (250 g)" price="19,95" />
+		<product name="Al Fakher Big Green (200 g)" price="17,50" />
+		<product name="Al Fakher Big Green (50 g)" price="4,70" />
+		<product name="Al Fakher Big Red Splash (250 g)" price="19,95" />
+		<product name="Al Fakher Big Red Splash (200 g)" price="17,50" />
+		<product name="Al Fakher Big Red Splash (50 g)" price="4,70" />
+		<product name="Al Fakher Big Yellow Green (250 g)" price="19,95" />
+		<product name="Al Fakher Big Yellow Green (200 g)" price="17,50" />
+		<product name="Al Fakher Big Yellow Green (50 g)" price="4,70" />
+		<product name="Al Fakher Black Mist (1000 g)" price="73,95" />
+		<product name="Al Fakher Black Mist (250 g)" price="16,90" />
+		<product name="Al Fakher Catwalk Melody (50 g)" price="4,80" />
+		<product name="Al Fakher Cinnasense (50 g)" price="4,70" />
+		<product name="Al Fakher Crimson Crush (100 g)" price="8,50" />
+		<product name="Al Fakher Dreams Indigo Crescendo (50 g)" price="4,80" />
+		<product name="Al Fakher Dreams Midnight Daydreams (50 g)" price="4,80" />
+		<product name="Al Fakher Dreams Sundown Serenade (50 g)" price="4,80" />
+		<product name="Al Fakher Exotic Escape (50 g)" price="4,80" />
+		<product name="Al Fakher Forever Fantasy (50 g)" price="4,80" />
+		<product name="Al Fakher Frost Double Crunch (50 g)" price="4,70" />
+		<product name="Al Fakher Fusion Lucid Dream (50 g)" price="3,20" />
+		<product name="Al Fakher Goova (50 g)" price="4,70" />
+		<product name="Al Fakher Grapio (250 g)" price="19,95" />
+		<product name="Al Fakher Grapio (200 g)" price="17,50" />
+		<product name="Al Fakher Grapio (50 g)" price="4,70" />
+		<product name="Al Fakher Grapio Green (250 g)" price="19,95" />
+		<product name="Al Fakher Grapio Green (200 g)" price="17,50" />
+		<product name="Al Fakher Grapio Green (50 g)" price="4,70" />
+		<product name="Al Fakher Grapio Night (250 g)" price="19,95" />
+		<product name="Al Fakher Grapio Night (200 g)" price="17,50" />
+		<product name="Al Fakher Grapio Night (50 g)" price="4,70" />
+		<product name="Al Fakher Green Chu (1000 g)" price="73,95" />
+		<product name="Al Fakher Green Chu (900 g)" price="69,95" />
+		<product name="Al Fakher Green Chu (250 g)" price="19,95" />
+		<product name="Al Fakher Green Chu (200 g)" price="17,50" />
+		<product name="Al Fakher Green Chu (50 g)" price="4,70" />
+		<product name="Al Fakher Green Velvet (1000 g)" price="73,95" />
+		<product name="Al Fakher Green Velvet (900 g)" price="69,95" />
+		<product name="Al Fakher Green Velvet (50 g)" price="4,70" />
+		<product name="Al Fakher Hello Harmony (50 g)" price="4,80" />
+		<product name="Al Fakher Ivory Gold (200 g)" price="19,95" />
+		<product name="Al Fakher Ivory Gold (100 g)" price="9,95" />
+		<product name="Al Fakher Japanese Sunrise (50 g)" price="4,70" />
+		<product name="Al Fakher Magic Love (250 g)" price="19,95" />
+		<product name="Al Fakher Magic Love (50 g)" price="4,70" />
+		<product name="Al Fakher Magic Love 2.0 (900 g)" price="69,95" />
+		<product name="Al Fakher Magic Love 2.0 (200 g)" price="17,50" />
+		<product name="Al Fakher Magic Love Crafted Mixes (900 g)" price="55,90" />
+		<product name="Al Fakher Magic Love Crafted Mixes (200 g)" price="13,50" />
+		<product name="Al Fakher Magic Love Crafted Mixes (50 g)" price="3,70" />
+		<product name="Al Fakher Majestic Aurora (100 g)" price="8,50" />
+		<product name="Al Fakher Malone (50 g)" price="4,70" />
+		<product name="Al Fakher Master Edition Flower Pop (200 g)" price="18,50" />
+		<product name="Al Fakher Master Edition Jazzy Summer (200 g)" price="18,50" />
+		<product name="Al Fakher Master Edition Summer Mix (200 g)" price="18,50" />
+		<product name="Al Fakher Nº 18 (50 g)" price="2,90" />
+		<product name="Al Fakher Polar Freeze (200 g)" price="19,95" />
+		<product name="Al Fakher Polar Freeze (100 g)" price="9,95" />
+		<product name="Al Fakher Red Green Smash (50 g)" price="4,70" />
+		<product name="Al Fakher Red Patch (50 g)" price="4,70" />
+		<product name="Al Fakher Red Smash (50 g)" price="4,70" />
+		<product name="Al Fakher Runway Rhapsody (50 g)" price="4,80" />
+		<product name="Al Fakher Big Coral (50 g)" price="4,70" />
+		<product name="Al Fakher Showtime Symphony (50 g)" price="4,80" />
+		<product name="Al Fakher Snowy Fuchsia Green (250 g)" price="19,95" />
+		<product name="Al Fakher Snowy Fuchsia Green (200 g)" price="17,50" />
+		<product name="Al Fakher Snowy Fuchsia Green (50 g)" price="4,70" />
+		<product name="Al Fakher Special Edition Winter Dream (200 g)" price="18,50" />
+		<product name="Al Fakher Special Edition Winter Glow (200 g)" price="18,50" />
+		<product name="Al Fakher The Double Crunch (5000 g)" price="225,00" />
+		<product name="Al Fakher The Double Crunch (1000 g)" price="73,95" />
+		<product name="Al Fakher The Double Crunch (900 g)" price="69,95" />
+		<product name="Al Fakher The Double Crunch (250 g)" price="19,95" />
+		<product name="Al Fakher The Double Crunch (200 g)" price="17,50" />
+		<product name="Al Fakher The Double Crunch (50 g)" price="4,70" />
+		<product name="Al Fakher Tropic Treat (50 g)" price="4,80" />
+		<product name="Al Fakher Twiwi (50 g)" price="4,70" />
+		<product name="Al Fakher White Pods (50 g)" price="4,70" />
+		<product name="Al Fakher Wicked Emerald (100 g)" price="8,50" />
+		<product name="Al Fakher Winter Wonder (200 g)" price="18,50" />
+		<product name="Al Fakher Yellow (250 g)" price="19,95" />
+		<product name="Al Fakher Yellow (200 g)" price="17,50" />
+		<product name="Al Fakher Yellow (50 g)" price="4,70" />
+	</brand>
+	<brand name="Almassiva">
+		<product name="Almassiva 4B (200 g)" price="16,50" />
+		<product name="Almassiva 4B (50 g)" price="4,40" />
+		<product name="Almassiva Black Lebanese (200 g)" price="16,50" />
+		<product name="Almassiva Black Lebanese (50 g)" price="4,40" />
+		<product name="Almassiva Blue Beast (200 g)" price="16,50" />
+		<product name="Almassiva Blue Beast (50 g)" price="4,40" />
+		<product name="Almassiva Bluelight (200 g)" price="16,50" />
+		<product name="Almassiva Bluelight (50 g)" price="4,40" />
+		<product name="Almassiva Brotherheart (200 g)" price="16,50" />
+		<product name="Almassiva Brotherheart (50 g)" price="4,40" />
+		<product name="Almassiva Cabrio In Marbella (200 g)" price="16,50" />
+		<product name="Almassiva Cabrio In Marbella (50 g)" price="4,40" />
+		<product name="Almassiva Come To Dubai (200 g)" price="16,50" />
+		<product name="Almassiva Come To Dubai (50 g)" price="4,40" />
+		<product name="Almassiva Pink King (200 g)" price="16,50" />
+		<product name="Almassiva Pink King (50 g)" price="4,40" />
+		<product name="Almassiva Summer In Beirut (200 g)" price="16,50" />
+		<product name="Almassiva Summer In Beyrut (50 g)" price="4,40" />
+		<product name="Almassiva The Big M (50 g)" price="3,85" />
+	</brand>
+	<brand name="Aloha">
+		<product name="Aloha American (50 g)" price="3,30" />
+		<product name="Aloha Atlantic (200 g)" price="13,50" />
+		<product name="Aloha Double Up (200 g)" price="13,50" />
+		<product name="Aloha Double Up (100 g)" price="7,50" />
+		<product name="Aloha Los Locos (50 g)" price="3,30" />
+		<product name="Aloha Maverick (50 g)" price="3,30" />
+		<product name="Aloha Pacific (50 g)" price="3,30" />
+		<product name="Aloha Somo (200 g)" price="13,50" />
+		<product name="Aloha Splash (50 g)" price="3,30" />
+		<product name="Aloha T.Riko (200 g)" price="13,50" />
+	</brand>
+	<brand name="Al-Waha">
+		<product name="Al-Waha Ali Baba (200 g)" price="15,45" />
+		<product name="Al-Waha Kaktus Jack (200 g)" price="15,45" />
+		<product name="Al-Waha Kaktus Jack (50 g)" price="3,85" />
+		<product name="Al-Waha Ringle Rangle (200 g)" price="15,45" />
+		<product name="Al-Waha Ringle Rangle (50 g)" price="3,85" />
+		<product name="Al-Waha 66 (200 g)" price="15,45" />
+		<product name="Al-Waha Amor (200 g)" price="15,45" />
+		<product name="Al-Waha Amor (50 g)" price="3,85" />
+		<product name="Al-Waha Big Boy (200 g)" price="15,95" />
+		<product name="Al-Waha Big Boy (50 g)" price="4,20" />
+		<product name="Al-Waha Big Boy Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Blue Lion (200 g)" price="15,95" />
+		<product name="Al-Waha Blue Lion (50 g)" price="4,20" />
+		<product name="Al-Waha Blue Van Cre (200 g)" price="15,45" />
+		<product name="Al-Waha Blue Van Crea (50 g)" price="3,85" />
+		<product name="Al-Waha Casper (200 g)" price="15,95" />
+		<product name="Al-Waha Casper (50 g)" price="4,20" />
+		<product name="Al-Waha Casper Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Dirty Thirty (200 g)" price="15,45" />
+		<product name="Al-Waha Dólar (200 g)" price="15,45" />
+		<product name="Al-Waha Dólar Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Fck 66 (200 g)" price="15,45" />
+		<product name="Al-Waha Fck 66 (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Bon (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh Bon (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Bon Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh GM (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh GM (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Loco (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh Loco (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Mang Tang (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh Mang Tang (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Mang Tang Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Mara Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Fresh Mary (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh Pea (200 g)" price="15,45" />
+		<product name="Al-Waha Fresh Pea (50 g)" price="3,85" />
+		<product name="Al-Waha Freshy Cherr (200 g)" price="15,45" />
+		<product name="Al-Waha Freshy Red Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Friday 13 (200 g)" price="15,45" />
+		<product name="Al-Waha Friday 13 (50 g)" price="3,85" />
+		<product name="Al-Waha Friday 13 Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Funky Fresh (200 g)" price="15,45" />
+		<product name="Al-Waha Funky Fresh (50 g)" price="3,85" />
+		<product name="Al-Waha Grap Min (200 g)" price="15,45" />
+		<product name="Al-Waha Grap Min (50 g)" price="3,85" />
+		<product name="Al-Waha Gumba (200 g)" price="15,45" />
+		<product name="Al-Waha Gumba (50 g)" price="3,85" />
+		<product name="Al-Waha Hot´n Cold (200 g)" price="15,45" />
+		<product name="Al-Waha Hot'n Cold (50 g)" price="3,85" />
+		<product name="Al-Waha Lazourdi (200 g)" price="15,45" />
+		<product name="Al-Waha Lazourdi (50 g)" price="3,85" />
+		<product name="Al-Waha Lazourdi Groz (50 g)" price="3,85" />
+		<product name="Al-Waha Lcorce (200 g)" price="15,45" />
+		<product name="Al-Waha Lem Min (200 g)" price="15,45" />
+		<product name="Al-Waha Libella Swing (200 g)" price="15,45" />
+		<product name="Al-Waha Libella Swing (50 g)" price="3,85" />
+		<product name="Al-Waha Libuma (200 g)" price="15,45" />
+		<product name="Al-Waha Libuma (50 g)" price="3,85" />
+		<product name="Al-Waha Mang Lem Ned (200 g)" price="15,45" />
+		<product name="Al-Waha Mang Lem Ned (50 g)" price="3,85" />
+		<product name="Al-Waha Masala (200 g)" price="15,95" />
+		<product name="Al-Waha Masala (50 g)" price="4,20" />
+		<product name="Al-Waha Min Fusion (200 g)" price="15,45" />
+		<product name="Al-Waha Min Fusion (50 g)" price="3,85" />
+		<product name="Al-Waha Panana Van (200 g)" price="15,95" />
+		<product name="Al-Waha Panana Van (50 g)" price="4,20" />
+		<product name="Al-Waha Paradisio (200 g)" price="15,45" />
+		<product name="Al-Waha Paradisio (50 g)" price="3,85" />
+		<product name="Al-Waha Pikchu (200 g)" price="15,45" />
+		<product name="Al-Waha Pikchu (50 g)" price="3,85" />
+		<product name="Al-Waha Pussy Wagon (200 g)" price="15,45" />
+		<product name="Al-Waha Pussy Wagon (50 g)" price="3,85" />
+		<product name="Al-Waha Rosito (200 g)" price="15,45" />
+		<product name="Al-Waha Rosito (50 g)" price="3,85" />
+		<product name="Al-Waha Sakura (200 g)" price="15,45" />
+		<product name="Al-Waha Sakura (50 g)" price="3,85" />
+		<product name="Al-Waha Sodala (200 g)" price="15,45" />
+		<product name="Al-Waha Sodala (50 g)" price="3,85" />
+		<product name="Al-Waha Sweet Africa (200 g)" price="15,45" />
+		<product name="Al-Waha Sweet Africa Groz (50 g)" price="3,85" />
+		<product name="Al-Waha The Devil (200 g)" price="15,45" />
+		<product name="Al-Waha The Devil (50 g)" price="3,85" />
+		<product name="Al-Waha Tornado (200 g)" price="15,95" />
+		<product name="Al-Waha Tornado (50 g)" price="4,20" />
+		<product name="Al-Waha Trex (200 g)" price="15,45" />
+		<product name="Al-Waha Trex (50 g)" price="3,85" />
+		<product name="Al-Waha Two App (200 g)" price="15,45" />
+		<product name="Al-Waha Veneto (200 g)" price="15,45" />
+		<product name="Al-Waha Veneto (50 g)" price="3,85" />
+		<product name="Al-Waha Zero Gravity (200 g)" price="15,45" />
+		<product name="Al-Waha Zero Gravity (50 g)" price="3,85" />
+	</brand>
+	<brand name="Anda">
+		<product name="Anda Blue Toteta (200 g)" price="17,50" />
+		<product name="Anda Blue Toteta (50 g)" price="4,95" />
+		<product name="Anda Casinada (200 g)" price="17,50" />
+		<product name="Anda Casinada (50 g)" price="4,95" />
+		<product name="Anda Chupala (50 g)" price="4,95" />
+		<product name="Anda Clipporizz (200 g)" price="17,50" />
+		<product name="Anda Clipporizz (50 g)" price="4,95" />
+		<product name="Anda Crim Pay (200 g)" price="17,50" />
+		<product name="Anda Crim Pay (50 g)" price="4,95" />
+		<product name="Anda Mentido (950 g)" price="75,00" />
+		<product name="Anda Mentido (200 g)" price="17,50" />
+		<product name="Anda Mentido (50 g)" price="4,95" />
+		<product name="Anda Optimus Leim (950 g)" price="75,00" />
+		<product name="Anda Optimus Leim (200 g)" price="17,50" />
+		<product name="Anda Optimus Leim (50 g)" price="4,95" />
+		<product name="Anda Red &amp; Green (200 g)" price="17,50" />
+		<product name="Anda Red &amp; Green (50 g)" price="4,95" />
+		<product name="Anda Sour Dia (200 g)" price="17,50" />
+		<product name="Anda Sour Dia (50 g)" price="4,95" />
+		<product name="Anda Temptation (200 g)" price="17,50" />
+		<product name="Anda Temptation (50 g)" price="4,95" />
+		<product name="Anda Temptation Mandingo (950 g)" price="75,00" />
+		<product name="Anda Temptation Mandingo (200 g)" price="17,50" />
+		<product name="Anda Temptation Mandingo (50 g)" price="4,95" />
+		<product name="Anda Temtation (950 g)" price="75,00" />
+		<product name="Anda Tiki Taka (950 g)" price="75,00" />
+		<product name="Anda Tiki Taka (200 g)" price="17,50" />
+		<product name="Anda Tiki Taka (50 g)" price="4,95" />
+		<product name="Anda Tropido (950 g)" price="75,00" />
+		<product name="Anda Tropido (200 g)" price="17,50" />
+		<product name="Anda Tropido (50 g)" price="4,95" />
+	</brand>
+	<brand name="Anda Blyat Strong">
+		<product name="Anda Blyat Strong Clipporizz (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Clipporizz (50 g)" price="6,50" />
+		<product name="Anda Blyat Strong Cono Verde (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Cono Verde (50 g)" price="6,50" />
+		<product name="Anda Blyat Strong Mentido (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Mentido (50 g)" price="6,50" />
+		<product name="Anda Blyat Strong Optimus Leim (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Optimus Leim (50 g)" price="6,50" />
+		<product name="Anda Blyat Strong Swiet Swirl (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Swiet Swirl (50 g)" price="6,50" />
+		<product name="Anda Blyat Strong Temptation (200 g)" price="22,50" />
+		<product name="Anda Blyat Strong Temptation (50 g)" price="6,50" />
+	</brand>
+	<brand name="Apocalypse">
+		<product name="Apocalypse Babyelia (40 g)" price="3,15" />
+		<product name="Apocalypse Baron Rouge (40 g)" price="3,15" />
+		<product name="Apocalypse Godfather (40 g)" price="3,15" />
+		<product name="Apocalypse Halep Boom (40 g)" price="3,15" />
+		<product name="Apocalypse King Leonidas (40 g)" price="3,15" />
+		<product name="Apocalypse La Force (40 g)" price="3,15" />
+		<product name="Apocalypse Odin (40 g)" price="3,15" />
+		<product name="Apocalypse Ommy Shelby (40 g)" price="3,15" />
+		<product name="Apocalypse Yakuza (50 g)" price="3,70" />
+		<product name="Apocalypse Yodda (40 g)" price="3,15" />
+	</brand>
+	<brand name="AQM">
+		<product name="AQM Babbel (50 g)" price="3,30" />
+		<product name="AQM Black Box (50 g)" price="3,85" />
+		<product name="AQM Black and White (50 g)" price="3,30" />
+		<product name="AQM Fanex (50 g)" price="3,85" />
+		<product name="AQM Golden Anna (50 g)" price="3,85" />
+		<product name="AQM Green Leo (50 g)" price="3,85" />
+		<product name="AQM Kamasutra (50 g)" price="3,85" />
+		<product name="AQM Purple Teeny (50 g)" price="3,30" />
+		<product name="AQM Red Balls (50 g)" price="3,85" />
+		<product name="AQM Red Fall (50 g)" price="3,85" />
+		<product name="AQM Violet Dream (50 g)" price="3,30" />
+		<product name="AQM Zero (50 g)" price="3,85" />
+	</brand>
+	<brand name="Azure">
+		<product name="Azure 2 (100 g)" price="16,00" />
+		<product name="Azure 3 (100 g)" price="16,00" />
+		<product name="Azure 5 (100 g)" price="16,00" />
+		<product name="Azure 8 (100 g)" price="16,00" />
+		<product name="Azure 9 (100 g)" price="16,00" />
+		<product name="Azure 10 (100 g)" price="16,00" />
+		<product name="Azure 11 (100 g)" price="16,00" />
+		<product name="Azure 12 (100 g)" price="16,00" />
+		<product name="Azure 14 (100 g)" price="16,00" />
+		<product name="Azure 15 (100 g)" price="16,00" />
+		<product name="Azure 18 (100 g)" price="16,00" />
+		<product name="Azure 23 (100 g)" price="16,00" />
+		<product name="Azure 24 (100 g)" price="16,00" />
+		<product name="Azure 25 (100 g)" price="16,00" />
+		<product name="Azure 26 (100 g)" price="16,00" />
+		<product name="Azure 63 (100 g)" price="16,00" />
+		<product name="Azure 153 (100 g)" price="16,00" />
+		<product name="Azure 157 (100 g)" price="16,00" />
+		<product name="Azure 219 (100 g)" price="16,00" />
+	</brand>
+	<brand name="Azure Gold">
+		<product name="Azure Gold Cosmos (100 g)" price="16,00" />
+		<product name="Azure Gold CT Mania (100 g)" price="16,00" />
+		<product name="Azure Gold Grow A Tear (100 g)" price="16,00" />
+		<product name="Azure Gold Route 66 (100 g)" price="16,00" />
+		<product name="Azure Gold Winter Or (100 g)" price="16,00" />
+	</brand>
+	<brand name="Blackburn">
+		<product name="Blackburn Anans Shok (100 g)" price="15,95" />
+		<product name="Blackburn Bapai Dnner (100 g)" price="15,95" />
+		<product name="Blackburn Blckm Lmnd (100 g)" price="15,95" />
+		<product name="Blackburn Celebricrisp (100 g)" price="15,95" />
+		<product name="Blackburn Chupper Grupper (100 g)" price="15,95" />
+		<product name="Blackburn Donatella (100 g)" price="15,95" />
+		<product name="Blackburn Ekzotic M (100 g)" price="15,95" />
+		<product name="Blackburn Epic Guru (100 g)" price="15,95" />
+		<product name="Blackburn Frostpeak (100 g)" price="15,95" />
+		<product name="Blackburn Glacial Tot (100 g)" price="15,95" />
+		<product name="Blackburn Green Stoner (100 g)" price="15,95" />
+		<product name="Blackburn Green T (100 g)" price="15,95" />
+		<product name="Blackburn Haribon (100 g)" price="15,95" />
+		<product name="Blackburn Kane Myata (100 g)" price="15,95" />
+		<product name="Blackburn Kram Shok (100 g)" price="15,95" />
+		<product name="Blackburn Lemn Shok (100 g)" price="15,95" />
+		<product name="Blackburn Malibu (100 g)" price="15,95" />
+		<product name="Blackburn Na Chille (100 g)" price="15,95" />
+		<product name="Blackburn Raserry (100 g)" price="15,95" />
+		<product name="Blackburn Real P.F. (100 g)" price="15,95" />
+		<product name="Blackburn Summer Basket (100 g)" price="15,95" />
+		<product name="Blackburn Vallas Las (100 g)" price="15,95" />
+		<product name="Blackburn Zestybliss (100 g)" price="15,95" />
+	</brand>
+	<brand name="Blaze">
+		<product name="Blaze Baba Gamma (200 g)" price="22,50" />
+		<product name="Blaze Baba Gamma (50 g)" price="6,50" />
+		<product name="Blaze Batluva (200 g)" price="22,50" />
+		<product name="Blaze Batluva (50 g)" price="6,50" />
+		<product name="Blaze Black Cinema Roll (200 g)" price="22,50" />
+		<product name="Blaze Black Cinema Roll (50 g)" price="6,50" />
+		<product name="Blaze Black Luv (200 g)" price="22,50" />
+		<product name="Blaze Black Luv (50 g)" price="6,50" />
+		<product name="Blaze Black Uber (200 g)" price="22,50" />
+		<product name="Blaze Black Uber (50 g)" price="6,50" />
+		<product name="Blaze Blowtus Dark (200 g)" price="22,50" />
+		<product name="Blaze Blowtus Dark (50 g)" price="6,50" />
+		<product name="Blaze Guavemente (200 g)" price="22,50" />
+		<product name="Blaze Guavemente (50 g)" price="6,50" />
+		<product name="Blaze Koka Koala (200 g)" price="22,50" />
+		<product name="Blaze Koka Koala (50 g)" price="6,50" />
+		<product name="Blaze Lemenciaga (200 g)" price="22,50" />
+		<product name="Blaze Lemenciaga (50 g)" price="6,50" />
+		<product name="Blaze Lim Hype (200 g)" price="22,50" />
+		<product name="Blaze Lim Hype (50 g)" price="6,50" />
+		<product name="Blaze Nana (200 g)" price="22,50" />
+		<product name="Blaze Nana (50 g)" price="6,50" />
+		<product name="Blaze Preach (200 g)" price="22,50" />
+		<product name="Blaze Preach (50 g)" price="6,50" />
+		<product name="Blaze White Heaven (200 g)" price="22,50" />
+		<product name="Blaze White Heaven (50 g)" price="6,50" />
+		<product name="Blaze Wiwi (200 g)" price="22,50" />
+		<product name="Blaze Wiwi (50 g)" price="6,50" />
+	</brand>
+	<brand name="Blue Horse">
+		<product name="Blue Horse Alhambra (50 g)" price="3,85" />
+		<product name="Blue Horse Amsterdam Lights (50 g)" price="3,30" />
+		<product name="Blue Horse Baku Nights (50 g)" price="3,85" />
+		<product name="Blue Horse Beirut Al Araq (50 g)" price="3,85" />
+		<product name="Blue Horse Discovery (50 g)" price="3,85" />
+		<product name="Blue Horse Istanblue (50 g)" price="3,85" />
+		<product name="Blue Horse La Beirut (50 g)" price="3,85" />
+		<product name="Blue Horse London Fog (50 g)" price="3,30" />
+		<product name="Blue Horse Mi Amor (1000 g)" price="65,00" />
+		<product name="Blue Horse Mi Amor (990 g)" price="65,00" />
+		<product name="Blue Horse Mi Amor (200 g)" price="14,00" />
+		<product name="Blue Horse Mi Amor (50 g)" price="3,85" />
+		<product name="Blue Horse Moscow Evenings (1000 g)" price="54,95" />
+		<product name="Blue Horse Moskow Evenings (50 g)" price="3,85" />
+		<product name="Blue Horse No Woman No Cry (50 g)" price="3,85" />
+		<product name="Blue Horse Paris Romantique (50 g)" price="3,30" />
+		<product name="Blue Horse Rio Kiss (50 g)" price="3,30" />
+		<product name="Blue Horse Sputnik (50 g)" price="3,30" />
+		<product name="Blue Horse Strangers in the Night (50 g)" price="3,30" />
+		<product name="Blue Horse The Coldest Green (200 g)" price="14,00" />
+		<product name="Blue Horse The Coldest Green (50 g)" price="3,85" />
+		<product name="Blue Horse The Perfect Storm (50 g)" price="3,30" />
+		<product name="Blue Horse Thor´s Flash (50 g)" price="3,85" />
+		<product name="Blue Horse Tokyo Desire (50 g)" price="3,85" />
+		<product name="Blue Horse Venezia Serenata (50 g)" price="3,85" />
+		<product name="Blue Horse Wind Of Amazon (50 g)" price="3,85" />
+	</brand>
+	<brand name="Cannibal">
+		<product name="Cannibal Beast (45 g)" price="3,30" />
+		<product name="Cannibal Bloody (60 g)" price="4,50" />
+		<product name="Cannibal Bloody (45 g)" price="3,30" />
+		<product name="Cannibal Blue Moon (60 g)" price="4,50" />
+		<product name="Cannibal Blue Moon (45 g)" price="3,30" />
+		<product name="Cannibal Brute (180 g)" price="13,90" />
+		<product name="Cannibal Brute (60 g)" price="4,50" />
+		<product name="Cannibal Brute (50 g)" price="3,95" />
+		<product name="Cannibal Brute (45 g)" price="3,30" />
+		<product name="Cannibal Bubble (45 g)" price="3,30" />
+		<product name="Cannibal Clown (60 g)" price="4,50" />
+		<product name="Cannibal Clown (45 g)" price="3,30" />
+		<product name="Cannibal Cold Blood (180 g)" price="15,90" />
+		<product name="Cannibal Cold Blood (50 g)" price="4,50" />
+		<product name="Cannibal Cold Blood (45 g)" price="3,30" />
+		<product name="Cannibal Crazy (60 g)" price="4,50" />
+		<product name="Cannibal Crazy (45 g)" price="3,30" />
+		<product name="Cannibal Dark Blood (180 g)" price="13,90" />
+		<product name="Cannibal Dark Blood (60 g)" price="4,50" />
+		<product name="Cannibal Dark Blood (50 g)" price="3,95" />
+		<product name="Cannibal Dark Blood (45 g)" price="3,30" />
+		<product name="Cannibal Great (180 g)" price="13,90" />
+		<product name="Cannibal Great (60 g)" price="4,50" />
+		<product name="Cannibal Great (45 g)" price="3,30" />
+		<product name="Cannibal Heartless (45 g)" price="3,30" />
+		<product name="Cannibal Lion (180 g)" price="15,90" />
+		<product name="Cannibal Lion (50 g)" price="4,50" />
+		<product name="Cannibal Lion (45 g)" price="3,30" />
+		<product name="Cannibal Mybro (180 g)" price="13,90" />
+		<product name="Cannibal Mybro (50 g)" price="3,95" />
+		<product name="Cannibal Philigrana (180 g)" price="13,90" />
+		<product name="Cannibal Philigrana (50 g)" price="3,95" />
+		<product name="Cannibal Ripping (60 g)" price="4,50" />
+		<product name="Cannibal Ripping (45 g)" price="3,30" />
+		<product name="Cannibal Scary (60 g)" price="4,50" />
+		<product name="Cannibal Scary (50 g)" price="3,95" />
+		<product name="Cannibal Scary (45 g)" price="3,30" />
+		<product name="Cannibal Shadow (60 g)" price="4,50" />
+		<product name="Cannibal Special Christmas (50 g)" price="3,95" />
+		<product name="Cannibal Sweet Bite (45 g)" price="3,30" />
+		<product name="Cannibal The Killer (50 g)" price="3,95" />
+		<product name="Cannibal Tigrish (180 g)" price="13,90" />
+		<product name="Cannibal Tigrish (60 g)" price="4,50" />
+		<product name="Cannibal Tigrish (50 g)" price="3,95" />
+		<product name="Cannibal Tigrish (45 g)" price="3,30" />
+		<product name="Cannibal Uh Mamy (180 g)" price="13,90" />
+		<product name="Cannibal Uh Mamy (50 g)" price="3,95" />
+		<product name="Cannibal White Panther (180 g)" price="15,90" />
+		<product name="Cannibal White Panther (50 g)" price="4,50" />
+		<product name="Cannibal White Panther (45 g)" price="3,30" />
+		<product name="Cannibal Wild (180 g)" price="15,90" />
+		<product name="Cannibal Wild (60 g)" price="4,50" />
+		<product name="Cannibal Wild (50 g)" price="4,50" />
+	</brand>
+	<brand name="Capital Bra">
+		<product name="Capital Bra 365 Tage (200 g)" price="17,50" />
+		<product name="Capital Bra 365 Tage (50 g)" price="4,80" />
+		<product name="Capital Bra Black Annab (200 g)" price="17,50" />
+		<product name="Capital Bra Black Annab (50 g)" price="4,80" />
+		<product name="Capital Bra Blody Nane (200 g)" price="17,50" />
+		<product name="Capital Bra Blody Nane (50 g)" price="4,80" />
+		<product name="Capital Bra Huba Ola (200 g)" price="17,50" />
+		<product name="Capital Bra Huba Ola (50 g)" price="4,80" />
+		<product name="Capital Bra Lecker Lecker (200 g)" price="17,50" />
+		<product name="Capital Bra Lecker Lecker (50 g)" price="4,80" />
+		<product name="Capital Bra Naughty Girl (200 g)" price="17,50" />
+		<product name="Capital Bra Naughty Girl (50 g)" price="4,80" />
+		<product name="Capital Bra Pomshwk (200 g)" price="17,50" />
+		<product name="Capital Bra Pomshwk (50 g)" price="4,80" />
+		<product name="Capital Bra Wann Dann (200 g)" price="17,50" />
+		<product name="Capital Bra Wann Dann (50 g)" price="4,80" />
+	</brand>
+	<brand name="Darkside">
+		<product name="Darkside B Monster Base (30 g)" price="3,85" />
+		<product name="Darkside Barvy O Base (30 g)" price="3,85" />
+		<product name="Darkside Blackery Base (30 g)" price="3,85" />
+		<product name="Darkside Bnpapa Base (30 g)" price="3,85" />
+		<product name="Darkside Darkside Hola Base (30 g)" price="3,85" />
+		<product name="Darkside Falling Star Base (30 g)" price="3,85" />
+		<product name="Darkside Generis Rsp Base (30 g)" price="3,85" />
+		<product name="Darkside I Granny Base (30 g)" price="3,85" />
+		<product name="Darkside Kalee Grap Base (30 g)" price="3,85" />
+		<product name="Darkside Lm Blast Base (30 g)" price="3,85" />
+		<product name="Darkside Mg Assi Base (30 g)" price="3,85" />
+		<product name="Darkside Skyline Base (30 g)" price="3,85" />
+		<product name="Darkside Space Ichi Base (30 g)" price="3,85" />
+		<product name="Darkside Supernova Base (30 g)" price="3,85" />
+		<product name="Darkside Tear Base (30 g)" price="3,85" />
+	</brand>
+	<brand name="Dozaj">
+		<product name="Dozaj Amnesia (200 g)" price="15,95" />
+		<product name="Dozaj Amnesia (50 g)" price="4,50" />
+		<product name="Dozaj Bumbum (950 g)" price="69,95" />
+		<product name="Dozaj Bumbum (200 g)" price="15,95" />
+		<product name="Dozaj Bumbum (50 g)" price="4,50" />
+		<product name="Dozaj Carnival (950 g)" price="69,95" />
+		<product name="Dozaj Carnival (200 g)" price="15,95" />
+		<product name="Dozaj Carnival (50 g)" price="4,50" />
+		<product name="Dozaj Casablanca (200 g)" price="15,95" />
+		<product name="Dozaj Casablanca (50 g)" price="4,50" />
+		<product name="Dozaj Chef (50 g)" price="4,50" />
+		<product name="Dozaj Cuba Dream (50 g)" price="4,50" />
+		<product name="Dozaj Dead Sea (200 g)" price="15,95" />
+		<product name="Dozaj Dead Sea (50 g)" price="4,50" />
+		<product name="Dozaj Eternal (200 g)" price="15,95" />
+		<product name="Dozaj Eternal (50 g)" price="4,50" />
+		<product name="Dozaj Euphoria (950 g)" price="69,95" />
+		<product name="Dozaj Euphoria (200 g)" price="15,95" />
+		<product name="Dozaj Euphoria (50 g)" price="4,50" />
+		<product name="Dozaj Filomena (200 g)" price="15,95" />
+		<product name="Dozaj Filomena (50 g)" price="4,50" />
+		<product name="Dozaj Furious (50 g)" price="4,50" />
+		<product name="Dozaj Huracan (950 g)" price="69,95" />
+		<product name="Dozaj Huracan (200 g)" price="15,95" />
+		<product name="Dozaj Huracan (50 g)" price="4,50" />
+		<product name="Dozaj Invisible (200 g)" price="15,95" />
+		<product name="Dozaj Invisible (50 g)" price="4,50" />
+		<product name="Dozaj Jelly Bear (50 g)" price="4,50" />
+		<product name="Dozaj Krasava (200 g)" price="15,95" />
+		<product name="Dozaj Krasava (50 g)" price="4,50" />
+		<product name="Dozaj Lambada (200 g)" price="15,95" />
+		<product name="Dozaj Lambada (50 g)" price="4,50" />
+		<product name="Dozaj Lava (50 g)" price="4,50" />
+		<product name="Dozaj Lio (950 g)" price="69,95" />
+		<product name="Dozaj Lio (200 g)" price="15,95" />
+		<product name="Dozaj Lio (50 g)" price="4,50" />
+		<product name="Dozaj Mangolia (200 g)" price="15,95" />
+		<product name="Dozaj Mangolia (50 g)" price="4,50" />
+		<product name="Dozaj Mito (200 g)" price="15,95" />
+		<product name="Dozaj Old School (200 g)" price="15,95" />
+		<product name="Dozaj Old School (50 g)" price="4,50" />
+		<product name="Dozaj Orko (200 g)" price="15,95" />
+		<product name="Dozaj Purple (950 g)" price="69,95" />
+		<product name="Dozaj Purple (200 g)" price="15,95" />
+		<product name="Dozaj Purple (50 g)" price="4,50" />
+		<product name="Dozaj Rich (50 g)" price="4,50" />
+		<product name="Dozaj Royal Style (200 g)" price="15,95" />
+		<product name="Dozaj Solo (950 g)" price="69,95" />
+		<product name="Dozaj Solo (200 g)" price="15,95" />
+		<product name="Dozaj Solo (50 g)" price="4,50" />
+		<product name="Dozaj Tokyo (950 g)" price="69,95" />
+		<product name="Dozaj Tokyo (200 g)" price="15,95" />
+		<product name="Dozaj Tokyo (50 g)" price="4,50" />
+		<product name="Dozaj Uff (950 g)" price="69,95" />
+		<product name="Dozaj Uff (200 g)" price="15,95" />
+		<product name="Dozaj Uff (50 g)" price="4,50" />
+	</brand>
+	<brand name="Dozaj Black">
+		<product name="Dozaj Black ¡Joe Que Frio! (200 g)" price="18,50" />
+		<product name="Dozaj Black ¡Joe Que Frio! (50 g)" price="4,95" />
+		<product name="Dozaj Black Atomic (200 g)" price="18,50" />
+		<product name="Dozaj Black Atomic (50 g)" price="4,95" />
+		<product name="Dozaj Black Berga (200 g)" price="18,50" />
+		<product name="Dozaj Black Berga (50 g)" price="4,95" />
+		<product name="Dozaj Black Blast (200 g)" price="18,50" />
+		<product name="Dozaj Black Blast (50 g)" price="4,95" />
+		<product name="Dozaj Black Booster (50 g)" price="4,95" />
+		<product name="Dozaj Black Chester (50 g)" price="4,95" />
+		<product name="Dozaj Black Cia (200 g)" price="18,50" />
+		<product name="Dozaj Black Cia (50 g)" price="4,95" />
+		<product name="Dozaj Black Dark Purple (200 g)" price="18,50" />
+		<product name="Dozaj Black Dark Purple (50 g)" price="4,95" />
+		<product name="Dozaj Black Double Manza (50 g)" price="4,95" />
+		<product name="Dozaj Black Explosion (200 g)" price="18,50" />
+		<product name="Dozaj Black Explosion (50 g)" price="4,95" />
+		<product name="Dozaj Black Infiniti (50 g)" price="4,95" />
+		<product name="Dozaj Black Kyoto (200 g)" price="18,50" />
+		<product name="Dozaj Black Kyoto (50 g)" price="4,95" />
+		<product name="Dozaj Black Lux (50 g)" price="4,95" />
+		<product name="Dozaj Black Max (200 g)" price="18,50" />
+		<product name="Dozaj Black Max (50 g)" price="4,95" />
+		<product name="Dozaj Black Nube (200 g)" price="18,50" />
+		<product name="Dozaj Black Nube (50 g)" price="4,95" />
+		<product name="Dozaj Black Prime (200 g)" price="18,50" />
+		<product name="Dozaj Black Prime (50 g)" price="4,95" />
+		<product name="Dozaj Black R-Gasm (200 g)" price="18,50" />
+		<product name="Dozaj Black R-Gasm (50 g)" price="4,95" />
+		<product name="Dozaj Black Suka (200 g)" price="18,50" />
+		<product name="Dozaj Black Suka (50 g)" price="4,95" />
+		<product name="Dozaj Black Terry Miss You (50 g)" price="4,95" />
+		<product name="Dozaj Black Tornado (200 g)" price="18,50" />
+		<product name="Dozaj Black Tornado (50 g)" price="4,95" />
+		<product name="Dozaj Black Vampiro (50 g)" price="4,95" />
+	</brand>
+	<brand name="Dschinni">
+		<product name="Dschinni Blacky (200 g)" price="16,95" />
+		<product name="Dschinni Blacky (50 g)" price="4,50" />
+		<product name="Dschinni Blue (200 g)" price="16,95" />
+		<product name="Dschinni Blue (50 g)" price="4,50" />
+		<product name="Dschinni Blue Sky (200 g)" price="16,95" />
+		<product name="Dschinni Blue Sky (50 g)" price="4,50" />
+		<product name="Dschinni Da Bomb (200 g)" price="16,95" />
+		<product name="Dschinni Da Bomb (50 g)" price="4,50" />
+		<product name="Dschinni Green Red (200 g)" price="16,95" />
+		<product name="Dschinni Green Red (50 g)" price="4,50" />
+		<product name="Dschinni Persian (200 g)" price="16,95" />
+		<product name="Dschinni Persian (50 g)" price="4,50" />
+		<product name="Dschinni Yellow (200 g)" price="16,95" />
+		<product name="Dschinni Yellow (50 g)" price="4,50" />
+	</brand>
+	<brand name="Duft">
+		<product name="Duft Brown (100 g)" price="14,00" />
+		<product name="Duft Cash U (100 g)" price="14,00" />
+		<product name="Duft Cheeca (100 g)" price="14,00" />
+		<product name="Duft Cinnabun (100 g)" price="14,00" />
+		<product name="Duft Co Cot (100 g)" price="14,00" />
+		<product name="Duft Colazer (100 g)" price="14,00" />
+		<product name="Duft Cucu Limo (100 g)" price="14,00" />
+		<product name="Duft Extragen (100 g)" price="14,00" />
+		<product name="Duft Jin Gr Kuki (100 g)" price="14,00" />
+		<product name="Duft Kshmr (100 g)" price="14,00" />
+		<product name="Duft Lenwaff (100 g)" price="14,00" />
+		<product name="Duft Pan Masala (100 g)" price="14,00" />
+		<product name="Duft Panapp (100 g)" price="14,00" />
+		<product name="Duft Peace (100 g)" price="14,00" />
+		<product name="Duft Pearls (100 g)" price="14,00" />
+		<product name="Duft Phazel H.T (100 g)" price="14,00" />
+		<product name="Duft Red One (100 g)" price="14,00" />
+		<product name="Duft Root Bear (100 g)" price="14,00" />
+		<product name="Duft Scoth Sky (100 g)" price="14,00" />
+		<product name="Duft T.L'Te (100 g)" price="14,00" />
+		<product name="Duft T.Missu (100 g)" price="14,00" />
+		<product name="Duft Yelow Ban (100 g)" price="14,00" />
+	</brand>
+	<brand name="Dumanji">
+		<product name="Dumanji Acho (200 g)" price="16,20" />
+		<product name="Dumanji Acho (50 g)" price="4,50" />
+		<product name="Dumanji Adam &amp; Eve (50 g)" price="4,50" />
+		<product name="Dumanji Adam P (200 g)" price="16,20" />
+		<product name="Dumanji Adam P (50 g)" price="4,50" />
+		<product name="Dumanji Bahamas (200 g)" price="16,20" />
+		<product name="Dumanji Bahamas (50 g)" price="4,50" />
+		<product name="Dumanji BB (200 g)" price="16,20" />
+		<product name="Dumanji BB (50 g)" price="4,50" />
+		<product name="Dumanji Blue Mix (200 g)" price="16,20" />
+		<product name="Dumanji Blue Mix (50 g)" price="4,50" />
+		<product name="Dumanji Brazz (200 g)" price="16,20" />
+		<product name="Dumanji Brazz (50 g)" price="4,50" />
+		<product name="Dumanji Breech (200 g)" price="16,20" />
+		<product name="Dumanji Breech (50 g)" price="4,50" />
+		<product name="Dumanji Cane Na3ne (200 g)" price="16,20" />
+		<product name="Dumanji Cane Na3ne (50 g)" price="4,50" />
+		<product name="Dumanji Cool-Cheeto (200 g)" price="16,20" />
+		<product name="Dumanji Cool-Cheeto (50 g)" price="4,50" />
+		<product name="Dumanji Dark Cnane Black (200 g)" price="19,00" />
+		<product name="Dumanji Dark Cnane Black (50 g)" price="5,50" />
+		<product name="Dumanji Darktic Black (200 g)" price="19,00" />
+		<product name="Dumanji Darktic Black (50 g)" price="5,50" />
+		<product name="Dumanji El-Cheeto (200 g)" price="16,20" />
+		<product name="Dumanji El-Cheeto (50 g)" price="4,50" />
+		<product name="Dumanji Eve Ice (200 g)" price="16,20" />
+		<product name="Dumanji Eve Ice (50 g)" price="4,50" />
+		<product name="Dumanji French Riviera (200 g)" price="16,20" />
+		<product name="Dumanji French Riviera (50 g)" price="4,50" />
+		<product name="Dumanji Galactic (200 g)" price="16,20" />
+		<product name="Dumanji Galactic (50 g)" price="4,50" />
+		<product name="Dumanji Hawai-5 (50 g)" price="4,50" />
+		<product name="Dumanji Heaven (200 g)" price="16,20" />
+		<product name="Dumanji Heaven (50 g)" price="4,50" />
+		<product name="Dumanji Kush (200 g)" price="16,20" />
+		<product name="Dumanji Kush (50 g)" price="4,50" />
+		<product name="Dumanji Kush Asia (200 g)" price="16,20" />
+		<product name="Dumanji Kush Asia (50 g)" price="4,50" />
+		<product name="Dumanji Kush Na3ne (200 g)" price="16,20" />
+		<product name="Dumanji Kush Na3ne (50 g)" price="4,50" />
+		<product name="Dumanji Le Blue (200 g)" price="16,20" />
+		<product name="Dumanji Le Blue (50 g)" price="4,50" />
+		<product name="Dumanji Lover (200 g)" price="16,20" />
+		<product name="Dumanji Lover (50 g)" price="4,50" />
+		<product name="Dumanji Meridian (200 g)" price="16,20" />
+		<product name="Dumanji Meridian (50 g)" price="4,50" />
+		<product name="Dumanji Na3ne (1000 g)" price="70,00" />
+		<product name="Dumanji Na3ne (200 g)" price="16,20" />
+		<product name="Dumanji Na3ne (50 g)" price="4,50" />
+		<product name="Dumanji Na3ne Blueb (200 g)" price="16,20" />
+		<product name="Dumanji Na3ne Blueb (50 g)" price="4,50" />
+		<product name="Dumanji Obscure (200 g)" price="16,20" />
+		<product name="Dumanji Obscure (50 g)" price="4,50" />
+		<product name="Dumanji Papaoutai (200 g)" price="16,20" />
+		<product name="Dumanji Papaoutai (50 g)" price="4,50" />
+		<product name="Dumanji Pink Kiss (200 g)" price="16,20" />
+		<product name="Dumanji Pink Kiss (50 g)" price="4,50" />
+		<product name="Dumanji Sahara (200 g)" price="16,20" />
+		<product name="Dumanji Sahara (50 g)" price="4,50" />
+		<product name="Dumanji Sun Beach (200 g)" price="16,20" />
+		<product name="Dumanji Sun Beach (50 g)" price="4,50" />
+		<product name="Dumanji Touty Red (200 g)" price="16,20" />
+		<product name="Dumanji Touty Red (50 g)" price="4,50" />
+		<product name="Dumanji Tsunami (200 g)" price="16,20" />
+		<product name="Dumanji Tsunami (50 g)" price="4,50" />
+		<product name="Dumanji Vin-Cheeto (200 g)" price="16,20" />
+		<product name="Dumanji Vin-Cheeto (50 g)" price="4,50" />
+		<product name="Dumanji Winter Night (200 g)" price="16,20" />
+		<product name="Dumanji Winter Night (50 g)" price="4,50" />
+	</brand>
+	<brand name="Element">
+		<product name="Element Amazon (40 g)" price="4,10" />
+		<product name="Element Amur (40 g)" price="4,10" />
+		<product name="Element Bise (40 g)" price="4,10" />
+		<product name="Element Bora (40 g)" price="4,10" />
+		<product name="Element Brickfielder (40 g)" price="4,10" />
+		<product name="Element Buran (40 g)" price="4,10" />
+		<product name="Element Chinook (40 g)" price="4,10" />
+		<product name="Element Colorado (40 g)" price="4,10" />
+		<product name="Element Columbia (40 g)" price="4,10" />
+		<product name="Element Congo (40 g)" price="4,10" />
+		<product name="Element Euprates (40 g)" price="4,10" />
+		<product name="Element Fohn Wind (40 g)" price="4,10" />
+		<product name="Element Ganges (40 g)" price="4,10" />
+		<product name="Element Gibli (40 g)" price="4,10" />
+		<product name="Element Khamseen (40 g)" price="4,10" />
+		<product name="Element Lena (40 g)" price="4,10" />
+		<product name="Element Mekong (40 g)" price="4,10" />
+		<product name="Element Mississippi (40 g)" price="4,10" />
+		<product name="Element Mistral (40 g)" price="4,10" />
+		<product name="Element Moazagoatl (40 g)" price="4,10" />
+		<product name="Element Niagara (40 g)" price="4,10" />
+		<product name="Element Nile (40 g)" price="4,10" />
+		<product name="Element Okavango (40 g)" price="4,10" />
+		<product name="Element Orinoco (40 g)" price="4,10" />
+		<product name="Element Rio Grande (40 g)" price="4,10" />
+		<product name="Element Samoon (40 g)" price="4,10" />
+		<product name="Element Sirocco (40 g)" price="4,10" />
+		<product name="Element Southerly Buster (40 g)" price="4,10" />
+		<product name="Element Tennessee (40 g)" price="4,10" />
+		<product name="Element Tigris (40 g)" price="4,10" />
+		<product name="Element Volga (40 g)" price="4,10" />
+		<product name="Element Volta (40 g)" price="4,10" />
+		<product name="Element Xlokk (40 g)" price="4,10" />
+		<product name="Element Yangtze (40 g)" price="4,10" />
+		<product name="Element Zonda (40 g)" price="4,10" />
+	</brand>
+	<brand name="Eternal Smoke">
+		<product name="Eternal Smoke Danish Goodies (50 g)" price="2,95" />
+		<product name="Eternal Smoke Delightful Kiss (50 g)" price="2,95" />
+		<product name="Eternal Smoke Lush Lit (50 g)" price="2,95" />
+		<product name="Eternal Smoke Passion Lit (50 g)" price="2,95" />
+		<product name="Eternal Smoke Red Lips (50 g)" price="2,95" />
+		<product name="Eternal Smoke Wild Lit (50 g)" price="2,95" />
+	</brand>
+	<brand name="Forever Gold">
+		<product name="Forever Gold Border (200 g)" price="19,00" />
+		<product name="Forever Gold Border (50 g)" price="4,95" />
+		<product name="Forever Gold Border Edición Limitada (50 g)" price="4,95" />
+		<product name="Forever Gold Budapest With Love (200 g)" price="19,00" />
+		<product name="Forever Gold Budapest With Love (50 g)" price="4,95" />
+		<product name="Forever Gold Crazy Izu (200 g)" price="19,00" />
+		<product name="Forever Gold Crazy Izu (50 g)" price="4,95" />
+		<product name="Forever Gold Dark Blue (200 g)" price="19,00" />
+		<product name="Forever Gold Dark Blue (100 g)" price="9,50" />
+		<product name="Forever Gold Dark Blue (50 g)" price="4,95" />
+		<product name="Forever Gold Drácula (200 g)" price="19,00" />
+		<product name="Forever Gold Drácula (50 g)" price="4,95" />
+		<product name="Forever Gold Dragon Daddy (200 g)" price="19,00" />
+		<product name="Forever Gold Dragon Daddy (50 g)" price="4,95" />
+		<product name="Forever Gold Escape Room (200 g)" price="19,00" />
+		<product name="Forever Gold Escape Room (50 g)" price="4,95" />
+		<product name="Forever Gold Fantasy (200 g)" price="19,00" />
+		<product name="Forever Gold Fantasy (50 g)" price="4,95" />
+		<product name="Forever Gold Faruk &amp; Farik (200 g)" price="19,00" />
+		<product name="Forever Gold Faruk &amp; Farik (50 g)" price="4,95" />
+		<product name="Forever Gold Flowers (200 g)" price="19,00" />
+		<product name="Forever Gold Flowers (50 g)" price="4,95" />
+		<product name="Forever Gold Freak (200 g)" price="19,00" />
+		<product name="Forever Gold Freak (50 g)" price="4,95" />
+		<product name="Forever Gold Galben (200 g)" price="19,00" />
+		<product name="Forever Gold Galben (100 g)" price="9,50" />
+		<product name="Forever Gold Galben (50 g)" price="4,95" />
+		<product name="Forever Gold Go with The Flow (200 g)" price="19,00" />
+		<product name="Forever Gold Go with The Flow (50 g)" price="4,95" />
+		<product name="Forever Gold Green (200 g)" price="19,00" />
+		<product name="Forever Gold Green (100 g)" price="9,50" />
+		<product name="Forever Gold Green (50 g)" price="4,95" />
+		<product name="Forever Gold Heaven (200 g)" price="19,00" />
+		<product name="Forever Gold Heaven (50 g)" price="4,95" />
+		<product name="Forever Gold Hurricane (200 g)" price="19,00" />
+		<product name="Forever Gold Hurricane (50 g)" price="4,95" />
+		<product name="Forever Gold Island (200 g)" price="19,00" />
+		<product name="Forever Gold Island (50 g)" price="4,95" />
+		<product name="Forever Gold Kekoko (200 g)" price="19,00" />
+		<product name="Forever Gold Kekoko (50 g)" price="4,95" />
+		<product name="Forever Gold Lemshock (200 g)" price="20,00" />
+		<product name="Forever Gold Lemshock (50 g)" price="5,25" />
+		<product name="Forever Gold Monkey (200 g)" price="19,00" />
+		<product name="Forever Gold Monkey (50 g)" price="4,95" />
+		<product name="Forever Gold Monkey Edición Limitada (50 g)" price="4,95" />
+		<product name="Forever Gold Mow (200 g)" price="19,00" />
+		<product name="Forever Gold Mow (100 g)" price="9,50" />
+		<product name="Forever Gold Mow (50 g)" price="4,95" />
+		<product name="Forever Gold Oh La Lá (200 g)" price="19,00" />
+		<product name="Forever Gold Oh La Lá (50 g)" price="4,95" />
+		<product name="Forever Gold Oh La Lá Edición Limitada (50 g)" price="4,95" />
+		<product name="Forever Gold Piggy BBQ Bangkok (200 g)" price="19,00" />
+		<product name="Forever Gold Piggy BBQ Bangkok (50 g)" price="4,95" />
+		<product name="Forever Gold Pinkman By Love (50 g)" price="4,95" />
+		<product name="Forever Gold Pinkman By Love 78 (950 g)" price="85,00" />
+		<product name="Forever Gold Pinkman By Love 78 (200 g)" price="19,00" />
+		<product name="Forever Gold Plum (200 g)" price="19,00" />
+		<product name="Forever Gold Plum (100 g)" price="9,50" />
+		<product name="Forever Gold Plum (50 g)" price="4,95" />
+		<product name="Forever Gold Purple (200 g)" price="19,00" />
+		<product name="Forever Gold Purple (100 g)" price="9,50" />
+		<product name="Forever Gold Purple (50 g)" price="4,95" />
+		<product name="Forever Gold Rakka (200 g)" price="19,00" />
+		<product name="Forever Gold Rakka (50 g)" price="4,95" />
+		<product name="Forever Gold Red Code (200 g)" price="19,00" />
+		<product name="Forever Gold Red Code (50 g)" price="4,95" />
+		<product name="Forever Gold Russet (200 g)" price="19,00" />
+		<product name="Forever Gold Russet (100 g)" price="9,50" />
+		<product name="Forever Gold Russet (50 g)" price="4,95" />
+		<product name="Forever Gold Secret History (200 g)" price="19,00" />
+		<product name="Forever Gold Secret History (50 g)" price="4,95" />
+		<product name="Forever Gold Space (200 g)" price="19,00" />
+		<product name="Forever Gold Space (50 g)" price="4,95" />
+		<product name="Forever Gold Timothy (200 g)" price="19,00" />
+		<product name="Forever Gold Timothy (50 g)" price="4,95" />
+		<product name="Forever Gold Wake Up (200 g)" price="19,00" />
+		<product name="Forever Gold Wake Up (50 g)" price="4,95" />
+		<product name="Forever Gold White Night (200 g)" price="19,00" />
+		<product name="Forever Gold White Night (50 g)" price="4,95" />
+	</brand>
+	<brand name="Forever Gold Black">
+		<product name="Forever Gold Black (200 g)" price="19,00" />
+		<product name="Forever Gold Black (100 g)" price="9,50" />
+		<product name="Forever Gold Black (50 g)" price="4,95" />
+		<product name="Forever Gold Black After (200 g)" price="20,00" />
+		<product name="Forever Gold Black American Gangster (200 g)" price="20,00" />
+		<product name="Forever Gold Black Evil Witch (200 g)" price="20,00" />
+		<product name="Forever Gold Black Evil Witch (50 g)" price="5,25" />
+		<product name="Forever Gold Black Little Ghost (200 g)" price="20,00" />
+		<product name="Forever Gold Black Pinkman (200 g)" price="20,00" />
+	</brand>
+	<brand name="Forever Gold Storm">
+		<product name="Forever Gold Storm Jazz Music (200 g)" price="22,00" />
+		<product name="Forever Gold Storm Jazz Music (50 g)" price="5,75" />
+		<product name="Forever Gold Storm Jess Pirate (200 g)" price="22,00" />
+		<product name="Forever Gold Storm Jess Pirate (50 g)" price="5,75" />
+		<product name="Forever Gold Storm Pinkman (200 g)" price="22,00" />
+		<product name="Forever Gold Storm Pinkman (50 g)" price="5,75" />
+		<product name="Forever Gold Storm The Cave (200 g)" price="22,00" />
+		<product name="Forever Gold Storm The Cave (50 g)" price="5,75" />
+	</brand>
+	<brand name="Fumari">
+		<product name="Fumari Amorosa (200 g)" price="12,00" />
+		<product name="Fumari Amorosa (100 g)" price="12,00" />
+		<product name="Fumari Amorosa (50 g)" price="3,50" />
+		<product name="Fumari Belgian Chill (100 g)" price="12,00" />
+		<product name="Fumari Bubba Chill (200 g)" price="12,00" />
+		<product name="Fumari Bubba Chill (50 g)" price="3,50" />
+		<product name="Fumari Carmella Kiss (200 g)" price="12,00" />
+		<product name="Fumari Carmella Kiss (50 g)" price="3,50" />
+		<product name="Fumari Ceylon Chi (200 g)" price="12,00" />
+		<product name="Fumari Ceylon Chi (100 g)" price="12,00" />
+		<product name="Fumari Ceylon Chi (50 g)" price="3,50" />
+		<product name="Fumari Golden West (100 g)" price="12,00" />
+		<product name="Fumari Island Playa (100 g)" price="12,00" />
+		<product name="Fumari Lumin Freeze (100 g)" price="12,00" />
+		<product name="Fumari Maison Bleu (200 g)" price="12,00" />
+		<product name="Fumari Maison Bleu (100 g)" price="12,00" />
+		<product name="Fumari Maison Bleu (50 g)" price="3,50" />
+		<product name="Fumari Original WGB (200 g)" price="12,00" />
+		<product name="Fumari Original WGB (50 g)" price="3,50" />
+		<product name="Fumari Original White Bear (100 g)" price="12,00" />
+		<product name="Fumari Prickly Oasis (100 g)" price="12,00" />
+		<product name="Fumari Scarlet Gem (200 g)" price="12,00" />
+		<product name="Fumari Scarlet Gem (50 g)" price="3,50" />
+		<product name="Fumari Sitra Chill (200 g)" price="12,00" />
+		<product name="Fumari Sitra Chill (50 g)" price="3,50" />
+		<product name="Fumari Sorrentocello (100 g)" price="12,00" />
+		<product name="Fumari Tango Melange (100 g)" price="12,00" />
+		<product name="Fumari Via Lattea (100 g)" price="12,00" />
+		<product name="Fumari Wild Beach (100 g)" price="12,00" />
+	</brand>
+	<brand name="Hater">
+		<product name="Hater Cheater (50 g)" price="3,50" />
+		<product name="Hater Fan Boy (50 g)" price="3,50" />
+		<product name="Hater Hype (50 g)" price="3,95" />
+		<product name="Hater Noob (50 g)" price="3,50" />
+		<product name="Hater Omg (50 g)" price="3,95" />
+		<product name="Hater Rat Boy (50 g)" price="3,50" />
+		<product name="Hater Shooter (50 g)" price="3,50" />
+		<product name="Hater Wtf (50 g)" price="3,50" />
+	</brand>
+	<brand name="Haze">
+		<product name="Haze Banarama (200 g)" price="17,50" />
+		<product name="Haze Banarama (50 g)" price="4,80" />
+		<product name="Haze Chaitastic (200 g)" price="17,50" />
+		<product name="Haze Chaitastic (50 g)" price="4,80" />
+		<product name="Haze Cotton Clouds (200 g)" price="17,50" />
+		<product name="Haze Cotton Clouds (50 g)" price="4,80" />
+		<product name="Haze Double Bubble (200 g)" price="17,50" />
+		<product name="Haze Double Bubble (50 g)" price="4,80" />
+		<product name="Haze Frozz Lakes (200 g)" price="17,50" />
+		<product name="Haze Frozz Lakes (50 g)" price="4,80" />
+		<product name="Haze Line It Up (200 g)" price="17,50" />
+		<product name="Haze Line It Up (50 g)" price="4,80" />
+		<product name="Haze Nice Dreams (200 g)" price="17,50" />
+		<product name="Haze Nice Dreams (50 g)" price="4,80" />
+		<product name="Haze Oh Boy Explosion (200 g)" price="17,50" />
+		<product name="Haze Oh Boy Explosion (50 g)" price="4,80" />
+		<product name="Haze Ohh Chata (200 g)" price="17,50" />
+		<product name="Haze Ohh Chata (50 g)" price="4,80" />
+		<product name="Haze Pacoca (200 g)" price="17,50" />
+		<product name="Haze Pacoca (50 g)" price="4,80" />
+		<product name="Haze Pine Krush (200 g)" price="17,50" />
+		<product name="Haze Pine Krush (50 g)" price="4,80" />
+		<product name="Haze Pump King Pleasure (200 g)" price="17,50" />
+		<product name="Haze Pump King Pleasure (50 g)" price="4,80" />
+		<product name="Haze Purple Krush (200 g)" price="17,50" />
+		<product name="Haze Purple Krush (50 g)" price="4,80" />
+		<product name="Haze Qcumberita (200 g)" price="17,50" />
+		<product name="Haze Qcumberita (50 g)" price="4,80" />
+		<product name="Haze Sinful (200 g)" price="17,50" />
+		<product name="Haze Sinful (50 g)" price="4,80" />
+		<product name="Haze Squeeze Yellow (200 g)" price="17,50" />
+		<product name="Haze Squeeze Yellow (50 g)" price="4,80" />
+		<product name="Haze Subzero (200 g)" price="17,50" />
+		<product name="Haze Subzero (50 g)" price="4,80" />
+		<product name="Haze Wam (200 g)" price="17,50" />
+		<product name="Haze Wam (50 g)" price="4,80" />
+	</brand>
+	<brand name="Holster">
+		<product name="Holster Blody Punch (200 g)" price="17,95" />
+		<product name="Holster Blody Punch (50 g)" price="4,80" />
+		<product name="Holster Blue Punch (200 g)" price="17,95" />
+		<product name="Holster Blue Punch (50 g)" price="4,80" />
+		<product name="Holster Bono (200 g)" price="17,95" />
+		<product name="Holster Bono (50 g)" price="4,80" />
+		<product name="Holster GP 2.0 Classic (200 g)" price="17,95" />
+		<product name="Holster GP 2.0 Classic (50 g)" price="4,80" />
+		<product name="Holster Iz Bomb (200 g)" price="17,95" />
+		<product name="Holster Iz Bomb (50 g)" price="4,80" />
+		<product name="Holster Iz Finger (200 g)" price="17,95" />
+		<product name="Holster Iz Finger (50 g)" price="4,80" />
+		<product name="Holster Iz Kaktuz (995 g)" price="86,00" />
+		<product name="Holster Iz Kaktuz (975 g)" price="67,00" />
+		<product name="Holster Iz Kaktuz (200 g)" price="17,95" />
+		<product name="Holster Iz Kaktuz (50 g)" price="4,80" />
+		<product name="Holster Lee Punch (200 g)" price="17,95" />
+		<product name="Holster Lee Punch (50 g)" price="4,80" />
+		<product name="Holster MR John (200 g)" price="17,95" />
+		<product name="Holster MR John (50 g)" price="4,80" />
+		<product name="Holster Miss Joosy (995 g)" price="86,00" />
+		<product name="Holster Miss Joosy (975 g)" price="67,00" />
+		<product name="Holster Miss Joosy (200 g)" price="17,95" />
+		<product name="Holster Miss Joosy (50 g)" price="4,80" />
+		<product name="Holster Mr. C (200 g)" price="17,95" />
+		<product name="Holster Mr. C (50 g)" price="4,80" />
+		<product name="Holster P-Rex (200 g)" price="17,95" />
+		<product name="Holster P-Rex (50 g)" price="4,80" />
+		<product name="Holster Peery Munch (200 g)" price="17,95" />
+		<product name="Holster Peery Punch (200 g)" price="17,95" />
+		<product name="Holster Peery Punch (50 g)" price="4,80" />
+		<product name="Holster Qumi Punch (995 g)" price="86,00" />
+		<product name="Holster Qumi Punch (975 g)" price="67,00" />
+		<product name="Holster Qumi Punch (200 g)" price="17,95" />
+		<product name="Holster Qumi Punch (50 g)" price="4,80" />
+		<product name="Holster Smurf Daddy (200 g)" price="17,95" />
+		<product name="Holster Smurf Daddy (50 g)" price="4,80" />
+		<product name="Holster Unicorn (200 g)" price="17,95" />
+		<product name="Holster Unicorn (50 g)" price="4,80" />
+		<product name="Holster Verdacho (200 g)" price="17,95" />
+		<product name="Holster Verdacho (50 g)" price="4,80" />
+		<product name="Holster Wild Punch (200 g)" price="17,95" />
+		<product name="Holster Wild Punch (50 g)" price="4,80" />
+		<product name="Holster Willy Punch (200 g)" price="17,95" />
+		<product name="Holster Willy Punch (50 g)" price="4,80" />
+		<product name="Holster Winter Edition (200 g)" price="17,95" />
+		<product name="Holster Winter Edition (50 g)" price="4,80" />
+		<product name="Holster Yellow Punch (200 g)" price="17,95" />
+		<product name="Holster Yellow Punch (50 g)" price="4,80" />
+	</brand>
+	<brand name="Holster Noir">
+		<product name="Holster Noir Charly Punch (200 g)" price="20,95" />
+		<product name="Holster Noir Charly Punch (50 g)" price="5,50" />
+		<product name="Holster Noir Iz Kaktuz (200 g)" price="20,95" />
+		<product name="Holster Noir Iz Kaktuz (50 g)" price="5,50" />
+		<product name="Holster Noir Miss Joosy (200 g)" price="20,95" />
+		<product name="Holster Noir Miss Joosy (50 g)" price="5,50" />
+	</brand>
+	<brand name="Hookain Angry">
+		<product name="Hookain Angry Dragon (200 g)" price="16,95" />
+		<product name="Hookain Angry Dragon (50 g)" price="4,80" />
+		<product name="Hookain Angry Green Dragon (200 g)" price="16,95" />
+		<product name="Hookain Angry Green Dragon (50 g)" price="4,80" />
+		<product name="Hookain Angry Piç Dragon (200 g)" price="16,95" />
+		<product name="Hookain Angry Piç Dragon (50 g)" price="4,80" />
+		<product name="Hookain Angry Red Dragon (200 g)" price="16,95" />
+		<product name="Hookain Angry Red Dragon (50 g)" price="4,80" />
+	</brand>
+	<brand name="Hookain Black">
+		<product name="Hookain Black Fellatio (200 g)" price="18,50" />
+		<product name="Hookain Black Fellatio (50 g)" price="5,70" />
+		<product name="Hookain Black Kaffa Yayo (200 g)" price="18,50" />
+		<product name="Hookain Black Kaffa Yayo (50 g)" price="5,70" />
+		<product name="Hookain Black Soleiro Spliff (200 g)" price="18,50" />
+		<product name="Hookain Black Soleiro Spliff (50 g)" price="5,70" />
+		<product name="Hookain Black White (200 g)" price="18,50" />
+		<product name="Hookain Black White (50 g)" price="5,70" />
+		<product name="Hookain Black Zenta Schox (200 g)" price="18,50" />
+		<product name="Hookain Black Zenta Schox (50 g)" price="5,70" />
+	</brand>
+	<brand name="Fyl">
+		<product name="Fyl Big Toy (200 g)" price="16,95" />
+		<product name="Fyl Big Toy (50 g)" price="4,80" />
+		<product name="Fyl Cactuz CNDY (200 g)" price="16,95" />
+		<product name="Fyl Cactuz Cndy (50 g)" price="4,80" />
+		<product name="Fyl Clitrus (200 g)" price="16,95" />
+		<product name="Fyl Clitrus (50 g)" price="4,80" />
+		<product name="Fyl Über (200 g)" price="16,95" />
+		<product name="Fyl Über (50 g)" price="4,80" />
+	</brand>
+	<brand name="Hookain">
+		<product name="Hookain Bär Lean (50 g)" price="3,95" />
+		<product name="Hookain Big Black Barries (200 g)" price="16,95" />
+		<product name="Hookain Big Black Barries (50 g)" price="4,80" />
+		<product name="Hookain Blowtus (200 g)" price="16,95" />
+		<product name="Hookain Blowtus (50 g)" price="4,80" />
+		<product name="Hookain Bubblenciaga (200 g)" price="16,95" />
+		<product name="Hookain Bubblenciaga (50 g)" price="4,80" />
+		<product name="Hookain C C C (200 g)" price="16,95" />
+		<product name="Hookain Cactopus (50 g)" price="4,80" />
+		<product name="Hookain Cheri Zkittlez (50 g)" price="4,80" />
+		<product name="Hookain Code in Love (50 g)" price="4,80" />
+		<product name="Hookain Cotton Cndy Craem (50 g)" price="4,80" />
+		<product name="Hookain Dubai Stachio (200 g)" price="16,95" />
+		<product name="Hookain Dubai Stachio (50 g)" price="4,80" />
+		<product name="Hookain Fellatio (200 g)" price="13,80" />
+		<product name="Hookain Fellatio (50 g)" price="4,80" />
+		<product name="Hookain Fuggi Ninja (200 g)" price="16,95" />
+		<product name="Hookain Fuggi Ninja (50 g)" price="4,80" />
+		<product name="Hookain Green Crack (50 g)" price="4,80" />
+		<product name="Hookain Green Lean (200 g)" price="16,95" />
+		<product name="Hookain Green Lean (50 g)" price="4,80" />
+		<product name="Hookain Hijo de Prut (50 g)" price="4,80" />
+		<product name="Hookain Jizzy Pia (50 g)" price="4,80" />
+		<product name="Hookain Kaffa Yayo (950 g)" price="75,00" />
+		<product name="Hookain Kaffa Yayo (200 g)" price="16,95" />
+		<product name="Hookain Kaffa Yayo (50 g)" price="4,80" />
+		<product name="Hookain Kivy King (50 g)" price="4,80" />
+		<product name="Hookain Kw King (200 g)" price="16,95" />
+		<product name="Hookain Laoz (200 g)" price="16,95" />
+		<product name="Hookain Laoz (50 g)" price="4,80" />
+		<product name="Hookain Lemenciaga (950 g)" price="75,00" />
+		<product name="Hookain Lemenciaga (200 g)" price="16,95" />
+		<product name="Hookain Lemenciaga (50 g)" price="4,80" />
+		<product name="Hookain Mega Loco (50 g)" price="4,80" />
+		<product name="Hookain Millionair (50 g)" price="4,80" />
+		<product name="Hookain Original Vanta Zotic (50 g)" price="4,80" />
+		<product name="Hookain Orog!na (50 g)" price="3,95" />
+		<product name="Hookain Pa Ya Mongo (50 g)" price="3,95" />
+		<product name="Hookain Pink Lemenciaga (200 g)" price="13,80" />
+		<product name="Hookain Pink Lemenciaga (50 g)" price="4,80" />
+		<product name="Hookain Pumpgun Spy (200 g)" price="16,95" />
+		<product name="Hookain Pumpgun Spy (50 g)" price="4,80" />
+		<product name="Hookain Punani (50 g)" price="4,80" />
+		<product name="Hookain Sm!nt (50 g)" price="4,80" />
+		<product name="Hookain Soleiro Spliff (50 g)" price="4,80" />
+		<product name="Hookain Spiced Lean (50 g)" price="3,95" />
+		<product name="Hookain Swii Ti (50 g)" price="4,80" />
+		<product name="Hookain Vantanaz (200 g)" price="13,80" />
+		<product name="Hookain Vantanaz (50 g)" price="3,95" />
+		<product name="Hookain Virgin Batluva (50 g)" price="4,80" />
+		<product name="Hookain White (950 g)" price="75,00" />
+		<product name="Hookain White (200 g)" price="16,95" />
+		<product name="Hookain White (50 g)" price="4,80" />
+		<product name="Hookain White Brown (200 g)" price="16,95" />
+		<product name="Hookain White Brown (50 g)" price="4,80" />
+		<product name="Hookain White Caek Alman (200 g)" price="16,95" />
+		<product name="Hookain White Caek Alman (50 g)" price="4,80" />
+		<product name="Hookain X-Treme Blue Bay (50 g)" price="4,80" />
+		<product name="Hookain Zenter Schox (50 g)" price="4,80" />
+	</brand>
+	<brand name="Kaja">
+		<product name="Kaja 3. 14 CH (100 g)" price="15,95" />
+		<product name="Kaja Ana's Azz (100 g)" price="15,95" />
+		<product name="Kaja Bantastic (100 g)" price="15,95" />
+		<product name="Kaja Bbry (100 g)" price="15,95" />
+		<product name="Kaja Bknt (100 g)" price="15,95" />
+		<product name="Kaja Brain Freeze (100 g)" price="15,95" />
+		<product name="Kaja C Trick (100 g)" price="15,95" />
+		<product name="Kaja Ch Nerro (100 g)" price="15,95" />
+		<product name="Kaja Ch Rosso (100 g)" price="15,95" />
+		<product name="Kaja Ch Verde (100 g)" price="15,95" />
+		<product name="Kaja Cold Ruby (100 g)" price="15,95" />
+		<product name="Kaja Ginguzu (100 g)" price="15,95" />
+		<product name="Kaja Green &amp; Hairy (100 g)" price="15,95" />
+		<product name="Kaja Jmpricot (100 g)" price="15,95" />
+		<product name="Kaja Kernamel (100 g)" price="15,95" />
+		<product name="Kaja La Passion (100 g)" price="15,95" />
+		<product name="Kaja Mndarling (100 g)" price="15,95" />
+		<product name="Kaja Prdise (100 g)" price="15,95" />
+		<product name="Kaja Rari (100 g)" price="15,95" />
+		<product name="Kaja Stwi (100 g)" price="15,95" />
+	</brand>
+	<brand name="Kismet">
+		<product name="Kismet 01-Black Violet (200 g)" price="21,30" />
+		<product name="Kismet 01-Black Violet (50 g)" price="5,55" />
+		<product name="Kismet 02-Black &amp; Soft Red (200 g)" price="21,30" />
+		<product name="Kismet 02-Black &amp; Soft Red (50 g)" price="5,55" />
+		<product name="Kismet 11-Funny Black (200 g)" price="21,30" />
+		<product name="Kismet 11-Funny Black (50 g)" price="5,55" />
+		<product name="Kismet 12-Black Beach (200 g)" price="21,30" />
+		<product name="Kismet 12-Black Beach (50 g)" price="5,55" />
+		<product name="Kismet 15-Black Angel (200 g)" price="21,30" />
+		<product name="Kismet 15-Black Angel (50 g)" price="5,55" />
+		<product name="Kismet 17-Good Friend (200 g)" price="21,30" />
+		<product name="Kismet 17-Good Friend (50 g)" price="5,55" />
+		<product name="Kismet 21-Black Rose (200 g)" price="21,30" />
+		<product name="Kismet 21-Black Rose (50 g)" price="5,55" />
+		<product name="Kismet 22-Black Wood (200 g)" price="21,30" />
+		<product name="Kismet 22-Black Wood (50 g)" price="5,55" />
+		<product name="Kismet 26-Black Maïa (200 g)" price="21,30" />
+		<product name="Kismet 26-Black Maïa (50 g)" price="5,55" />
+		<product name="Kismet 27-Black &amp; Greenlight (200 g)" price="21,30" />
+		<product name="Kismet 27-Black &amp; Greenlight (50 g)" price="5,55" />
+		<product name="Kismet 33-Black Bella (200 g)" price="21,30" />
+		<product name="Kismet 33-Black Bella (50 g)" price="5,55" />
+		<product name="Kismet 42-Black Maroon (200 g)" price="21,30" />
+		<product name="Kismet 42-Black Maroon (50 g)" price="5,55" />
+		<product name="Kismet 44-Black Kimi (200 g)" price="21,30" />
+		<product name="Kismet 44-Black Kimi (50 g)" price="5,55" />
+	</brand>
+	<brand name="Mr. Shisha">
+		<product name="Mr. Shisha 1000K (200 g)" price="16,00" />
+		<product name="Mr. Shisha 1000K (50 g)" price="4,50" />
+		<product name="Mr. Shisha Adan (100 g)" price="7,50" />
+		<product name="Mr. Shisha Adan (50 g)" price="4,50" />
+		<product name="Mr. Shisha Babilonia (200 g)" price="16,00" />
+		<product name="Mr. Shisha Babilonia (50 g)" price="4,50" />
+		<product name="Mr. Shisha Boss Mode (100 g)" price="7,50" />
+		<product name="Mr. Shisha Boss Mode (50 g)" price="4,50" />
+		<product name="Mr. Shisha Camdown (200 g)" price="16,00" />
+		<product name="Mr. Shisha Camdown (50 g)" price="4,50" />
+		<product name="Mr. Shisha Coolio (200 g)" price="16,00" />
+		<product name="Mr. Shisha Coolio (50 g)" price="4,50" />
+		<product name="Mr. Shisha Ginja Laim (200 g)" price="16,00" />
+		<product name="Mr. Shisha Ginja Laim (50 g)" price="4,50" />
+		<product name="Mr. Shisha Got Dozen (100 g)" price="7,50" />
+		<product name="Mr. Shisha Got Dozen (50 g)" price="4,50" />
+		<product name="Mr. Shisha Guayna (200 g)" price="16,00" />
+		<product name="Mr. Shisha Guayna (50 g)" price="4,50" />
+		<product name="Mr. Shisha Habana (50 g)" price="4,50" />
+		<product name="Mr. Shisha Habibi (200 g)" price="16,00" />
+		<product name="Mr. Shisha Habibi (50 g)" price="4,50" />
+		<product name="Mr. Shisha Harlem Frap (200 g)" price="16,00" />
+		<product name="Mr. Shisha Harlem Frap (50 g)" price="4,50" />
+		<product name="Mr. Shisha Haselnat (200 g)" price="16,00" />
+		<product name="Mr. Shisha Haselnat (50 g)" price="4,50" />
+		<product name="Mr. Shisha Jheez (200 g)" price="16,00" />
+		<product name="Mr. Shisha Jheez (50 g)" price="4,50" />
+		<product name="Mr. Shisha Late Night (200 g)" price="16,00" />
+		<product name="Mr. Shisha Late Night (100 g)" price="7,50" />
+		<product name="Mr. Shisha Late Night (50 g)" price="4,50" />
+		<product name="Mr. Shisha Lxmxn (200 g)" price="16,00" />
+		<product name="Mr. Shisha Lxmxn (50 g)" price="4,50" />
+		<product name="Mr. Shisha Lym (200 g)" price="16,00" />
+		<product name="Mr. Shisha Lym (50 g)" price="4,50" />
+		<product name="Mr. Shisha Malibu (100 g)" price="7,50" />
+		<product name="Mr. Shisha Malibu (50 g)" price="4,50" />
+		<product name="Mr. Shisha Melo Crush (200 g)" price="16,00" />
+		<product name="Mr. Shisha Melo Crush (50 g)" price="4,50" />
+		<product name="Mr. Shisha Oriental Desert (100 g)" price="7,50" />
+		<product name="Mr. Shisha Otai (200 g)" price="16,00" />
+		<product name="Mr. Shisha Otai (50 g)" price="4,50" />
+		<product name="Mr. Shisha Passion Love (200 g)" price="16,00" />
+		<product name="Mr. Shisha Passion Love (100 g)" price="7,50" />
+		<product name="Mr. Shisha Passion Love (50 g)" price="4,50" />
+		<product name="Mr. Shisha Pomaye (950 g)" price="73,00" />
+		<product name="Mr. Shisha Pomaye (200 g)" price="16,00" />
+		<product name="Mr. Shisha Pomaye (50 g)" price="4,50" />
+		<product name="Mr. Shisha Rock N Roll (100 g)" price="7,50" />
+		<product name="Mr. Shisha Rock N Roll (50 g)" price="4,50" />
+		<product name="Mr. Shisha Scattman (200 g)" price="16,00" />
+		<product name="Mr. Shisha Scattman (50 g)" price="4,50" />
+		<product name="Mr. Shisha Sosiomen (200 g)" price="16,00" />
+		<product name="Mr. Shisha Sosiomen (50 g)" price="4,50" />
+		<product name="Mr. Shisha Summer Sunset (200 g)" price="16,00" />
+		<product name="Mr. Shisha Summer Sunset (100 g)" price="7,50" />
+		<product name="Mr. Shisha Summer Sunset (50 g)" price="4,50" />
+		<product name="Mr. Shisha Tropical (100 g)" price="7,50" />
+		<product name="Mr. Shisha Tropical (50 g)" price="4,50" />
+	</brand>
+	<brand name="Nash">
+		<product name="Nash Bali (100 g)" price="15,95" />
+		<product name="Nash Bravo (100 g)" price="15,95" />
+		<product name="Nash Cold Sun (100 g)" price="15,95" />
+		<product name="Nash Corazon (100 g)" price="15,95" />
+		<product name="Nash Green Heart (100 g)" price="15,95" />
+		<product name="Nash Heaven (100 g)" price="15,95" />
+		<product name="Nash Hola Carmencita (100 g)" price="15,95" />
+		<product name="Nash Hola Gargopera (100 g)" price="15,95" />
+		<product name="Nash Jubilee (100 g)" price="15,95" />
+		<product name="Nash Skitlzz (100 g)" price="15,95" />
+		<product name="Nash Sun Capri (100 g)" price="15,95" />
+		<product name="Nash Tarkun (100 g)" price="15,95" />
+		<product name="Nash Tuselo (100 g)" price="15,95" />
+		<product name="Nash Violet Cloud (100 g)" price="15,95" />
+	</brand>
+	<brand name="Os Tobacco">
+		<product name="Os African King (50 g)" price="4,50" />
+		<product name="Os African Queen (200 g)" price="17,50" />
+		<product name="Os African Queen (50 g)" price="4,50" />
+		<product name="Os Bonnie'n Clyde (200 g)" price="17,50" />
+		<product name="Os Bonnie'n Clyde (50 g)" price="4,50" />
+		<product name="Os Casanova (200 g)" price="17,50" />
+		<product name="Os Casanova (50 g)" price="4,50" />
+		<product name="Os Cosanostra (50 g)" price="4,50" />
+		<product name="Os Disco (200 g)" price="17,50" />
+		<product name="Os Disco (50 g)" price="4,50" />
+		<product name="Os Lucifero (50 g)" price="4,50" />
+		<product name="Os Unknown (50 g)" price="4,50" />
+	</brand>
+	<brand name="Overdozz">
+		<product name="Overdozz 1St Love (60 g)" price="3,30" />
+		<product name="Overdozz 24 Karatine (200 g)" price="14,80" />
+		<product name="Overdozz 24 Karatine (60 g)" price="3,30" />
+		<product name="Overdozz All Nighter (200 g)" price="14,80" />
+		<product name="Overdozz All Nighter (60 g)" price="3,30" />
+		<product name="Overdozz All Nighter (50 g)" price="3,95" />
+		<product name="Overdozz Areejan (200 g)" price="14,80" />
+		<product name="Overdozz Areejan (60 g)" price="3,30" />
+		<product name="Overdozz Areejan (50 g)" price="3,95" />
+		<product name="Overdozz Bad Habit (200 g)" price="14,80" />
+		<product name="Overdozz Bad Habit (60 g)" price="3,30" />
+		<product name="Overdozz Banango (200 g)" price="14,80" />
+		<product name="Overdozz Banango (60 g)" price="3,30" />
+		<product name="Overdozz Banango (50 g)" price="3,95" />
+		<product name="Overdozz Crazy Ex (200 g)" price="14,80" />
+		<product name="Overdozz Crazy Ex (60 g)" price="3,30" />
+		<product name="Overdozz Double Trouble (200 g)" price="14,80" />
+		<product name="Overdozz Double Trouble (60 g)" price="3,30" />
+		<product name="Overdozz Fresh Green (60 g)" price="3,30" />
+		<product name="Overdozz Fresh Greens (200 g)" price="14,80" />
+		<product name="Overdozz Go For Broke (200 g)" price="14,80" />
+		<product name="Overdozz Go for Broke (60 g)" price="3,30" />
+		<product name="Overdozz Green Mist® (60 g)" price="3,30" />
+		<product name="Overdozz Green Mist® (50 g)" price="3,95" />
+		<product name="Overdozz Heat Wave (200 g)" price="14,80" />
+		<product name="Overdozz Heat Wave (60 g)" price="3,30" />
+		<product name="Overdozz Ist Love (200 g)" price="14,80" />
+		<product name="Overdozz Ist Love (50 g)" price="3,95" />
+		<product name="Overdozz Judgment Day (200 g)" price="14,80" />
+		<product name="Overdozz Judgment Day (60 g)" price="3,30" />
+		<product name="Overdozz K.O. (200 g)" price="14,80" />
+		<product name="Overdozz K.O. (50 g)" price="3,95" />
+		<product name="Overdozz Kesowawa (200 g)" price="14,80" />
+		<product name="Overdozz Kesowawa (60 g)" price="3,30" />
+		<product name="Overdozz Kesowawa (50 g)" price="3,95" />
+		<product name="Overdozz Kooliche (60 g)" price="3,30" />
+		<product name="Overdozz Kooliche (50 g)" price="3,95" />
+		<product name="Overdozz Love Bug (200 g)" price="14,80" />
+		<product name="Overdozz Love Bug (60 g)" price="3,30" />
+		<product name="Overdozz Lusidream (60 g)" price="3,30" />
+		<product name="Overdozz Lusidrem (200 g)" price="14,80" />
+		<product name="Overdozz Mad Spiral (200 g)" price="14,80" />
+		<product name="Overdozz Mad Spiral (50 g)" price="3,95" />
+		<product name="Overdozz One Night Stand (200 g)" price="14,80" />
+		<product name="Overdozz One Night Stand (60 g)" price="3,30" />
+		<product name="Overdozz Perta On The Rocks (200 g)" price="14,80" />
+		<product name="Overdozz Perta On The Rocks (50 g)" price="3,95" />
+		<product name="Overdozz Pombom (200 g)" price="14,80" />
+		<product name="Overdozz Pombom (50 g)" price="3,95" />
+		<product name="Overdozz Psych Out (200 g)" price="14,80" />
+		<product name="Overdozz Psych Out (60 g)" price="3,30" />
+		<product name="Overdozz Rachillo (200 g)" price="14,80" />
+		<product name="Overdozz Rachillo (60 g)" price="3,30" />
+		<product name="Overdozz Rachillo (50 g)" price="3,95" />
+		<product name="Overdozz Sex With an Ex (200 g)" price="14,80" />
+		<product name="Overdozz Sex With an Ex (60 g)" price="3,30" />
+		<product name="Overdozz Sex With an Ex (50 g)" price="3,95" />
+		<product name="Overdozz Summer Fling (200 g)" price="14,80" />
+		<product name="Overdozz Summer Fling (60 g)" price="3,30" />
+		<product name="Overdozz Tease Um (200 g)" price="14,80" />
+		<product name="Overdozz Tease Um (50 g)" price="3,95" />
+		<product name="Overdozz Tranquilyser (200 g)" price="14,80" />
+		<product name="Overdozz Wild Night Out (200 g)" price="14,80" />
+		<product name="Overdozz Wild Night Out (60 g)" price="3,30" />
+		<product name="Overdozz Zero Gravity (200 g)" price="14,80" />
+		<product name="Overdozz Zero Gravity (60 g)" price="3,30" />
+	</brand>
+	<brand name="Privilege">
+		<product name="Privilege Smoke Feel (200 g)" price="15,50" />
+		<product name="Privilege Smoke Feel (50 g)" price="4,10" />
+		<product name="Privilege Smoke Jump (200 g)" price="15,50" />
+		<product name="Privilege Smoke Jump (50 g)" price="4,10" />
+		<product name="Privilege Smoke Kiss (50 g)" price="4,10" />
+		<product name="Privilege Smoke Like lata (200 g)" price="15,50" />
+		<product name="Privilege Smoke Like lata (50 g)" price="4,10" />
+		<product name="Privilege Smoke Live (200 g)" price="15,50" />
+		<product name="Privilege Smoke Live (50 g)" price="4,10" />
+		<product name="Privilege Smoke Play (200 g)" price="15,50" />
+		<product name="Privilege Smoke Play (50 g)" price="4,10" />
+		<product name="Privilege Smoke Shake (50 g)" price="4,10" />
+		<product name="Privilege Smoke Show (50 g)" price="4,10" />
+		<product name="Privilege Smoke Stop (50 g)" price="4,10" />
+	</brand>
+	<brand name="Revoshi">
+		<product name="Revoshi A-Easy (200 g)" price="15,95" />
+		<product name="Revoshi Anibal Fang (200 g)" price="15,95" />
+		<product name="Revoshi Anibal Fang (50 g)" price="4,35" />
+		<product name="Revoshi Anibal Fang (25 g)" price="1,85" />
+		<product name="Revoshi Antep Dream (200 g)" price="15,95" />
+		<product name="Revoshi Antep Dream (50 g)" price="4,35" />
+		<product name="Revoshi Antep Dream (25 g)" price="1,85" />
+		<product name="Revoshi A-Strong (200 g)" price="15,95" />
+		<product name="Revoshi A-Strong (25 g)" price="1,85" />
+		<product name="Revoshi Black-G (200 g)" price="15,95" />
+		<product name="Revoshi Black-G (25 g)" price="1,85" />
+		<product name="Revoshi Blackbeard Soul (200 g)" price="15,95" />
+		<product name="Revoshi Blackbeard Soul (50 g)" price="4,35" />
+		<product name="Revoshi Blackbeard Soul (25 g)" price="1,85" />
+		<product name="Revoshi Blck G (50 g)" price="4,35" />
+		<product name="Revoshi Blck Grp (50 g)" price="4,35" />
+		<product name="Revoshi Boricua (200 g)" price="15,95" />
+		<product name="Revoshi Boricua (50 g)" price="4,35" />
+		<product name="Revoshi Capitan Pinto (200 g)" price="15,95" />
+		<product name="Revoshi Capitan Pinto (50 g)" price="4,35" />
+		<product name="Revoshi Capitan Pinto (25 g)" price="1,85" />
+		<product name="Revoshi Carmitta (200 g)" price="15,95" />
+		<product name="Revoshi Carmitta (50 g)" price="4,35" />
+		<product name="Revoshi Chao Bella (995 g)" price="65,00" />
+		<product name="Revoshi Chao Bella (200 g)" price="15,95" />
+		<product name="Revoshi Chao Bella (50 g)" price="4,35" />
+		<product name="Revoshi Chao Bella (25 g)" price="1,85" />
+		<product name="Revoshi D'App Strng (995 g)" price="65,00" />
+		<product name="Revoshi D'App Strng (50 g)" price="4,35" />
+		<product name="Revoshi Darmita (200 g)" price="18,00" />
+		<product name="Revoshi Darmita (50 g)" price="4,80" />
+		<product name="Revoshi Eskimo C (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Cndy (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo L (995 g)" price="65,00" />
+		<product name="Revoshi Eskimo L (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Lmn (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Loka (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo Loka (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Loka (25 g)" price="1,85" />
+		<product name="Revoshi Eskimo P'A (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo P'A (25 g)" price="1,85" />
+		<product name="Revoshi Eskimo P´app (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Polar (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo Polar (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo Vtrmln (50 g)" price="4,35" />
+		<product name="Revoshi Eskimo-A (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo-C (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo-C (25 g)" price="1,85" />
+		<product name="Revoshi Eskimo-L (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo-L (25 g)" price="1,85" />
+		<product name="Revoshi Eskimo-W (200 g)" price="15,95" />
+		<product name="Revoshi Eskimo-W (25 g)" price="1,85" />
+		<product name="Revoshi Float Like Butterfly (200 g)" price="18,00" />
+		<product name="Revoshi Float Like Butterfly (50 g)" price="4,80" />
+		<product name="Revoshi Free Spartacus (200 g)" price="15,95" />
+		<product name="Revoshi Free Spartacus (50 g)" price="4,35" />
+		<product name="Revoshi Free Spartacus (25 g)" price="1,85" />
+		<product name="Revoshi Funny Bunny (200 g)" price="15,95" />
+		<product name="Revoshi Funny Bunny (50 g)" price="4,35" />
+		<product name="Revoshi Funny Bunny (25 g)" price="1,85" />
+		<product name="Revoshi G (200 g)" price="15,95" />
+		<product name="Revoshi G Jager (200 g)" price="15,95" />
+		<product name="Revoshi G Jager (50 g)" price="4,35" />
+		<product name="Revoshi G Jager (25 g)" price="1,85" />
+		<product name="Revoshi GM (200 g)" price="15,95" />
+		<product name="Revoshi GM (50 g)" price="4,35" />
+		<product name="Revoshi GP (50 g)" price="4,35" />
+		<product name="Revoshi Ghandi Spir (200 g)" price="15,95" />
+		<product name="Revoshi Green Jager (200 g)" price="15,95" />
+		<product name="Revoshi Green Jager (50 g)" price="4,35" />
+		<product name="Revoshi Green Jager (25 g)" price="1,85" />
+		<product name="Revoshi Grp (50 g)" price="4,35" />
+		<product name="Revoshi Grp-Mnt (50 g)" price="4,35" />
+		<product name="Revoshi Kak de la Trshkv (200 g)" price="15,95" />
+		<product name="Revoshi Kak de la Trshkv (25 g)" price="1,85" />
+		<product name="Revoshi Kak dela Trshkv (50 g)" price="4,35" />
+		<product name="Revoshi Kazak (200 g)" price="15,95" />
+		<product name="Revoshi Kazak (50 g)" price="4,35" />
+		<product name="Revoshi Kazak (25 g)" price="1,85" />
+		<product name="Revoshi L (200 g)" price="15,95" />
+		<product name="Revoshi L (50 g)" price="4,35" />
+		<product name="Revoshi LM (200 g)" price="15,95" />
+		<product name="Revoshi LM (50 g)" price="4,35" />
+		<product name="Revoshi Lazy Sunday (200 g)" price="15,95" />
+		<product name="Revoshi Lazy Sunday (50 g)" price="4,35" />
+		<product name="Revoshi Leonidas Spirit (200 g)" price="15,95" />
+		<product name="Revoshi Leonidas Spirit (50 g)" price="4,35" />
+		<product name="Revoshi Leonidas Spirit (25 g)" price="1,85" />
+		<product name="Revoshi Lmn (50 g)" price="4,35" />
+		<product name="Revoshi Lmn-Mnt (50 g)" price="4,35" />
+		<product name="Revoshi M (50 g)" price="4,35" />
+		<product name="Revoshi Manda (200 g)" price="15,95" />
+		<product name="Revoshi Manda (50 g)" price="4,35" />
+		<product name="Revoshi Marbella (200 g)" price="15,95" />
+		<product name="Revoshi Marbella (50 g)" price="4,35" />
+		<product name="Revoshi Mnt (50 g)" price="4,35" />
+		<product name="Revoshi Mulan Sword (200 g)" price="15,95" />
+		<product name="Revoshi Mulan Sword (50 g)" price="4,35" />
+		<product name="Revoshi Mulan Sword (25 g)" price="1,85" />
+		<product name="Revoshi Nana (995 g)" price="65,00" />
+		<product name="Revoshi Nana (200 g)" price="15,95" />
+		<product name="Revoshi Nana (50 g)" price="4,35" />
+		<product name="Revoshi O (200 g)" price="15,95" />
+		<product name="Revoshi O (50 g)" price="4,35" />
+		<product name="Revoshi OM (200 g)" price="15,95" />
+		<product name="Revoshi OM (50 g)" price="4,35" />
+		<product name="Revoshi OM (25 g)" price="1,85" />
+		<product name="Revoshi Ola Zapata (200 g)" price="15,95" />
+		<product name="Revoshi Ola Zapata (50 g)" price="4,35" />
+		<product name="Revoshi Ola Zapata (25 g)" price="1,85" />
+		<product name="Revoshi Orng (50 g)" price="4,35" />
+		<product name="Revoshi Orng-Mnt (50 g)" price="4,35" />
+		<product name="Revoshi Pancho Villa (200 g)" price="15,95" />
+		<product name="Revoshi Pancho Villa (50 g)" price="4,35" />
+		<product name="Revoshi Pancho Villa (25 g)" price="1,85" />
+		<product name="Revoshi Panonino (200 g)" price="15,95" />
+		<product name="Revoshi Panonino (50 g)" price="4,35" />
+		<product name="Revoshi Panonino (25 g)" price="1,85" />
+		<product name="Revoshi Qui-Qui (200 g)" price="15,95" />
+		<product name="Revoshi Qui-Qui (50 g)" price="4,35" />
+		<product name="Revoshi Racy Colombian (200 g)" price="15,95" />
+		<product name="Revoshi Racy Colombian (50 g)" price="4,35" />
+		<product name="Revoshi Racy Colombian (25 g)" price="1,85" />
+		<product name="Revoshi Raggata (200 g)" price="15,95" />
+		<product name="Revoshi Raggata (50 g)" price="4,35" />
+		<product name="Revoshi Raggata (25 g)" price="1,85" />
+		<product name="Revoshi Ragnar (200 g)" price="15,95" />
+		<product name="Revoshi Ragnar (50 g)" price="4,35" />
+		<product name="Revoshi Ragnar (25 g)" price="1,85" />
+		<product name="Revoshi Red Sunset (200 g)" price="15,95" />
+		<product name="Revoshi Red Sunset (50 g)" price="4,35" />
+		<product name="Revoshi Rope a Dope (200 g)" price="18,00" />
+		<product name="Revoshi Rope a Dope (50 g)" price="4,80" />
+		<product name="Revoshi Rumble Of Jungle (200 g)" price="18,00" />
+		<product name="Revoshi Rumble Of Jungle (50 g)" price="4,80" />
+		<product name="Revoshi Sting Like Bee (200 g)" price="18,00" />
+		<product name="Revoshi Sting Like Bee (50 g)" price="4,80" />
+		<product name="Revoshi Thanks Engels (200 g)" price="15,95" />
+		<product name="Revoshi Thanks Engels (50 g)" price="4,35" />
+		<product name="Revoshi Thanks Engels (25 g)" price="1,85" />
+		<product name="Revoshi The Shuffle (200 g)" price="18,00" />
+		<product name="Revoshi The Shuffle (50 g)" price="4,80" />
+		<product name="Revoshi Thrilla in Manila (200 g)" price="18,00" />
+		<product name="Revoshi Thrilla in Manila (50 g)" price="4,80" />
+		<product name="Revoshi Txele (200 g)" price="15,95" />
+		<product name="Revoshi Txele (50 g)" price="4,35" />
+		<product name="Revoshi Vaina (200 g)" price="15,95" />
+		<product name="Revoshi Vaina (50 g)" price="4,35" />
+		<product name="Revoshi Vamos Ernesto (200 g)" price="15,95" />
+		<product name="Revoshi Vamos Ernesto (50 g)" price="4,35" />
+		<product name="Revoshi Vamos Ernesto (25 g)" price="1,85" />
+		<product name="Revoshi What's My Name? (200 g)" price="18,00" />
+		<product name="Revoshi What's My Name? (50 g)" price="4,80" />
+		<product name="Revoshi Zingy Newyork (200 g)" price="15,95" />
+		<product name="Revoshi Zingy Newyork (50 g)" price="4,35" />
+		<product name="Revoshi Zingy Newyork (25 g)" price="1,85" />
+	</brand>
+	<brand name="Sapphire Crown">
+		<product name="Sapphire Crown Alpine Straw (100 g)" price="15,95" />
+		<product name="Sapphire Crown Apl Strudl (100 g)" price="15,95" />
+		<product name="Sapphire Crown Ba Na2 (100 g)" price="15,95" />
+		<product name="Sapphire Crown Froostyle (100 g)" price="15,95" />
+		<product name="Sapphire Crown Hazel Crush (100 g)" price="15,95" />
+		<product name="Sapphire Crown Indian Stuff (100 g)" price="15,95" />
+		<product name="Sapphire Crown Love Above (100 g)" price="15,95" />
+		<product name="Sapphire Crown Love Under Tonik (100 g)" price="15,95" />
+		<product name="Sapphire Crown Persik (100 g)" price="15,95" />
+		<product name="Sapphire Crown Yozo Hani (100 g)" price="15,95" />
+	</brand>
+	<brand name="Sayes!">
+		<product name="Sayes! Dominika (100 g)" price="11,95" />
+		<product name="Sayes! Ginbrew (100 g)" price="11,95" />
+		<product name="Sayes! Noir Bry (100 g)" price="11,95" />
+		<product name="Sayes! Passika (100 g)" price="11,95" />
+		<product name="Sayes! Pinkman (100 g)" price="11,95" />
+		<product name="Sayes! Raspi (100 g)" price="11,95" />
+		<product name="Sayes! Rokman (100 g)" price="11,95" />
+		<product name="Sayes! Shak (100 g)" price="11,95" />
+		<product name="Sayes! Spayz (100 g)" price="11,95" />
+		<product name="Sayes! Zola (100 g)" price="11,95" />
+	</brand>
+	<brand name="Sebero">
+		<product name="Sebero Artic Mix Kiss of a Beauty (200 g)" price="20,50" />
+		<product name="Sebero Artic Mix Kiss of a Beauty (50 g)" price="5,25" />
+		<product name="Sebero Artic Mix Tropical Heat (200 g)" price="20,50" />
+		<product name="Sebero Artic Mix Tropical Heat (50 g)" price="5,25" />
+		<product name="Sebero Artic Mix Weightlessness (200 g)" price="20,50" />
+		<product name="Sebero Artic Mix Weightlessness (50 g)" price="5,25" />
+		<product name="Sebero Black Fun Madness (200 g)" price="22,00" />
+		<product name="Sebero Black Fun Madness (50 g)" price="5,50" />
+		<product name="Sebero Black Kingly (200 g)" price="22,00" />
+		<product name="Sebero Black Kingly (50 g)" price="5,50" />
+		<product name="Sebero Black Lunch Break (200 g)" price="22,00" />
+		<product name="Sebero Black Lunch Break (50 g)" price="5,50" />
+		<product name="Sebero Black Pearl (200 g)" price="22,00" />
+		<product name="Sebero Black Pearl (50 g)" price="5,50" />
+		<product name="Sebero Black Predictions (200 g)" price="22,00" />
+		<product name="Sebero Black Predictions (50 g)" price="5,50" />
+		<product name="Sebero Black Red-Yellow Mix (200 g)" price="22,00" />
+		<product name="Sebero Black Red-Yellow Mix (50 g)" price="5,50" />
+		<product name="Sebero Blue Forest (200 g)" price="20,50" />
+		<product name="Sebero Blue Forest (50 g)" price="5,25" />
+		<product name="Sebero Bumble (200 g)" price="20,50" />
+		<product name="Sebero Bumble (50 g)" price="5,25" />
+		<product name="Sebero Children Sun (200 g)" price="20,50" />
+		<product name="Sebero Children Sun (50 g)" price="5,25" />
+		<product name="Sebero Depth (200 g)" price="20,50" />
+		<product name="Sebero Depth (50 g)" price="5,25" />
+		<product name="Sebero Double Royal (200 g)" price="20,50" />
+		<product name="Sebero Double Royal (50 g)" price="5,25" />
+		<product name="Sebero Garden Queen (200 g)" price="20,50" />
+		<product name="Sebero Garden Queen (50 g)" price="5,25" />
+		<product name="Sebero Heart (200 g)" price="20,50" />
+		<product name="Sebero Heart (50 g)" price="5,25" />
+		<product name="Sebero Hedgehogs (200 g)" price="20,50" />
+		<product name="Sebero Hedgehogs (50 g)" price="5,25" />
+		<product name="Sebero Italian Sunset (200 g)" price="20,50" />
+		<product name="Sebero Italian Sunset (50 g)" price="5,25" />
+		<product name="Sebero Love and Passion (200 g)" price="20,50" />
+		<product name="Sebero Love and Passion (50 g)" price="5,25" />
+		<product name="Sebero Sunlight (200 g)" price="20,50" />
+		<product name="Sebero Sunlight (50 g)" price="5,25" />
+		<product name="Sebero Tropical (200 g)" price="20,50" />
+		<product name="Sebero Tropical (50 g)" price="5,25" />
+		<product name="Sebero Wonder (200 g)" price="20,50" />
+		<product name="Sebero Wonder (50 g)" price="5,25" />
+	</brand>
+	<brand name="Serbetli">
+		<product name="Serbetli Classic American Ke (50 g)" price="4,30" />
+		<product name="Serbetli Classic Capu Capu (50 g)" price="4,30" />
+		<product name="Serbetli Classic Charli (50 g)" price="4,30" />
+		<product name="Serbetli Classic Doble A (50 g)" price="4,30" />
+		<product name="Serbetli Classic Emon (50 g)" price="4,30" />
+		<product name="Serbetli Classic Emon Ke (50 g)" price="4,30" />
+		<product name="Serbetli Classic Grapi (50 g)" price="4,30" />
+		<product name="Serbetli Classic Green Mix (50 g)" price="4,30" />
+		<product name="Serbetli Classic Icbdrumm (50 g)" price="4,30" />
+		<product name="Serbetli Classic Istambul Nights (50 g)" price="4,30" />
+		<product name="Serbetli Classic Marbella (50 g)" price="4,30" />
+		<product name="Serbetli Classic Meint (50 g)" price="4,30" />
+		<product name="Serbetli Classic Milkotin (50 g)" price="4,30" />
+		<product name="Serbetli Classic Stra Shark (50 g)" price="4,30" />
+		<product name="Serbetli Classic Wati Meli (50 g)" price="4,30" />
+		<product name="Serbetli Hard Line Breezy Bum (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Jerry (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Limton Gril (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Nara Ja (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Nestja (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Panepol (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Pops (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Redbera (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Supremo (40 g)" price="4,50" />
+		<product name="Serbetli Hard Line Sweet Oney (40 g)" price="4,50" />
+		<product name="Serbetli Shisha Fei Joan (50 g)" price="3,10" />
+		<product name="Serbetli Shisha Fresh Mix (50 g)" price="3,10" />
+		<product name="Serbetli Shisha Genios Dream (50 g)" price="3,10" />
+		<product name="Serbetli Shisha Green Mix (50 g)" price="3,80" />
+		<product name="Serbetli Spepinch (50 g)" price="3,10" />
+	</brand>
+	<brand name="Shisha Kartel">
+		<product name="Shisha Kartel Big Bagman (200 g)" price="17,95" />
+		<product name="Shisha Kartel Big Bagman (50 g)" price="4,95" />
+		<product name="Shisha Kartel Blood Bath (50 g)" price="4,50" />
+		<product name="Shisha Kartel Bouncer Bruno (200 g)" price="17,95" />
+		<product name="Shisha Kartel Bouncer Bruno (50 g)" price="4,95" />
+		<product name="Shisha Kartel Capo Dei Capi (950 g)" price="59,90" />
+		<product name="Shisha Kartel Capo Dei Capi (200 g)" price="17,95" />
+		<product name="Shisha Kartel Capo Dei Capi (50 g)" price="4,95" />
+		<product name="Shisha Kartel Cursed Crusader (50 g)" price="4,50" />
+		<product name="Shisha Kartel Fatal Frenzy (50 g)" price="4,50" />
+		<product name="Shisha Kartel Guilty Gang (950 g)" price="59,90" />
+		<product name="Shisha Kartel Guilty Gang (200 g)" price="16,50" />
+		<product name="Shisha Kartel Guilty Gang (50 g)" price="4,50" />
+		<product name="Shisha Kartel Happy Hound (200 g)" price="17,95" />
+		<product name="Shisha Kartel Happy Hound (50 g)" price="4,95" />
+		<product name="Shisha Kartel Hidden Hacker (50 g)" price="4,50" />
+		<product name="Shisha Kartel Krazee Kombo (200 g)" price="16,50" />
+		<product name="Shisha Kartel Krazee Kombo (50 g)" price="4,50" />
+		<product name="Shisha Kartel Latino Loco (50 g)" price="4,50" />
+		<product name="Shisha Kartel Mafia Madness (50 g)" price="4,50" />
+		<product name="Shisha Kartel Maniac Manager (50 g)" price="4,50" />
+		<product name="Shisha Kartel Milf Mia (50 g)" price="4,50" />
+		<product name="Shisha Kartel Plata o Plomo (200 g)" price="17,95" />
+		<product name="Shisha Kartel Plata o Plomo (50 g)" price="4,95" />
+		<product name="Shisha Kartel Sexy Sheba (950 g)" price="59,90" />
+		<product name="Shisha Kartel Sexy Sheba (200 g)" price="17,95" />
+		<product name="Shisha Kartel Sexy Sheba (50 g)" price="4,95" />
+		<product name="Shisha Kartel Silly Scientish (50 g)" price="4,50" />
+	</brand>
+	<brand name="Social Smoke">
+		<product name="Social Smoke Absolute Zero (200 g)" price="18,95" />
+		<product name="Social Smoke Absolute Zero (50 g)" price="4,95" />
+		<product name="Social Smoke C Roll (200 g)" price="18,95" />
+		<product name="Social Smoke C Roll (50 g)" price="4,95" />
+		<product name="Social Smoke CA Chill (200 g)" price="18,95" />
+		<product name="Social Smoke CA Chill (50 g)" price="4,95" />
+		<product name="Social Smoke CU Chill (200 g)" price="18,95" />
+		<product name="Social Smoke CU Chill (50 g)" price="4,95" />
+		<product name="Social Smoke D D L (200 g)" price="18,95" />
+		<product name="Social Smoke D D L (50 g)" price="4,95" />
+		<product name="Social Smoke Gumtastic (200 g)" price="18,95" />
+		<product name="Social Smoke Gumtastic (50 g)" price="4,95" />
+		<product name="Social Smoke H CTA (200 g)" price="18,95" />
+		<product name="Social Smoke H CTA (50 g)" price="4,95" />
+		<product name="Social Smoke HD M Chill (200 g)" price="18,95" />
+		<product name="Social Smoke HD M Chill (50 g)" price="4,95" />
+		<product name="Social Smoke L Chill (200 g)" price="18,95" />
+		<product name="Social Smoke L Chill (50 g)" price="4,95" />
+		<product name="Social Smoke P Chill (999 g)" price="82,90" />
+		<product name="Social Smoke P Chill (200 g)" price="18,95" />
+		<product name="Social Smoke P Chill (50 g)" price="4,95" />
+		<product name="Social Smoke PST BRZ (200 g)" price="18,95" />
+		<product name="Social Smoke PST BRZ (50 g)" price="4,95" />
+		<product name="Social Smoke Twisted (200 g)" price="18,95" />
+		<product name="Social Smoke Twisted (50 g)" price="4,95" />
+		<product name="Social Smoke White Bear (200 g)" price="18,95" />
+		<product name="Social Smoke White Bear (50 g)" price="4,95" />
+		<product name="Social Smoke WM Chill (200 g)" price="18,95" />
+		<product name="Social Smoke WM Chill (50 g)" price="4,95" />
+	</brand>
+	<brand name="Starbuzz Bold">
+		<product name="Starbuzz Bold App Doppio (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Black Ice (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Black Mist (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Brown Kiss (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Frost Bite (100 g)" price="9,95" />
+		<product name="Starbuzz Bold G Freeze (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Golden Gee (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Ice Colossus (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Indy White (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Tropikool Mist (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Tropikool (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Wet Meli Freeze (100 g)" price="9,95" />
+		<product name="Starbuzz Bold White Freeze (100 g)" price="9,95" />
+		<product name="Starbuzz Bold Yellow Mist (100 g)" price="9,95" />
+	</brand>
+	<brand name="Starbuzz Classic Line">
+		<product name="Starbuzz Classic Line Double App (50 g)" price="4,20" />
+		<product name="Starbuzz Classic Line Lmn Mnt (50 g)" price="4,20" />
+		<product name="Starbuzz Classic Line O. Mnt (50 g)" price="4,20" />
+		<product name="Starbuzz Classic Line Royal Grp (50 g)" price="4,20" />
+	</brand>
+	<brand name="Starbuzz Regular">
+		<product name="Starbuzz Regular Anjou Chill (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Blue Dew (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Blue Gee (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Cito Mist (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Code 0690 (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Cucu Jumbo (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Double App (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Green Charge (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Kaktus Chill (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Passionova (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Pineana (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Pinolada (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Razzy (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Royal Gee (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Safari M Dew (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Strawmargita (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Sweet Meli (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Tangi Dream (100 g)" price="9,95" />
+		<product name="Starbuzz Regular White Delight (100 g)" price="9,95" />
+		<product name="Starbuzz Regular White Nec (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Wild Artic (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Yellow Freeze (100 g)" price="9,95" />
+		<product name="Starbuzz Regular Yellow T (100 g)" price="9,95" />
+	</brand>
+	<brand name="Starbuzz Vintage">
+		<product name="Starbuzz Vintage Cheers! (80 g)" price="8,95" />
+		<product name="Starbuzz Vintage Dark Winilla (80 g)" price="8,95" />
+		<product name="Starbuzz Vintage Delhi T (80 g)" price="8,95" />
+		<product name="Starbuzz Vintage Fresh Cito (80 g)" price="8,95" />
+		<product name="Starbuzz Vintage Hunny Dew Me (80 g)" price="8,95" />
+		<product name="Starbuzz Vintage Indian App Kick ® (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Timisue (80 g)" price="8,95" />
+	</brand>
+	<brand name="Starbuzz Vintage Plus">
+		<product name="Starbuzz Vintage Plus Alaskan Freeze® (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Cheers! (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Colombian Kick (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Dark Caribbean (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Dark Mist (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Dark Valencia (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Dark Winilla (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Delhi T (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Fresh Cito (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Fuzzy Kick (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Green Savior (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Hunny Dew Me (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Kick Me Red (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus La Dominikana (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Morning Breeze® (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Shanghai Passion (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Timisue (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus Tokyo Kick (50 g)" price="4,30" />
+		<product name="Starbuzz Vintage Plus White Mist® (50 g)" price="4,30" />
+	</brand>
+	<brand name="Starline">
+		<product name="Starline Asian Blaze (200 g)" price="19,49" />
+		<product name="Starline Asian Blaze (50 g)" price="4,99" />
+		<product name="Starline Belgian Morning (200 g)" price="19,49" />
+		<product name="Starline Belgian Morning (50 g)" price="4,99" />
+		<product name="Starline Black Glace (50 g)" price="4,99" />
+		<product name="Starline Blue Crump (200 g)" price="19,49" />
+		<product name="Starline Blue Crump (50 g)" price="4,99" />
+		<product name="Starline Crimson Boom (50 g)" price="4,99" />
+		<product name="Starline Dreamy White (50 g)" price="4,99" />
+		<product name="Starline Emerald Touch (50 g)" price="4,99" />
+		<product name="Starline Exotic Mix (50 g)" price="4,99" />
+		<product name="Starline French Puff (200 g)" price="19,49" />
+		<product name="Starline French Puff (50 g)" price="4,99" />
+		<product name="Starline Grainy Red (50 g)" price="4,99" />
+		<product name="Starline Mellow Yellow (50 g)" price="4,99" />
+		<product name="Starline Purple Dreams (50 g)" price="4,99" />
+		<product name="Starline Summer Fizz (50 g)" price="4,99" />
+		<product name="Starline Sunny Burst (50 g)" price="4,99" />
+		<product name="Starline Thai Sunrise (50 g)" price="4,99" />
+		<product name="Starline Tropic Chi (200 g)" price="19,49" />
+		<product name="Starline Tropic Chi (50 g)" price="4,99" />
+		<product name="Starline Violet Charm (200 g)" price="19,49" />
+		<product name="Starline Violet Charm (50 g)" price="4,99" />
+		<product name="Starline Wild Drops (50 g)" price="4,99" />
+	</brand>
+	<brand name="Stral">
+		<product name="Stral Alberino (200 g)" price="17,90" />
+		<product name="Stral Alberino (50 g)" price="5,00" />
+		<product name="Stral Black Mln (200 g)" price="17,90" />
+		<product name="Stral Black Mln (50 g)" price="5,00" />
+		<product name="Stral Kiva (200 g)" price="17,90" />
+		<product name="Stral Kiva (50 g)" price="5,00" />
+		<product name="Stral Lit Schi (200 g)" price="17,90" />
+		<product name="Stral Lit Schi (50 g)" price="5,00" />
+		<product name="Stral The Rza (200 g)" price="17,90" />
+		<product name="Stral The Rza (50 g)" price="5,00" />
+		<product name="Stral Tik Tok (200 g)" price="17,90" />
+		<product name="Stral Tik Tok (50 g)" price="5,00" />
+	</brand>
+	<brand name="Street Smoke">
+		<product name="Street Smoke Angel Face (50 g)" price="4,55" />
+		<product name="Street Smoke Artic Prince (200 g)" price="17,50" />
+		<product name="Street Smoke Artic Prince (50 g)" price="4,55" />
+		<product name="Street Smoke Barista (200 g)" price="17,50" />
+		<product name="Street Smoke Barista (50 g)" price="4,55" />
+		<product name="Street Smoke Bartender (50 g)" price="4,55" />
+		<product name="Street Smoke Beach With A P (200 g)" price="17,50" />
+		<product name="Street Smoke Beach With A P (50 g)" price="4,55" />
+		<product name="Street Smoke Blue Beast (50 g)" price="4,55" />
+		<product name="Street Smoke Booty (50 g)" price="4,55" />
+		<product name="Street Smoke Bro (50 g)" price="4,55" />
+		<product name="Street Smoke Desert Dream (200 g)" price="17,50" />
+		<product name="Street Smoke Desert Dream (50 g)" price="4,55" />
+		<product name="Street Smoke Dr. Street (50 g)" price="4,55" />
+		<product name="Street Smoke Green Craze (50 g)" price="4,55" />
+		<product name="Street Smoke Gypsy Queen (50 g)" price="4,55" />
+		<product name="Street Smoke Habibo (200 g)" price="17,50" />
+		<product name="Street Smoke Habibo (50 g)" price="4,55" />
+		<product name="Street Smoke Lil Chill (50 g)" price="4,55" />
+		<product name="Street Smoke Machine (50 g)" price="4,55" />
+		<product name="Street Smoke MBA P (50 g)" price="4,55" />
+		<product name="Street Smoke Mic Drop (200 g)" price="17,50" />
+		<product name="Street Smoke Mic Drop (50 g)" price="4,55" />
+		<product name="Street Smoke Mr. Grumpy (50 g)" price="4,55" />
+		<product name="Street Smoke Mrs. Pink (50 g)" price="4,55" />
+		<product name="Street Smoke Namaste (50 g)" price="4,55" />
+		<product name="Street Smoke Red Charm (50 g)" price="4,55" />
+		<product name="Street Smoke Russian Roulette (50 g)" price="4,55" />
+		<product name="Street Smoke Scar (50 g)" price="4,55" />
+		<product name="Street Smoke Street Love (50 g)" price="4,55" />
+		<product name="Street Smoke Super Mama (50 g)" price="4,55" />
+		<product name="Street Smoke The Boss (200 g)" price="17,50" />
+		<product name="Street Smoke The Boss (50 g)" price="4,55" />
+		<product name="Street Smoke Yummy (50 g)" price="4,55" />
+	</brand>
+	<brand name="Taboo">
+		<product name="Taboo Alien Twist (200 g)" price="15,90" />
+		<product name="Taboo Alien Twist (50 g)" price="4,30" />
+		<product name="Taboo Alpine Spirit (200 g)" price="15,90" />
+		<product name="Taboo Alpine Spirit (50 g)" price="4,30" />
+		<product name="Taboo American Pay (200 g)" price="15,90" />
+		<product name="Taboo American Pay (50 g)" price="4,30" />
+		<product name="Taboo American Pay (25 g)" price="1,95" />
+		<product name="Taboo Bahama Mama (200 g)" price="15,90" />
+		<product name="Taboo Bahama Mama (50 g)" price="4,30" />
+		<product name="Taboo Bikini Sunset (200 g)" price="15,90" />
+		<product name="Taboo Bikini Sunset (50 g)" price="4,30" />
+		<product name="Taboo Black Banaloco (50 g)" price="4,30" />
+		<product name="Taboo Black Crunch (50 g)" price="4,30" />
+		<product name="Taboo Black Limousine (200 g)" price="15,90" />
+		<product name="Taboo Black Limousine (50 g)" price="4,30" />
+		<product name="Taboo Black Splash (50 g)" price="4,30" />
+		<product name="Taboo Black Vanla Sky (50 g)" price="4,30" />
+		<product name="Taboo Black Volcano (50 g)" price="4,30" />
+		<product name="Taboo Blizzardina (200 g)" price="15,90" />
+		<product name="Taboo Blizzardina (50 g)" price="4,30" />
+		<product name="Taboo Blue Bay (200 g)" price="15,90" />
+		<product name="Taboo Blue Bay (50 g)" price="4,30" />
+		<product name="Taboo Blue Bay (25 g)" price="1,95" />
+		<product name="Taboo Brutal Choice (200 g)" price="15,90" />
+		<product name="Taboo Brutal Choice (50 g)" price="4,30" />
+		<product name="Taboo Car Melo (50 g)" price="4,30" />
+		<product name="Taboo Caribbean Cruise (200 g)" price="15,90" />
+		<product name="Taboo Caribbean Cruise (50 g)" price="4,30" />
+		<product name="Taboo Casanova Dream (200 g)" price="15,90" />
+		<product name="Taboo Casanova Dream (50 g)" price="4,30" />
+		<product name="Taboo Cinna Mill (200 g)" price="15,90" />
+		<product name="Taboo Cinna Mill (50 g)" price="4,30" />
+		<product name="Taboo Cool Sunrise (200 g)" price="15,90" />
+		<product name="Taboo Cool Sunrise (50 g)" price="4,30" />
+		<product name="Taboo Copa Cabana (200 g)" price="15,90" />
+		<product name="Taboo Copa Cabana (50 g)" price="4,30" />
+		<product name="Taboo Cumulus (200 g)" price="15,90" />
+		<product name="Taboo Cumulus (50 g)" price="4,30" />
+		<product name="Taboo Dancing Queen (950 g)" price="69,50" />
+		<product name="Taboo Dancing Queen (200 g)" price="15,90" />
+		<product name="Taboo Dancing Queen (50 g)" price="4,30" />
+		<product name="Taboo Darkum (200 g)" price="15,90" />
+		<product name="Taboo Darkum (50 g)" price="4,30" />
+		<product name="Taboo Five O'Clock (200 g)" price="15,90" />
+		<product name="Taboo Five O'Clock (50 g)" price="4,30" />
+		<product name="Taboo French Kiss (200 g)" price="15,90" />
+		<product name="Taboo French Kiss (50 g)" price="4,30" />
+		<product name="Taboo French Kiss (25 g)" price="1,95" />
+		<product name="Taboo French Kss (950 g)" price="69,50" />
+		<product name="Taboo French Kss (200 g)" price="15,90" />
+		<product name="Taboo French Kss (50 g)" price="4,30" />
+		<product name="Taboo Game Over (200 g)" price="15,90" />
+		<product name="Taboo Game Over (50 g)" price="4,30" />
+		<product name="Taboo Golden Eye (200 g)" price="15,90" />
+		<product name="Taboo Golden Eye (50 g)" price="4,30" />
+		<product name="Taboo Hakuna Matata (200 g)" price="15,90" />
+		<product name="Taboo Hakuna Matata (50 g)" price="4,30" />
+		<product name="Taboo Indian Summer (200 g)" price="15,90" />
+		<product name="Taboo Indian Summer (50 g)" price="4,30" />
+		<product name="Taboo Irish Dream (200 g)" price="15,90" />
+		<product name="Taboo Irish Dream (50 g)" price="4,30" />
+		<product name="Taboo Italian Passion (200 g)" price="15,90" />
+		<product name="Taboo Italian Passion (50 g)" price="4,30" />
+		<product name="Taboo Jungle (200 g)" price="15,90" />
+		<product name="Taboo Jungle (50 g)" price="4,30" />
+		<product name="Taboo Lucky (50 g)" price="4,30" />
+		<product name="Taboo Mambo (200 g)" price="15,90" />
+		<product name="Taboo Mambo (50 g)" price="4,30" />
+		<product name="Taboo Misguided (200 g)" price="15,90" />
+		<product name="Taboo Misguided (50 g)" price="4,30" />
+		<product name="Taboo Moonwalk (200 g)" price="15,90" />
+		<product name="Taboo Moonwalk (50 g)" price="4,30" />
+		<product name="Taboo Mystic China (200 g)" price="15,90" />
+		<product name="Taboo Mystic China (50 g)" price="4,30" />
+		<product name="Taboo Over The Rainbow (950 g)" price="69,50" />
+		<product name="Taboo Over The Rainbow (200 g)" price="15,90" />
+		<product name="Taboo Over The Rainbow (50 g)" price="4,30" />
+		<product name="Taboo Over The Rainbow (25 g)" price="1,95" />
+		<product name="Taboo Pocamel (200 g)" price="15,90" />
+		<product name="Taboo Pocamel (50 g)" price="4,30" />
+		<product name="Taboo Power of Love (200 g)" price="15,90" />
+		<product name="Taboo Power of Love (50 g)" price="4,30" />
+		<product name="Taboo Promise (200 g)" price="15,90" />
+		<product name="Taboo Promise (50 g)" price="4,30" />
+		<product name="Taboo Red Blast (200 g)" price="15,90" />
+		<product name="Taboo Red Blast (50 g)" price="4,30" />
+		<product name="Taboo Red Fusion (200 g)" price="15,90" />
+		<product name="Taboo Red Fussion (50 g)" price="4,30" />
+		<product name="Taboo Richman (200 g)" price="15,90" />
+		<product name="Taboo Richman (50 g)" price="4,30" />
+		<product name="Taboo Rim Shot (200 g)" price="15,90" />
+		<product name="Taboo Rim Shot (50 g)" price="4,30" />
+		<product name="Taboo Seduction (200 g)" price="15,90" />
+		<product name="Taboo Seduction (50 g)" price="4,30" />
+		<product name="Taboo Seduction (25 g)" price="1,95" />
+		<product name="Taboo Sexy Green (200 g)" price="15,90" />
+		<product name="Taboo Sexy Green (50 g)" price="4,30" />
+		<product name="Taboo Sexy Green (25 g)" price="1,95" />
+		<product name="Taboo Sxy Green (950 g)" price="69,50" />
+		<product name="Taboo Sxy Green (200 g)" price="15,90" />
+		<product name="Taboo Sxy Green (50 g)" price="4,30" />
+		<product name="Taboo Sxy Green (25 g)" price="1,95" />
+		<product name="Taboo Talisman (200 g)" price="15,90" />
+		<product name="Taboo Talisman (50 g)" price="4,30" />
+		<product name="Taboo Tropical Storm (200 g)" price="15,90" />
+		<product name="Taboo Tropical Storm (50 g)" price="4,30" />
+		<product name="Taboo Tuxedo (200 g)" price="15,90" />
+		<product name="Taboo Tuxedo (50 g)" price="4,30" />
+		<product name="Taboo Unicorn Dust (200 g)" price="15,90" />
+		<product name="Taboo Unicorn Dust (50 g)" price="4,30" />
+		<product name="Taboo Waterfall (950 g)" price="69,50" />
+		<product name="Taboo Waterfall (200 g)" price="15,90" />
+		<product name="Taboo Waterfall (50 g)" price="4,30" />
+		<product name="Taboo Waterfall (25 g)" price="1,95" />
+	</brand>
+	<brand name="Tangiers">
+		<product name="Tangiers 3 (250 g)" price="37,00" />
+		<product name="Tangiers 4 (250 g)" price="37,00" />
+		<product name="Tangiers 5 (250 g)" price="37,00" />
+		<product name="Tangiers 6 (250 g)" price="37,00" />
+		<product name="Tangiers 8 (250 g)" price="37,00" />
+		<product name="Tangiers 9 (250 g)" price="37,00" />
+		<product name="Tangiers 16 (250 g)" price="37,00" />
+		<product name="Tangiers 19 (250 g)" price="37,00" />
+		<product name="Tangiers 24 (250 g)" price="37,00" />
+		<product name="Tangiers 27 (250 g)" price="37,00" />
+		<product name="Tangiers 34 (250 g)" price="37,00" />
+		<product name="Tangiers 35 (250 g)" price="37,00" />
+		<product name="Tangiers 38 (250 g)" price="37,00" />
+		<product name="Tangiers 51 (250 g)" price="37,00" />
+		<product name="Tangiers 57 (250 g)" price="37,00" />
+		<product name="Tangiers 58 (250 g)" price="37,00" />
+		<product name="Tangiers 59 (250 g)" price="37,00" />
+		<product name="Tangiers 62 (250 g)" price="37,00" />
+		<product name="Tangiers 63 (250 g)" price="37,00" />
+		<product name="Tangiers 69 (250 g)" price="37,00" />
+		<product name="Tangiers 74 (250 g)" price="37,00" />
+		<product name="Tangiers 76 (250 g)" price="37,00" />
+		<product name="Tangiers 77 (250 g)" price="37,00" />
+		<product name="Tangiers 78 (250 g)" price="37,00" />
+		<product name="Tangiers 87 (250 g)" price="37,00" />
+		<product name="Tangiers 90 (250 g)" price="37,00" />
+		<product name="Tangiers 91 (250 g)" price="37,00" />
+		<product name="Tangiers 92 (250 g)" price="37,00" />
+		<product name="Tangiers 93 (250 g)" price="37,00" />
+		<product name="Tangiers 94 (250 g)" price="37,00" />
+		<product name="Tangiers 96 (250 g)" price="37,00" />
+		<product name="Tangiers 96a (250 g)" price="37,00" />
+		<product name="Tangiers 111 (250 g)" price="37,00" />
+		<product name="Tangiers 113 (250 g)" price="37,00" />
+		<product name="Tangiers 114 (250 g)" price="37,00" />
+		<product name="Tangiers 118 (250 g)" price="37,00" />
+		<product name="Tangiers 119 (250 g)" price="37,00" />
+		<product name="Tangiers 123 (250 g)" price="37,00" />
+		<product name="Tangiers 132 (250 g)" price="37,00" />
+		<product name="Tangiers 135 (250 g)" price="37,00" />
+		<product name="Tangiers 136 (250 g)" price="37,00" />
+		<product name="Tangiers 138 (250 g)" price="37,00" />
+		<product name="Tangiers 139 (250 g)" price="37,00" />
+		<product name="Tangiers 143 (250 g)" price="37,00" />
+	</brand>
+	<brand name="Tipsy">
+		<product name="Tipsy Aqua de Luna (200 g)" price="16,50" />
+		<product name="Tipsy Aqua de Luna (50 g)" price="4,30" />
+		<product name="Tipsy Berserk Red (200 g)" price="16,50" />
+		<product name="Tipsy Berserk Red (50 g)" price="4,30" />
+		<product name="Tipsy Summer Love (200 g)" price="16,50" />
+		<product name="Tipsy Summer Love (50 g)" price="4,30" />
+		<product name="Tipsy Viva la Fiesta (200 g)" price="16,50" />
+		<product name="Tipsy Viva la Fiesta (50 g)" price="4,30" />
+	</brand>
+	<brand name="Ziggy">
+		<product name="Ziggy Amazon Breeze (250 g)" price="20,30" />
+		<product name="Ziggy Amazon Breeze (50 g)" price="4,25" />
+		<product name="Ziggy Beach Crush (250 g)" price="20,30" />
+		<product name="Ziggy Beach Crush (50 g)" price="4,25" />
+		<product name="Ziggy Brazilian Gold (250 g)" price="20,30" />
+		<product name="Ziggy Brazilian Gold (50 g)" price="4,25" />
+		<product name="Ziggy Green Hapocalyx (990 g)" price="79,50" />
+		<product name="Ziggy Green Hapocalyx (250 g)" price="20,30" />
+		<product name="Ziggy Green Hapocalyx (50 g)" price="4,25" />
+		<product name="Ziggy Love Diamond (250 g)" price="20,30" />
+		<product name="Ziggy Love Diamond (50 g)" price="4,25" />
+		<product name="Ziggy Lust Crown (250 g)" price="20,30" />
+		<product name="Ziggy Lust Crown (50 g)" price="4,25" />
+		<product name="Ziggy Lust Queen (250 g)" price="20,30" />
+		<product name="Ziggy Lust Queen (50 g)" price="4,25" />
+		<product name="Ziggy Morning Glance (250 g)" price="20,30" />
+		<product name="Ziggy Morning Glance (50 g)" price="4,25" />
+		<product name="Ziggy Native Lines (250 g)" price="20,30" />
+		<product name="Ziggy Native Lines (50 g)" price="4,25" />
+		<product name="Ziggy Pool Party (250 g)" price="20,30" />
+		<product name="Ziggy Pool Party (50 g)" price="4,25" />
+		<product name="Ziggy Purple Starburst (250 g)" price="20,30" />
+		<product name="Ziggy Purple Starburst (50 g)" price="4,25" />
+		<product name="Ziggy Rainbow Blast (250 g)" price="20,30" />
+		<product name="Ziggy Rainbow Blast (50 g)" price="4,25" />
+		<product name="Ziggy Red Starburst (250 g)" price="20,30" />
+		<product name="Ziggy Red Starburst (50 g)" price="4,25" />
+		<product name="Ziggy Rocket Flame (250 g)" price="20,30" />
+		<product name="Ziggy Rocket Flame (50 g)" price="4,25" />
+		<product name="Ziggy Rubi Shade (250 g)" price="20,30" />
+		<product name="Ziggy Rubi Shade (50 g)" price="4,25" />
+		<product name="Ziggy Show Dream (250 g)" price="20,30" />
+		<product name="Ziggy Show Dream (50 g)" price="4,25" />
+		<product name="Ziggy Summer Sunrise (990 g)" price="79,50" />
+		<product name="Ziggy Summer Sunrise (250 g)" price="20,30" />
+		<product name="Ziggy Summer Sunrise (50 g)" price="4,25" />
+		<product name="Ziggy Thrill Hunter (250 g)" price="20,30" />
+		<product name="Ziggy Thrill Hunter (50 g)" price="4,25" />
+		<product name="Ziggy Tropical (250 g)" price="20,30" />
+		<product name="Ziggy Tropical (50 g)" price="4,25" />
+		<product name="Ziggy Valentine's Kiss (250 g)" price="20,30" />
+		<product name="Ziggy Valentine's Kiss (50 g)" price="4,25" />
+		<product name="Ziggy Velvet Petals (250 g)" price="20,30" />
+		<product name="Ziggy Velvet Petals (50 g)" price="4,25" />
+		<product name="Ziggy Wild Dive (250 g)" price="20,30" />
+		<product name="Ziggy Wild Dive (50 g)" price="4,25" />
+		<product name="Ziggy Yellow Hype (250 g)" price="20,30" />
+		<product name="Ziggy Yellow Hype (50 g)" price="4,25" />
+		<product name="Ziggy Zest of Summer (250 g)" price="20,30" />
+		<product name="Ziggy Zest of Summer (50 g)" price="4,25" />
+	</brand>
+	<brand name="Nameless">
+		<product name="Nameless # Black Box (200 g)" price="18,95" />
+		<product name="Nameless # Black Box (50 g)" price="4,80" />
+		<product name="Nameless #007 Gold Finger (200 g)" price="18,95" />
+		<product name="Nameless #007 Gold Finger (50 g)" price="4,80" />
+		<product name="Nameless #06 Dragon Lady (200 g)" price="18,95" />
+		<product name="Nameless #6 Dragon Lady (50 g)" price="4,80" />
+		<product name="Nameless #100 Yelow Pei (200 g)" price="18,95" />
+		<product name="Nameless #100 Yelow Pei (50 g)" price="4,80" />
+		<product name="Nameless #105 Red Turtle (200 g)" price="18,95" />
+		<product name="Nameless #105 Red Turtle (50 g)" price="4,80" />
+		<product name="Nameless #107 Winter is Coming (200 g)" price="18,95" />
+		<product name="Nameless #107 Winter is Coming (50 g)" price="4,80" />
+		<product name="Nameless #109 Monkey Brain (200 g)" price="18,95" />
+		<product name="Nameless #109 Monkey Brain (50 g)" price="4,80" />
+		<product name="Nameless #11 Adam y Eve (200 g)" price="18,95" />
+		<product name="Nameless #11 Adam y Eve (50 g)" price="4,80" />
+		<product name="Nameless #115 Californication (200 g)" price="18,95" />
+		<product name="Nameless #115 Californication (50 g)" price="4,80" />
+		<product name="Nameless #116 Pablo (995 g)" price="89,00" />
+		<product name="Nameless #116 Pablo (200 g)" price="18,95" />
+		<product name="Nameless #116 Pablo (50 g)" price="4,80" />
+		<product name="Nameless #121 Boogie Bomb (200 g)" price="18,95" />
+		<product name="Nameless #121 Boogie Bomb (50 g)" price="4,80" />
+		<product name="Nameless #13 Ivi (200 g)" price="18,95" />
+		<product name="Nameless #13 Ivi (50 g)" price="4,80" />
+		<product name="Nameless #13 Kivick (200 g)" price="18,95" />
+		<product name="Nameless #13 Kivick (50 g)" price="4,80" />
+		<product name="Nameless #15 Grüner Marokkaner (200 g)" price="18,95" />
+		<product name="Nameless #15 Grüner Marokkaner (50 g)" price="4,80" />
+		<product name="Nameless #17 Piches (200 g)" price="18,95" />
+		<product name="Nameless #17 Piches (50 g)" price="4,80" />
+		<product name="Nameless #40 Black Nana (995 g)" price="89,00" />
+		<product name="Nameless #40 Black Nana (955 g)" price="67,90" />
+		<product name="Nameless #40 Black Nana (200 g)" price="18,95" />
+		<product name="Nameless #40 Black Nana (50 g)" price="4,80" />
+		<product name="Nameless #43 Nevada (200 g)" price="18,95" />
+		<product name="Nameless #43 Nevadas (50 g)" price="4,80" />
+		<product name="Nameless #711 L' Oasis (200 g)" price="18,95" />
+		<product name="Nameless #711 L' Oasis (50 g)" price="4,80" />
+		<product name="Nameless #808 Pina y Lada (200 g)" price="18,95" />
+		<product name="Nameless #808 Pina y Lada (50 g)" price="4,80" />
+		<product name="Nameless Dark Nana (200 g)" price="19,50" />
+		<product name="Nameless Dark Nana (50 g)" price="5,65" />
+	</brand>
+	<brand name="Musth">
+		<product name="Musth Aluva (200 g)" price="32,30" />
+		<product name="Musth Amazonia (200 g)" price="32,30" />
+		<product name="Musth Amazonia (125 g)" price="22,60" />
+		<product name="Musth APL Drops (200 g)" price="32,30" />
+		<product name="Musth Bam Mam (200 g)" price="32,30" />
+		<product name="Musth Bam Mam (125 g)" price="22,60" />
+		<product name="Musth Bass Hlls (200 g)" price="32,30" />
+		<product name="Musth Berri Hols (200 g)" price="32,30" />
+		<product name="Musth Blvck Bros (200 g)" price="32,30" />
+		<product name="Musth Blvck Bros (125 g)" price="22,60" />
+		<product name="Musth Chisi Pi (125 g)" price="22,60" />
+		<product name="Musth Chry Col (125 g)" price="22,60" />
+		<product name="Musth Coky (125 g)" price="22,60" />
+		<product name="Musth Cosmos (200 g)" price="32,30" />
+		<product name="Musth Cosmos (125 g)" price="22,60" />
+		<product name="Musth Djumngo (200 g)" price="32,30" />
+		<product name="Musth Djumngo (125 g)" price="22,60" />
+		<product name="Musth Eclipse (200 g)" price="32,30" />
+		<product name="Musth Exotic Pum (125 g)" price="22,60" />
+		<product name="Musth Gap Fut (200 g)" price="32,30" />
+		<product name="Musth Gap Fut (125 g)" price="22,60" />
+		<product name="Musth Kendi Co (200 g)" price="32,30" />
+		<product name="Musth Kendi Co (125 g)" price="22,60" />
+		<product name="Musth Koko Dream (200 g)" price="32,30" />
+		<product name="Musth Koko Dream (125 g)" price="22,60" />
+		<product name="Musth Milric (200 g)" price="32,30" />
+		<product name="Musth Milric (125 g)" price="22,60" />
+		<product name="Musth Morocco (200 g)" price="32,30" />
+		<product name="Musth Morocco (125 g)" price="22,60" />
+		<product name="Musth Neptune (200 g)" price="32,30" />
+		<product name="Musth Neptune (125 g)" price="22,60" />
+		<product name="Musth Ornj Team (200 g)" price="32,30" />
+		<product name="Musth Ornj Team (125 g)" price="22,60" />
+		<product name="Musth Parapap (200 g)" price="32,30" />
+		<product name="Musth Parapap (125 g)" price="22,60" />
+		<product name="Musth Pinkman (200 g)" price="32,30" />
+		<product name="Musth Pinkman (125 g)" price="22,60" />
+		<product name="Musth Plombir (200 g)" price="32,30" />
+		<product name="Musth Plombir (125 g)" price="22,60" />
+		<product name="Musth Proscco (125 g)" price="22,60" />
+		<product name="Musth Raspi (200 g)" price="32,30" />
+		<product name="Musth Raspi (125 g)" price="22,60" />
+		<product name="Musth Rd Ti (125 g)" price="22,60" />
+		<product name="Musth Red Gape (200 g)" price="32,30" />
+		<product name="Musth Red Gape (125 g)" price="22,60" />
+		<product name="Musth Rocketman (200 g)" price="32,30" />
+		<product name="Musth Rocketman (125 g)" price="22,60" />
+		<product name="Musth Sea Backtrn Ti (200 g)" price="32,30" />
+		<product name="Musth Sea Backtrn Ti (125 g)" price="22,60" />
+		<product name="Musth Space FLV (200 g)" price="32,30" />
+		<product name="Musth Space Invaders (200 g)" price="32,30" />
+		<product name="Musth Space Invaders (125 g)" price="22,60" />
+		<product name="Musth Stellar (200 g)" price="32,30" />
+		<product name="Musth Straw Lych (200 g)" price="32,30" />
+		<product name="Musth Swt Pech (125 g)" price="22,60" />
+		<product name="Musth Tarxun (125 g)" price="22,60" />
+		<product name="Musth Unicorn (125 g)" price="22,60" />
+		<product name="Musth Uranus (200 g)" price="32,30" />
+		<product name="Musth Violet (125 g)" price="22,60" />
+		<product name="Musth Violet CO (200 g)" price="32,30" />
+		<product name="Musth Wet Mel (125 g)" price="22,60" />
+		<product name="Musth White Sod (125 g)" price="22,60" />
+		<product name="Musth Ylkah (125 g)" price="22,60" />
+	</brand>
+</shisha_tobaccos>
