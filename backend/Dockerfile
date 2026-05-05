@@ -3,7 +3,7 @@ FROM node:24-bookworm AS builder
 WORKDIR /app
 
 # Instalar dependencias necesarias para Prisma y dependencias del sistema (para puppeteer si lo usas)
-RUN apt-get update -y && apt-get install -y openssl libnss3 libnspr4 libgbm1 libasound2
+RUN apt-get update -y && apt-get install -y openssl chromium
 
 COPY package*.json ./
 COPY prisma ./prisma/
@@ -22,7 +22,7 @@ FROM node:24-bookworm
 
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y openssl libnss3 libnspr4 libgbm1 libasound2 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && apt-get install -y openssl chromium && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
