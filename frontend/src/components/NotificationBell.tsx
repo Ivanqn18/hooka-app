@@ -60,7 +60,7 @@ export default function NotificationBell() {
                 style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'relative', padding: '0.4rem', display: 'flex', alignItems: 'center' }}
                 title="Notificaciones"
             >
-                <Bell size={20} color="var(--text-primary)" />
+                <Bell size={20} color="white" />
                 {unreadCount > 0 && (
                     <span style={{
                         position: 'absolute', top: 0, right: 0,
