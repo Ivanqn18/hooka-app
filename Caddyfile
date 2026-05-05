@@ -1,4 +1,10 @@
-:80 {
+{
+    # Correo para el registro automático de Let's Encrypt (ACME)
+    email {$ACME_EMAIL:tuemail@ejemplo.com}
+}
+
+# Usa el dominio configurado en .env, si no hay, usa el puerto 80 por defecto
+{$DOMAIN::80} {
     # Redirigir el API al contenedor del backend (NestJS)
     handle_path /api/* {
         reverse_proxy backend:3000

@@ -25,7 +25,7 @@ export default function Chat() {
             .catch(console.error);
 
         // 2. Connect Socket.IO
-        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const baseUrl = import.meta.env.VITE_API_URL || '/api';
         socketRef.current = io(baseUrl);
 
         socketRef.current.on('connect', () => {

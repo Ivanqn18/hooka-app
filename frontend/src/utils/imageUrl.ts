@@ -13,7 +13,7 @@ export const imageUrl = (path: string | null | undefined): string | undefined =>
   }
   
   // Prepend backend URL for local paths
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const baseUrl = import.meta.env.VITE_API_URL || '/api';
   
   // Ensure the path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
