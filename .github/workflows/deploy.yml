@@ -1,0 +1,72 @@
+name: Deploy HookaApp to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and Build Backend
+        working-directory: ./backend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install and Build Frontend
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Droplet via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # 1. Navegar al directorio del proyecto
+            cd /var/www/hookaapp
+            
+            # 2. Descargar últimos cambios de GitHub
+            git pull origin main
+            
+            # 3. Levantar la base de datos (PostgreSQL vía Docker Compose)
+            docker-compose up -d
+            
+            # 4. Desplegar Backend (NestJS)
+            cd backend
+            npm install --production=false
+            npx prisma generate
+            npx prisma migrate deploy
+            npm run build
+            # Si no existe el proceso en PM2, lo creará, si existe, lo reinicia
+            pm2 describe hooka-backend > /dev/null
+            if [ $? -eq 0 ]; then
+                pm2 restart hooka-backend
+            else
+                pm2 start dist/main.js --name "hooka-backend"
+            fi
+            pm2 save
+            
+            # 5. Desplegar Frontend (React/Vite)
+            cd ../frontend
+            npm install
+            npm run build
+            
+            # (Caddy sirve la carpeta dist estáticamente, por lo que los cambios del frontend se ven inmediatamente)
