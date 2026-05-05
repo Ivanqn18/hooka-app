@@ -13,7 +13,7 @@ async function main() {
   console.log('Catálogo anterior borrado.');
   
   // 1. Leer archivo XML
-  const xmlPath = path.resolve(__dirname, '../tabacosxml.xml');
+  const xmlPath = path.resolve(__dirname, 'tabacosxml.xml');
   if (!fs.existsSync(xmlPath)) {
     console.error(`No se encuentra el archivo XML en: ${xmlPath}`);
     process.exit(1);

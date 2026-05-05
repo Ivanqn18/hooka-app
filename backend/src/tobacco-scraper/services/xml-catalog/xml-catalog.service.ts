@@ -20,12 +20,10 @@ export class XmlCatalogService {
   getLightCatalog(): XmlBrandCatalog[] {
     if (this.cachedCatalog) return this.cachedCatalog;
 
-    // Candidatos de ruta: buscamos desde process.cwd() (backend/) y con __dirname
+    // Candidatos de ruta: buscamos desde process.cwd() (backend/ o /app) y con __dirname
     const candidates = [
-      path.resolve(process.cwd(), '..', 'tabacosxml.xml'),          // backend/ -> HookaApp/tabacosxml.xml
-      path.resolve(process.cwd(), 'tabacosxml.xml'),                 // si cwd es ya HookaApp/
-      path.resolve(__dirname, '..', '..', '..', '..', '..', 'tabacosxml.xml'), // desde dist profundo
-      path.resolve(__dirname, '..', '..', '..', '..', 'tabacosxml.xml'),       // fallback
+      path.resolve(process.cwd(), 'tabacosxml.xml'),
+      path.resolve(__dirname, '..', '..', '..', '..', 'tabacosxml.xml'),
     ];
 
     const xmlPath = candidates.find(p => fs.existsSync(p)) ?? '';
