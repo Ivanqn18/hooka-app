@@ -24,9 +24,16 @@ export default function Chat() {
             .then((data: any) => setMessages(data))
             .catch(console.error);
 
-        // 2. Connect Socket.IO
-        const baseUrl = import.meta.env.VITE_API_URL || '/api';
-        socketRef.current = io(baseUrl);
+        // En producción: io() conecta al mismo origen → Caddy enruta /socket.io/* al backend
+        // En desarrollo: VITE_SOCKET_URL=http://localhost:3000
+        const socketUrl = import.meta.env.VITE_SOCKET_URL as string | undefined;
+        const socketOptions = {
+            withCredentials: true,
+            transports: ['websocket', 'polling'] as const,
+        };
+        socketRef.current = socketUrl
+            ? io(socketUrl, socketOptions)
+            : io(socketOptions);
 
         socketRef.current.on('connect', () => {
             socketRef.current?.emit('joinChat', Number(id));
