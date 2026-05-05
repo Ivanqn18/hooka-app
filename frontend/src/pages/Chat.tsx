@@ -24,16 +24,15 @@ export default function Chat() {
             .then((data: any) => setMessages(data))
             .catch(console.error);
 
-        // En producción: io() conecta al mismo origen → Caddy enruta /socket.io/* al backend
-        // En desarrollo: VITE_SOCKET_URL=http://localhost:3000
-        const socketUrl = import.meta.env.VITE_SOCKET_URL as string | undefined;
+        // En producción: conecta al mismo origen → Caddy enruta /socket.io/* al backend
+        // Se construye explícitamente la URL para garantizar wss:// en HTTPS
+        const socketUrl = import.meta.env.VITE_SOCKET_URL as string | undefined
+            || window.location.origin;  // e.g. https://hookahub.me → usa wss://
         const socketOptions = {
             withCredentials: true,
             transports: ['websocket', 'polling'],
         };
-        socketRef.current = socketUrl
-            ? io(socketUrl, socketOptions)
-            : io(socketOptions);
+        socketRef.current = io(socketUrl, socketOptions);
 
         socketRef.current.on('connect', () => {
             socketRef.current?.emit('joinChat', Number(id));

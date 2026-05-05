@@ -18,6 +18,14 @@
         }
     }
 
+    # Archivos estáticos subidos por usuarios (avatares, imágenes de productos)
+    # NestJS los sirve en /uploads — se exponen directamente sin quitar el prefijo
+    handle /uploads/* {
+        reverse_proxy backend:3000 {
+            header_up X-Forwarded-Proto {scheme}
+        }
+    }
+
     # Redirigir el API al contenedor del backend (NestJS)
     handle_path /api/* {
         reverse_proxy backend:3000 {
