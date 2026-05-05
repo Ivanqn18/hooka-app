@@ -1,72 +1,93 @@
-name: Deploy HookaApp to DigitalOcean
+name: Deploy HookaApp to DigitalOcean via Docker
 
 on:
   push:
     branches:
       - main
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  build-and-test:
+  build-and-push-images:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          node-version: '20'
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install and Build Backend
-        working-directory: ./backend
-        run: |
-          npm ci
-          npm run build
+      - name: Build and push Backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:latest
 
-      - name: Install and Build Frontend
-        working-directory: ./frontend
-        run: |
-          npm ci
-          npm run build
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:latest
 
   deploy:
-    needs: build-and-test
+    needs: build-and-push-images
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Droplet via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET
           script: |
             # 1. Navegar al directorio del proyecto
             cd /var/www/hookaapp
             
-            # 2. Descargar últimos cambios de GitHub
+            # 2. Descargar el docker-compose.yml actualizado
             git pull origin main
             
-            # 3. Levantar la base de datos (PostgreSQL vía Docker Compose)
-            docker-compose up -d
+            # 3. Descargar las nuevas imágenes
+            export BACKEND_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}-backend:latest
+            export FRONTEND_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}-frontend:latest
             
-            # 4. Desplegar Backend (NestJS)
-            cd backend
-            npm install --production=false
-            npx prisma generate
-            npx prisma migrate deploy
-            npm run build
-            # Si no existe el proceso en PM2, lo creará, si existe, lo reinicia
-            pm2 describe hooka-backend > /dev/null
-            if [ $? -eq 0 ]; then
-                pm2 restart hooka-backend
-            else
-                pm2 start dist/main.js --name "hooka-backend"
-            fi
-            pm2 save
+            # Asegurar que el formato sea todo minúsculas
+            export BACKEND_IMAGE=$(echo $BACKEND_IMAGE | tr '[:upper:]' '[:lower:]')
+            export FRONTEND_IMAGE=$(echo $FRONTEND_IMAGE | tr '[:upper:]' '[:lower:]')
             
-            # 5. Desplegar Frontend (React/Vite)
-            cd ../frontend
-            npm install
-            npm run build
+            # Escribir las variables en el .env del servidor (generado automáticamente)
+            cat <<EOF > .env
+            POSTGRES_USER=$POSTGRES_USER
+            POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+            POSTGRES_DB=$POSTGRES_DB
+            POSTGRES_PORT=$POSTGRES_PORT
+            DATABASE_URL=$DATABASE_URL
+            JWT_SECRET=$JWT_SECRET
+            BACKEND_IMAGE=$BACKEND_IMAGE
+            FRONTEND_IMAGE=$FRONTEND_IMAGE
+            EOF
             
-            # (Caddy sirve la carpeta dist estáticamente, por lo que los cambios del frontend se ven inmediatamente)
+            # Descargar nuevas versiones e iniciar
+            docker-compose pull backend frontend
+            docker-compose up -d --remove-orphans
+            
+            # Recargar Caddy por si el Caddyfile cambió
+            docker-compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile || docker-compose restart caddy

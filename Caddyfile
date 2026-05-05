@@ -1,0 +1,11 @@
+:80 {
+    # Redirigir el API al contenedor del backend (NestJS)
+    handle_path /api/* {
+        reverse_proxy backend:3000
+    }
+
+    # Redirigir todo lo demás al contenedor del frontend (Nginx/React)
+    handle {
+        reverse_proxy frontend:80
+    }
+}
