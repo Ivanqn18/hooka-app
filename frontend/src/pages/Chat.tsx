@@ -29,7 +29,7 @@ export default function Chat() {
         const socketUrl = import.meta.env.VITE_SOCKET_URL as string | undefined;
         const socketOptions = {
             withCredentials: true,
-            transports: ['websocket', 'polling'] as const,
+            transports: ['websocket', 'polling'],
         };
         socketRef.current = socketUrl
             ? io(socketUrl, socketOptions)
