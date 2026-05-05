@@ -29,6 +29,15 @@ const storage = diskStorage({
 
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
+// En producción (HTTPS via Caddy) las cookies necesitan secure:true y sameSite:'none'
+const IS_PROD = !!process.env.FRONTEND_URL;
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  maxAge: COOKIE_MAX_AGE,
+  sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+  secure: IS_PROD,
+};
+
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
@@ -61,12 +70,7 @@ export class AuthController {
     }
     const { token, user } = await this.authService.register(body);
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: COOKIE_MAX_AGE,
-      sameSite: 'lax',
-      secure: false, // set to true in production with HTTPS
-    });
+    res.cookie('token', token, COOKIE_OPTIONS);
 
     return { user };
   }
@@ -78,12 +82,7 @@ export class AuthController {
   ) {
     const { token, user } = await this.authService.login(body);
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: COOKIE_MAX_AGE,
-      sameSite: 'lax',
-      secure: false,
-    });
+    res.cookie('token', token, COOKIE_OPTIONS);
 
     return { user };
   }
@@ -99,7 +98,11 @@ export class AuthController {
 
   @Post('logout')
   logout(@Res({ passthrough: true }) res: express.Response) {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+      httpOnly: true,
+      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+      secure: IS_PROD,
+    });
     return { message: 'Sesión cerrada' };
   }
 }

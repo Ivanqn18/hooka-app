@@ -12,12 +12,17 @@
             header_up X-Real-IP {remote_host}
             header_up X-Forwarded-For {remote_host}
             header_up X-Forwarded-Proto {scheme}
+            # Headers necesarios para el upgrade de WebSocket
+            header_up Connection {>Connection}
+            header_up Upgrade {>Upgrade}
         }
     }
 
     # Redirigir el API al contenedor del backend (NestJS)
     handle_path /api/* {
-        reverse_proxy backend:3000
+        reverse_proxy backend:3000 {
+            header_up X-Forwarded-Proto {scheme}
+        }
     }
 
     # Redirigir todo lo demás al contenedor del frontend (Nginx/React)
