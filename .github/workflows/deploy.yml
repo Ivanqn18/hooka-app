@@ -69,17 +69,20 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,GH_TOKEN
           script: |
             # 1. Crear directorio si no existe y navegar
             mkdir -p /var/www/hookaapp
             cd /var/www/hookaapp
+            # 2. Iniciar sesión en GitHub Container Registry para descargar imágenes privadas
+            echo $GH_TOKEN | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            # 2. Descargar las nuevas imágenes
+            # 3. Descargar las nuevas imágenes
             export BACKEND_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}-backend:latest
             export FRONTEND_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}-frontend:latest
             
