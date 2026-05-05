@@ -64,18 +64,23 @@ export default function Profile() {
 
     const handleSave = async () => {
         try {
-            const payload = new FormData();
-            payload.append('nombre', formData.nombre);
-            payload.append('bio', formData.bio);
-            if (avatarFile) {
-                payload.append('avatar', avatarFile);
-            } else {
-                payload.append('avatarUrl', formData.avatarUrl);
-            }
-            const updatedUser: any = await api.put(`/users/${user.id}`, payload, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            // 1. Actualizar nombre y bio (JSON puro)
+            const updatedUser: any = await api.put(`/users/${user.id}`, {
+                nombre: formData.nombre,
+                bio: formData.bio,
             });
-            updateUser(updatedUser);
+
+            // 2. Si hay un archivo de avatar nuevo, subirlo en una petición separada
+            let finalUser = updatedUser;
+            if (avatarFile) {
+                const avatarForm = new FormData();
+                avatarForm.append('avatar', avatarFile);
+                finalUser = await api.post(`/users/${user.id}/avatar`, avatarForm, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            }
+
+            updateUser(finalUser);
             setAvatarFile(null);
             setAvatarPreview(null);
             setIsEditing(false);
