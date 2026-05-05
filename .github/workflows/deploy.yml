@@ -102,9 +102,12 @@ jobs:
             FRONTEND_IMAGE=$FRONTEND_IMAGE
             EOF
             
-            # Descargar nuevas versiones e iniciar
-            docker compose pull backend frontend
-            docker compose up -d --remove-orphans
+            # Bajar contenedores existentes
+            docker compose down
             
-            # Recargar Caddy por si el Caddyfile cambió
-            docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile || docker compose restart caddy
+            # Descargar nuevas versiones e iniciar
+            docker compose pull
+            docker compose up -d
+            
+            # Limpiar imágenes antiguas para no llenar el disco del servidor
+            docker image prune -a -f
