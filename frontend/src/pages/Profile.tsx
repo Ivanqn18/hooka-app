@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Camera, Users } from 'lucide-react';
+import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Camera, Users, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
 import { imageUrl } from '../utils/imageUrl';
@@ -26,6 +26,17 @@ export default function Profile() {
         avatarUrl: '',
         bio: ''
     });
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setAvatarFile(file);
+            setAvatarPreview(URL.createObjectURL(file));
+        }
+    };
 
     useEffect(() => {
         if (!user) {
@@ -53,8 +64,20 @@ export default function Profile() {
 
     const handleSave = async () => {
         try {
-            const updatedUser: any = await api.put(`/users/${user.id}`, formData);
-            updateUser(updatedUser); // Actualizar contexto local para que cambie en toda la app
+            const payload = new FormData();
+            payload.append('nombre', formData.nombre);
+            payload.append('bio', formData.bio);
+            if (avatarFile) {
+                payload.append('avatar', avatarFile);
+            } else {
+                payload.append('avatarUrl', formData.avatarUrl);
+            }
+            const updatedUser: any = await api.put(`/users/${user.id}`, payload, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            updateUser(updatedUser);
+            setAvatarFile(null);
+            setAvatarPreview(null);
             setIsEditing(false);
         } catch (error) {
             console.error(error);
@@ -73,7 +96,7 @@ export default function Profile() {
                 
                 <div className="relative z-10 mb-8 group">
                     {(() => {
-                        const avatarSrc = imageUrl(formData.avatarUrl);
+                        const avatarSrc = avatarPreview || imageUrl(formData.avatarUrl);
                         if (avatarSrc) {
                             return (
                                 <div className="relative">
@@ -83,9 +106,14 @@ export default function Profile() {
                                         className="w-32 h-32 rounded-full object-cover border-4 border-shisha-surface shadow-2xl transition-transform group-hover:scale-105"
                                     />
                                     {isEditing && (
-                                        <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border-4 border-shisha-ember">
-                                            <Camera size={24} />
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="absolute inset-0 bg-black/50 rounded-full flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity border-4 border-shisha-ember gap-1"
+                                        >
+                                            <Upload size={22} />
+                                            <span className="text-[9px] font-black uppercase tracking-widest">Cambiar</span>
+                                        </button>
                                     )}
                                 </div>
                             );
@@ -94,12 +122,32 @@ export default function Profile() {
                             const colorIndex = Math.abs(stringHash(nameStr)) % BG_COLORS.length;
                             const dynamicBgColor = BG_COLORS[colorIndex];
                             return (
-                                <div className="w-32 h-32 rounded-full border-4 border-shisha-surface shadow-2xl overflow-hidden transition-transform group-hover:scale-105" style={{ background: dynamicBgColor }}>
-                                    <Facehash name={nameStr} size={128} intensity3d="none" variant="solid" showInitial={false} enableBlink={true} />
+                                <div className="relative">
+                                    <div className="w-32 h-32 rounded-full border-4 border-shisha-surface shadow-2xl overflow-hidden transition-transform group-hover:scale-105" style={{ background: dynamicBgColor }}>
+                                        <Facehash name={nameStr} size={128} intensity3d="none" variant="solid" showInitial={false} enableBlink={true} />
+                                    </div>
+                                    {isEditing && (
+                                        <button
+                                            type="button"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="absolute inset-0 bg-black/50 rounded-full flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity border-4 border-shisha-ember gap-1"
+                                        >
+                                            <Upload size={22} />
+                                            <span className="text-[9px] font-black uppercase tracking-widest">Subir foto</span>
+                                        </button>
+                                    )}
                                 </div>
                             );
                         }
                     })()}
+                    {/* Hidden file input */}
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        accept="image/jpg,image/jpeg,image/png,image/webp"
+                        onChange={handleFileSelect}
+                    />
                 </div>
 
                 <div className="relative z-10 space-y-4 w-full max-w-xl">
@@ -112,13 +160,16 @@ export default function Profile() {
                                 onChange={e => setFormData({ ...formData, nombre: e.target.value })} 
                                 placeholder="Tu apodo en el gremio..." 
                             />
-                            <input 
-                                type="url" 
-                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium text-sm focus:border-shisha-ember outline-none transition-all placeholder:text-shisha-text-dim/20" 
-                                value={formData.avatarUrl} 
-                                onChange={e => setFormData({ ...formData, avatarUrl: e.target.value })} 
-                                placeholder="URL de imagen de perfil..." 
-                            />
+                            <button
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium text-sm hover:border-shisha-ember/50 outline-none transition-all flex items-center gap-3 group"
+                            >
+                                <Upload size={16} className="text-shisha-text-dim group-hover:text-shisha-ember transition-colors shrink-0" />
+                                <span className="text-shisha-text-dim group-hover:text-white transition-colors truncate">
+                                    {avatarFile ? avatarFile.name : 'Seleccionar imagen de perfil...'}
+                                </span>
+                            </button>
                             <textarea 
                                 className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium focus:border-shisha-ember outline-none transition-all resize-none placeholder:text-shisha-text-dim/20" 
                                 rows={3} 
