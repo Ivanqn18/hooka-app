@@ -109,5 +109,8 @@ jobs:
             docker compose pull
             docker compose up -d
             
+            # Ejecutar migraciones de Prisma en la base de datos de producción
+            docker compose exec -T backend npx prisma migrate deploy
+            
             # Limpiar imágenes antiguas para no llenar el disco del servidor
             docker image prune -a -f
