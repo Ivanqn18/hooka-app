@@ -9,7 +9,6 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFile,
-  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -50,7 +49,7 @@ export class UsersController {
       }),
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
-          return cb(new BadRequestException('Solo se permiten imágenes'), false);
+          return cb(new Error('Solo se permiten imágenes jpg, jpeg, png o webp'), false);
         }
         cb(null, true);
       },
@@ -63,7 +62,7 @@ export class UsersController {
     @UploadedFile() file?: Express.Multer.File,
   ) {
     if (file) {
-      updateUserDto.avatarUrl = `/uploads/avatars/${file.filename}`;
+      (updateUserDto as any).avatarUrl = `/uploads/avatars/${file.filename}`;
     }
     return this.usersService.update(id, updateUserDto);
   }

@@ -5,6 +5,16 @@
 
 # Usa el dominio configurado en .env, si no hay, usa el puerto 80 por defecto
 {$DOMAIN::80} {
+    # WebSockets para el chat (Socket.IO) — DEBE estar antes de /api
+    handle /socket.io/* {
+        reverse_proxy backend:3000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+        }
+    }
+
     # Redirigir el API al contenedor del backend (NestJS)
     handle_path /api/* {
         reverse_proxy backend:3000

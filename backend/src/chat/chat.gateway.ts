@@ -8,7 +8,16 @@ import {
 import { ChatService } from './chat.service';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({ cors: { origin: '*' } })
+const WS_CORS_ORIGIN = process.env.FRONTEND_URL
+  ? [process.env.FRONTEND_URL, 'http://localhost:5173']
+  : '*';
+
+@WebSocketGateway({
+  cors: {
+    origin: WS_CORS_ORIGIN,
+    credentials: true,
+  },
+})
 export class ChatGateway {
   @WebSocketServer()
   server: Server;

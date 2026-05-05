@@ -70,11 +70,12 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,GH_TOKEN
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,GH_TOKEN,FRONTEND_URL
           script: |
             # 1. Crear directorio si no existe y navegar
             mkdir -p /var/www/hookaapp
@@ -100,6 +101,7 @@ jobs:
             JWT_SECRET=$JWT_SECRET
             BACKEND_IMAGE=$BACKEND_IMAGE
             FRONTEND_IMAGE=$FRONTEND_IMAGE
+            FRONTEND_URL=$FRONTEND_URL
             EOF
             
             # Bajar contenedores existentes
@@ -111,6 +113,9 @@ jobs:
             
             # Ejecutar migraciones de Prisma en la base de datos de producción
             docker compose exec -T backend npx prisma migrate deploy
+            
+            # Asegurar que existe un administrador en la base de datos
+            docker compose exec -T backend npx ts-node prisma/ensure-admin.ts
             
             # Limpiar imágenes antiguas para no llenar el disco del servidor
             docker image prune -a -f
