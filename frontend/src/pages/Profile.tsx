@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Camera, Users, Upload } from 'lucide-react';
+import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Users, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
 import { imageUrl } from '../utils/imageUrl';
