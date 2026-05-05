@@ -13,6 +13,9 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
+# Eliminar el generador ERD temporalmente para la build y evitar el error de root sin --no-sandbox en Puppeteer
+RUN sed -i '/generator erd {/,/}/d' prisma/schema.prisma
+
 RUN npx prisma generate
 
 RUN npm run build
