@@ -1,32 +1,38 @@
-FROM node:24-bookworm AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Instalar dependencias necesarias para Prisma y dependencias del sistema (para puppeteer si lo usas)
-RUN apt-get update -y && apt-get install -y openssl chromium
+# Install build dependencies
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Instalar usando legacy-peer-deps por el conflicto de puppeteer
 RUN npm ci --legacy-peer-deps
 
 COPY . .
 
-# Eliminar el generador ERD temporalmente para la build y evitar el error de root sin --no-sandbox en Puppeteer
+# Remove ERD generator for build
 RUN sed -i '/generator erd {/,/}/d' prisma/schema.prisma
 
 RUN npx prisma generate
-
 RUN npm run build
 
-# --- Imagen de Producción ---
-FROM node:24-bookworm
+# --- Production Image ---
+FROM node:20-slim
 
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y openssl chromium && rm -rf /var/lib/apt/lists/*
+# Install runtime dependencies (chromium for puppeteer)
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    openssl \
+    chromium \
+    && rm -rf /var/lib/apt/lists/*
 
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+# Copy only production dependencies
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma

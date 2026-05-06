@@ -15,6 +15,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        service: [backend, frontend]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,6 +26,9 @@ jobs:
         run: |
           echo "IMAGE_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -30,19 +36,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Backend image
+      - name: Build and push ${{ matrix.service }} image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ./${{ matrix.service }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}-backend:latest
-
-      - name: Build and push Frontend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}-frontend:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}-${{ matrix.service }}:latest
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
 
   deploy:
     needs: build-and-push-images
@@ -50,6 +51,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set lower case repository name
+        run: |
+          echo "IMAGE_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Copy files to Droplet
         uses: appleboy/scp-action@master
@@ -69,6 +74,7 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
           ACME_EMAIL: ${{ secrets.ACME_EMAIL }}
@@ -77,7 +83,7 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,GH_TOKEN,FRONTEND_URL,ACME_EMAIL,DOMAIN
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,JWT_REFRESH_SECRET,GH_TOKEN,FRONTEND_URL,ACME_EMAIL,DOMAIN
           script: |
             # 1. Crear directorio si no existe y navegar
             mkdir -p /var/www/hookaapp
@@ -97,6 +103,7 @@ jobs:
             printf "POSTGRES_PORT=%s\n"   "$POSTGRES_PORT"   >> .env
             printf "DATABASE_URL=%s\n"    "$DATABASE_URL"    >> .env
             printf "JWT_SECRET=%s\n"      "$JWT_SECRET"      >> .env
+            printf "JWT_REFRESH_SECRET=%s\n" "$JWT_REFRESH_SECRET" >> .env
             printf "BACKEND_IMAGE=%s\n"   "$BACKEND_IMAGE"   >> .env
             printf "FRONTEND_IMAGE=%s\n"  "$FRONTEND_IMAGE"  >> .env
             printf "FRONTEND_URL=%s\n"    "$FRONTEND_URL"    >> .env
@@ -111,14 +118,10 @@ jobs:
             docker compose up -d
 
             # 7. Esperar a que el backend arranque antes de migrar
-            sleep 15
+            sleep 10
 
             # 8. Ejecutar migraciones de Prisma
             docker compose exec -T backend npx prisma migrate deploy
 
-            # 9. Asegurar que existe un administrador
-            docker compose exec -T backend npx ts-node prisma/ensure-admin.ts
-
-            # 10. Limpiar imágenes antiguas
+            # 9. Limpiar imágenes antiguas
             docker image prune -a -f
-

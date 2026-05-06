@@ -3,12 +3,14 @@ FROM node:20-slim AS builder
 WORKDIR /app
 
 COPY package*.json ./
+
+# Leverage cache for dependencies
 RUN npm ci --legacy-peer-deps
 
 COPY . .
 RUN npm run build
 
-# --- Imagen de Producción (Nginx) ---
+# --- Production Image (Nginx) ---
 FROM nginx:alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
