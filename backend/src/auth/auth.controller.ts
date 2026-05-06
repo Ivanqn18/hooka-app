@@ -9,6 +9,7 @@ import {
   UploadedFile,
   BadRequestException,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -28,7 +29,7 @@ const storage = diskStorage({
 });
 
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
-const ACCESS_TOKEN_MAX_AGE = 24 * 60 * 60 * 1000; // 24 hours in ms
+const ACCESS_TOKEN_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
 const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
 
@@ -37,15 +38,15 @@ function getCookieOptions(maxAge: number) {
     httpOnly: true,
     path: '/',
     maxAge,
-    sameSite: 'lax' as const,
-    secure: IS_PROD,
-    // No domain: let browser use the current domain automatically
-    // This works correctly with reverse proxies (Caddy)
+    sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+    secure: true, // Always true - browsers reject secure cookies on HTTP anyway
   };
 }
 
 @Controller('auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(private authService: AuthService) { }
 
   private setAuthCookies(
@@ -58,8 +59,18 @@ export class AuthController {
   }
 
   private clearAuthCookies(res: express.Response) {
-    res.clearCookie('token', getCookieOptions(ACCESS_TOKEN_MAX_AGE));
-    res.clearCookie('refresh_token', getCookieOptions(COOKIE_MAX_AGE));
+    res.clearCookie('token', { 
+      httpOnly: true, 
+      path: '/', 
+      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax', 
+      secure: true 
+    });
+    res.clearCookie('refresh_token', { 
+      httpOnly: true, 
+      path: '/', 
+      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax', 
+      secure: true 
+    });
   }
 
   @Post('register')
@@ -125,8 +136,10 @@ export class AuthController {
 
   @Get('me')
   async me(@Req() req: express.Request) {
+    this.logger.debug(`Cookies received: ${JSON.stringify(req.cookies)}`);
     const token = req.cookies?.token;
     if (!token) {
+      this.logger.warn('No token cookie found');
       throw new UnauthorizedException('No session cookie');
     }
     return this.authService.getMe(token);
