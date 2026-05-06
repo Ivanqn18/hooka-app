@@ -4,7 +4,7 @@
 }
 
 # Usa el dominio configurado en .env, si no hay, usa el puerto 80 por defecto
-{$DOMAIN::80} {
+hookahub.me {
     # WebSockets para el chat (Socket.IO)
     handle /socket.io/* {
         reverse_proxy backend:3000
@@ -16,8 +16,6 @@
         reverse_proxy backend:3000 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-For {remote_host}
-            header_up X-Forwarded-Proto {scheme}
         }
     }
 
@@ -26,7 +24,6 @@
         reverse_proxy backend:3000 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-For {remote_host}
             header_up X-Forwarded-Proto {scheme}
         }
     }
