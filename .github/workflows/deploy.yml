@@ -82,29 +82,26 @@ jobs:
             # 1. Crear directorio si no existe y navegar
             mkdir -p /var/www/hookaapp
             cd /var/www/hookaapp
-            # 2. Iniciar sesión en GitHub Container Registry para descargar imágenes privadas
+
+            # 2. Login en GitHub Container Registry
             echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
             # 3. Calcular nombres de imagen en minúsculas
             BACKEND_IMAGE=$(echo "ghcr.io/${{ env.IMAGE_NAME }}-backend:latest" | tr '[:upper:]' '[:lower:]')
             FRONTEND_IMAGE=$(echo "ghcr.io/${{ env.IMAGE_NAME }}-frontend:latest" | tr '[:upper:]' '[:lower:]')
 
-            # 4. Escribir .env sin indentación (heredoc sin sangría para evitar corrupción)
-            cat > .env <<'ENVEOF'
-POSTGRES_USER=$POSTGRES_USER
-POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-POSTGRES_DB=$POSTGRES_DB
-POSTGRES_PORT=$POSTGRES_PORT
-DATABASE_URL=$DATABASE_URL
-JWT_SECRET=$JWT_SECRET
-BACKEND_IMAGE=$BACKEND_IMAGE
-FRONTEND_IMAGE=$FRONTEND_IMAGE
-FRONTEND_URL=$FRONTEND_URL
-ACME_EMAIL=$ACME_EMAIL
-DOMAIN=$DOMAIN
-ENVEOF
-            # Expandir las variables del shell dentro del .env ya escrito
-            envsubst < .env > .env.tmp && mv .env.tmp .env
+            # 4. Escribir .env (printf en lugar de heredoc para compatibilidad YAML)
+            printf "POSTGRES_USER=%s\n"   "$POSTGRES_USER"   > .env
+            printf "POSTGRES_PASSWORD=%s\n" "$POSTGRES_PASSWORD" >> .env
+            printf "POSTGRES_DB=%s\n"     "$POSTGRES_DB"     >> .env
+            printf "POSTGRES_PORT=%s\n"   "$POSTGRES_PORT"   >> .env
+            printf "DATABASE_URL=%s\n"    "$DATABASE_URL"    >> .env
+            printf "JWT_SECRET=%s\n"      "$JWT_SECRET"      >> .env
+            printf "BACKEND_IMAGE=%s\n"   "$BACKEND_IMAGE"   >> .env
+            printf "FRONTEND_IMAGE=%s\n"  "$FRONTEND_IMAGE"  >> .env
+            printf "FRONTEND_URL=%s\n"    "$FRONTEND_URL"    >> .env
+            printf "ACME_EMAIL=%s\n"      "$ACME_EMAIL"      >> .env
+            printf "DOMAIN=%s\n"          "$DOMAIN"          >> .env
 
             # 5. Bajar contenedores existentes
             docker compose down
@@ -124,3 +121,4 @@ ENVEOF
 
             # 10. Limpiar imágenes antiguas
             docker image prune -a -f
+
