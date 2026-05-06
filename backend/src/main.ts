@@ -16,7 +16,18 @@ async function bootstrap() {
     : ['http://localhost:5173'];
 
   app.enableCors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      // Permitir peticiones sin origin (server-to-server, mobile apps)
+      if (!origin) return callback(null, true);
+      // Permitir orígenes explícitos
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      // En producción, permitir cualquier origen HTTPS del mismo dominio base
+      const isProd = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
+      if (isProd && origin.startsWith('https://')) {
+        return callback(null, true);
+      }
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],

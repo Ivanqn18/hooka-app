@@ -29,16 +29,18 @@ const storage = diskStorage({
 
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
-// En producción (HTTPS via Caddy) las cookies necesitan secure:true y sameSite:'none'
-// FRONTEND_URL sólo se define en producción (se pasa por variable de entorno en docker-compose)
 const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  path: '/',          // Imprescindible: la cookie aplica a toda la app, no sólo a /api/auth/
-  maxAge: COOKIE_MAX_AGE,
-  sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
-  secure: IS_PROD,    // Requerido junto a SameSite=None en HTTPS
-};
+
+function getCookieOptions(req: express.Request) {
+  return {
+    httpOnly: true,
+    path: '/',
+    maxAge: COOKIE_MAX_AGE,
+    sameSite: 'lax' as const,
+    secure: IS_PROD,
+    domain: req.hostname || undefined,
+  };
+}
 
 @Controller('auth')
 export class AuthController {
@@ -65,6 +67,7 @@ export class AuthController {
   async register(
     @Body() body: RegisterDto,
     @UploadedFile() file: Express.Multer.File | undefined,
+    @Req() req: express.Request,
     @Res({ passthrough: true }) res: express.Response,
   ) {
     if (file) {
@@ -72,7 +75,7 @@ export class AuthController {
     }
     const { token, user } = await this.authService.register(body);
 
-    res.cookie('token', token, COOKIE_OPTIONS);
+    res.cookie('token', token, getCookieOptions(req));
 
     return { user };
   }
@@ -80,11 +83,12 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() body: LoginDto,
+    @Req() req: express.Request,
     @Res({ passthrough: true }) res: express.Response,
   ) {
     const { token, user } = await this.authService.login(body);
 
-    res.cookie('token', token, COOKIE_OPTIONS);
+    res.cookie('token', token, getCookieOptions(req));
 
     return { user };
   }
@@ -99,13 +103,11 @@ export class AuthController {
   }
 
   @Post('logout')
-  logout(@Res({ passthrough: true }) res: express.Response) {
-    res.clearCookie('token', {
-      httpOnly: true,
-      path: '/',
-      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
-      secure: IS_PROD,
-    });
+  logout(
+    @Req() req: express.Request,
+    @Res({ passthrough: true }) res: express.Response,
+  ) {
+    res.clearCookie('token', getCookieOptions(req));
     return { message: 'Sesión cerrada' };
   }
 }
