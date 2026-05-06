@@ -16,31 +16,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchUser = async () => {
-        try {
-            const userData = await api.get('/auth/me');
-            setUser(userData);
-        } catch (error: any) {
-            // If /auth/me fails with 401, try to refresh
-            if (error.response?.status === 401) {
-                try {
-                    await api.post('/auth/refresh');
-                    // Retry fetching user after refresh
-                    const userData = await api.get('/auth/me');
-                    setUser(userData);
-                } catch {
-                    setUser(null);
-                }
-            } else {
-                setUser(null);
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchUser();
+        // Simple: just try to get the current user
+        // The axios interceptor will handle token refresh automatically if needed
+        api.get('/auth/me')
+            .then(userData => {
+                setUser(userData);
+            })
+            .catch(() => {
+                setUser(null);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }, []);
 
     const login = (newUser: any) => {

@@ -28,7 +28,7 @@ const storage = diskStorage({
 });
 
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
-const ACCESS_TOKEN_MAX_AGE = 15 * 60 * 1000; // 15 minutes in ms
+const ACCESS_TOKEN_MAX_AGE = 24 * 60 * 60 * 1000; // 24 hours in ms
 
 const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
 
