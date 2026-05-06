@@ -8,13 +8,21 @@ import {
 import { ChatService } from './chat.service';
 import { Server, Socket } from 'socket.io';
 
-const WS_CORS_ORIGIN = process.env.FRONTEND_URL
-  ? [process.env.FRONTEND_URL, 'http://localhost:5173']
-  : '*';
-
 @WebSocketGateway({
+  // path debe coincidir con la regla handle /socket.io/* del Caddyfile
+  path: '/socket.io',
   cors: {
-    origin: WS_CORS_ORIGIN,
+    // Función dinámica para que lea FRONTEND_URL cuando ya está disponible el entorno
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      const allowed = process.env.FRONTEND_URL
+        ? [process.env.FRONTEND_URL, 'http://localhost:5173']
+        : true; // en dev aceptamos cualquier origen
+      if (allowed === true || !origin || (Array.isArray(allowed) && allowed.includes(origin))) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not allowed by Socket.IO CORS`));
+      }
+    },
     credentials: true,
   },
 })
