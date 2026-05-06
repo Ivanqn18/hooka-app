@@ -16,10 +16,21 @@ export default function CreateProduct() {
         vendedorId: user?.id || 1
     });
 
+    const [image, setImage] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
     const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
     const [locationLoading, setLocationLoading] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const categories = ['CACHIMBA', 'CAZOLETA', 'MANGUERA', 'GESTOR_CALOR', 'ACCESORIO', 'BASE', 'CARBON'];
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImage(file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
 
     const handleGetLocation = () => {
         setLocationLoading(true);
@@ -47,19 +58,38 @@ export default function CreateProduct() {
         }
     };
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const payload = {
-                ...formData,
-                precio: parseFloat(formData.precio),
-                ...(coords && { latitud: coords.lat, longitud: coords.lng })
-            };
+        if (!image) {
+            alert("La imagen del producto es obligatoria");
+            return;
+        }
 
-            await api.post('/marketplace/products', payload);
+        setIsSubmitting(true);
+        try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('titulo', formData.titulo);
+            formDataToSend.append('descripcion', formData.descripcion);
+            formDataToSend.append('precio', formData.precio);
+            formDataToSend.append('categoria', formData.categoria);
+            formDataToSend.append('ubicacion', formData.ubicacion);
+            formDataToSend.append('vendedorId', String(formData.vendedorId));
+            formDataToSend.append('imagen', image);
+            
+            if (coords) {
+                formDataToSend.append('latitud', String(coords.lat));
+                formDataToSend.append('longitud', String(coords.lng));
+            }
+
+            await api.post('/marketplace/products', formDataToSend, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
             navigate('/market');
         } catch (err) {
             console.error(err);
+            alert("Error al publicar el producto");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -75,6 +105,36 @@ export default function CreateProduct() {
 
             <form onSubmit={handleSubmit} className="glass-panel p-8 md:p-12 rounded-[2.5rem] border-white/5 shadow-2xl flex flex-col gap-8">
                 
+                {/* Image Upload */}
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1">Imagen del Producto (Obligatoria)</label>
+                    <div 
+                        onClick={() => document.getElementById('product-image')?.click()}
+                        className="relative aspect-video rounded-3xl bg-white/5 border-2 border-dashed border-white/10 hover:border-shisha-ember/50 transition-all cursor-pointer overflow-hidden group flex items-center justify-center"
+                    >
+                        {preview ? (
+                            <>
+                                <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-black text-xs uppercase tracking-widest">
+                                    Cambiar Imagen
+                                </div>
+                            </>
+                        ) : (
+                            <div className="flex flex-col items-center gap-3 text-shisha-text-dim group-hover:text-shisha-ember transition-colors">
+                                <ShoppingBag size={40} className="opacity-20" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Click para subir foto</span>
+                            </div>
+                        )}
+                        <input 
+                            id="product-image"
+                            type="file" 
+                            accept="image/*" 
+                            onChange={handleImageChange} 
+                            className="hidden" 
+                        />
+                    </div>
+                </div>
+
                 <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1">Qué vendes</label>
                     <div className="relative">
@@ -170,9 +230,10 @@ export default function CreateProduct() {
 
                 <button 
                     type="submit" 
-                    className="mt-2 md:mt-4 w-full py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black text-base md:text-lg rounded-2xl md:rounded-3xl shadow-2xl shadow-shisha-ember/30 transition-all hover:-translate-y-1 active:scale-[0.98]"
+                    disabled={isSubmitting}
+                    className="mt-2 md:mt-4 w-full py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black text-base md:text-lg rounded-2xl md:rounded-3xl shadow-2xl shadow-shisha-ember/30 transition-all hover:-translate-y-1 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
-                    Publicar en el Mercado
+                    {isSubmitting ? 'Publicando...' : 'Publicar en el Mercado'}
                 </button>
             </form>
         </div>

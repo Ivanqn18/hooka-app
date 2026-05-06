@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Award, Flame, Sparkles, ArrowRight } from 'lucide-react';
+import { imageUrl } from '../utils/imageUrl';
 import api from '../services/api';
 
 export default function MixOfTheWeek() {
@@ -28,7 +29,7 @@ export default function MixOfTheWeek() {
                 <div className="flex-1 space-y-8">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 px-4 py-1.5 bg-shisha-ember/20 border border-shisha-ember/30 backdrop-blur-md rounded-full text-shisha-ember text-[10px] font-black uppercase tracking-widest animate-glow-pulse">
-                            <Flame size={14} /> La Mezcla de la Semana
+                            <Flame size={14} /> La Mezcla del Mes
                         </div>
                     </div>
 
@@ -66,12 +67,20 @@ export default function MixOfTheWeek() {
                     </div>
                 </div>
 
-                <div className="hidden lg:block w-1/3 relative">
-                     <div className="absolute inset-0 bg-shisha-ember/20 blur-[100px] rounded-full animate-pulse"></div>
-                     <div className="relative glass-panel-premium aspect-square rounded-[3rem] border-white/10 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl">
-                        <Sparkles size={80} className="text-shisha-ember" />
-                     </div>
-                </div>
+                 <div className="hidden lg:block w-1/3 relative">
+                      <div className="absolute inset-0 bg-shisha-ember/20 blur-[100px] rounded-full animate-pulse"></div>
+                      <div className="relative glass-panel-premium aspect-square rounded-[3rem] border-white/10 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl overflow-hidden">
+                         {mix.imagenUrl ? (
+                             <img 
+                                 src={imageUrl(mix.imagenUrl)} 
+                                 alt={mix.titulo}
+                                 className="w-full h-full object-cover"
+                             />
+                         ) : (
+                             <Sparkles size={80} className="text-shisha-ember" />
+                         )}
+                      </div>
+                 </div>
             </div>
         </div>
     );
