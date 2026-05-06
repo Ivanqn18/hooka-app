@@ -7,7 +7,11 @@
 hookahub.me {
     # WebSockets para el chat (Socket.IO)
     handle /socket.io/* {
-        reverse_proxy backend:3000
+        reverse_proxy backend:3000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+        }
     }
 
     # Archivos estáticos subidos por usuarios (avatares, imágenes de productos)
@@ -16,6 +20,7 @@ hookahub.me {
         reverse_proxy backend:3000 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-Proto {scheme}
         }
     }
 
