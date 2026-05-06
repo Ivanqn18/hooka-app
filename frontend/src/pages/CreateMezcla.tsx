@@ -142,6 +142,11 @@ export default function CreateMezcla() {
             return;
         }
 
+        if (!selectedImage && !id) {
+            alert("La imagen de la mezcla es obligatoria.");
+            return;
+        }
+
         const data = new FormData();
         data.append('titulo', formData.titulo);
         data.append('descripcion', formData.descripcion);
@@ -265,7 +270,7 @@ export default function CreateMezcla() {
                                     className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-shisha-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-lg"
                                 >
                                     {selectedImage ? <ImageIcon size={14} /> : <Camera size={14} />}
-                                    {selectedImage ? "Imagen Lista" : "Subir Foto (Opcl)"}
+                                    {selectedImage ? "Imagen Lista" : "Subir Foto (Obligatoria)"}
                                 </label>
                                 
                                 <button 
