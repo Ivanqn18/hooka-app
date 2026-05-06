@@ -14,7 +14,7 @@ const BG_COLORS = [
 ];
 
 export default function Profile() {
-    const { user, token, updateUser } = useAuth();
+    const { user, updateUser } = useAuth();
     const navigate = useNavigate();
 
     const [stats, setStats] = useState({ totalMezclas: 0, productosActivos: 0 });
@@ -60,7 +60,7 @@ export default function Profile() {
             .then((data: any) => setFullUser(data))
             .catch(err => console.error("Error fetching full user:", err));
 
-    }, [user, navigate, token]);
+    }, [user, navigate]);
 
     const handleSave = async () => {
         try {
