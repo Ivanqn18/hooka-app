@@ -10,11 +10,35 @@ const api = axios.create({
   },
 });
 
-// Response interceptor for easy error handling
+// Separate axios instance for refresh to avoid interceptor loops
+const refreshApi = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Response interceptor for easy error handling + auto-refresh
 api.interceptors.response.use(
   (response) => response.data,
-  (error) => {
-    // Handle global errors if needed (e.g., redirect to login on 401)
+  async (error) => {
+    const originalRequest = error.config;
+
+    // If 401 and not already retrying, try to refresh
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await refreshApi.post('/auth/refresh');
+        // Refresh succeeded, retry original request
+        return api(originalRequest);
+      } catch (refreshError) {
+        // Refresh failed, reject with original error
+        return Promise.reject(error);
+      }
+    }
+
     return Promise.reject(error);
   }
 );

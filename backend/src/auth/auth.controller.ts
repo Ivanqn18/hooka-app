@@ -28,14 +28,15 @@ const storage = diskStorage({
 });
 
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+const ACCESS_TOKEN_MAX_AGE = 15 * 60 * 1000; // 15 minutes in ms
 
 const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
 
-function getCookieOptions(req: express.Request) {
+function getCookieOptions(req: express.Request, maxAge: number) {
   return {
     httpOnly: true,
     path: '/',
-    maxAge: COOKIE_MAX_AGE,
+    maxAge,
     sameSite: 'lax' as const,
     secure: IS_PROD,
     domain: req.hostname || undefined,
@@ -45,6 +46,21 @@ function getCookieOptions(req: express.Request) {
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
+
+  private setAuthCookies(
+    res: express.Response,
+    req: express.Request,
+    accessToken: string,
+    refreshToken: string,
+  ) {
+    res.cookie('token', accessToken, getCookieOptions(req, ACCESS_TOKEN_MAX_AGE));
+    res.cookie('refresh_token', refreshToken, getCookieOptions(req, COOKIE_MAX_AGE));
+  }
+
+  private clearAuthCookies(res: express.Response, req: express.Request) {
+    res.clearCookie('token', getCookieOptions(req, ACCESS_TOKEN_MAX_AGE));
+    res.clearCookie('refresh_token', getCookieOptions(req, COOKIE_MAX_AGE));
+  }
 
   @Post('register')
   @UseInterceptors(
@@ -73,9 +89,9 @@ export class AuthController {
     if (file) {
       body.avatarUrl = `/uploads/avatars/${file.filename}`;
     }
-    const { token, user } = await this.authService.register(body);
+    const { tokens, user } = await this.authService.register(body);
 
-    res.cookie('token', token, getCookieOptions(req));
+    this.setAuthCookies(res, req, tokens.accessToken, tokens.refreshToken);
 
     return { user };
   }
@@ -86,11 +102,27 @@ export class AuthController {
     @Req() req: express.Request,
     @Res({ passthrough: true }) res: express.Response,
   ) {
-    const { token, user } = await this.authService.login(body);
+    const { tokens, user } = await this.authService.login(body);
 
-    res.cookie('token', token, getCookieOptions(req));
+    this.setAuthCookies(res, req, tokens.accessToken, tokens.refreshToken);
 
     return { user };
+  }
+
+  @Post('refresh')
+  async refresh(
+    @Req() req: express.Request,
+    @Res({ passthrough: true }) res: express.Response,
+  ) {
+    const refreshToken = req.cookies?.refresh_token;
+    if (!refreshToken) {
+      throw new UnauthorizedException('No refresh token');
+    }
+
+    const tokens = await this.authService.refreshTokens(refreshToken);
+    this.setAuthCookies(res, req, tokens.accessToken, tokens.refreshToken);
+
+    return { message: 'Token refrescado' };
   }
 
   @Get('me')
@@ -103,11 +135,15 @@ export class AuthController {
   }
 
   @Post('logout')
-  logout(
+  async logout(
     @Req() req: express.Request,
     @Res({ passthrough: true }) res: express.Response,
   ) {
-    res.clearCookie('token', getCookieOptions(req));
+    const refreshToken = req.cookies?.refresh_token;
+    if (refreshToken) {
+      this.authService.invalidateRefreshToken(refreshToken);
+    }
+    this.clearAuthCookies(res, req);
     return { message: 'Sesión cerrada' };
   }
 }

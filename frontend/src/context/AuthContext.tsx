@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import api from '../services/api';
 
 interface AuthContextType {
-    token: string | null;
     user: any | null;
     loading: boolean;
     login: (user: any) => void;
@@ -14,21 +13,34 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [token] = useState<string | null>(null);
     const [user, setUser] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        api.get('/auth/me')
-            .then(userData => {
-                setUser(userData);
-            })
-            .catch(() => {
+    const fetchUser = async () => {
+        try {
+            const userData = await api.get('/auth/me');
+            setUser(userData);
+        } catch (error: any) {
+            // If /auth/me fails with 401, try to refresh
+            if (error.response?.status === 401) {
+                try {
+                    await api.post('/auth/refresh');
+                    // Retry fetching user after refresh
+                    const userData = await api.get('/auth/me');
+                    setUser(userData);
+                } catch {
+                    setUser(null);
+                }
+            } else {
                 setUser(null);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
     }, []);
 
     const login = (newUser: any) => {
@@ -49,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, loading, login, logout, updateUser }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

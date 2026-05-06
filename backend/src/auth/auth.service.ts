@@ -7,12 +7,35 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
+// Store invalidated refresh tokens (in production use Redis)
+const invalidatedRefreshTokens = new Set<string>();
+
+export interface TokenPair {
+  accessToken: string;
+  refreshToken: string;
+}
+
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
   ) { }
+
+  private async generateTokens(user: any): Promise<TokenPair> {
+    const payload = { sub: user.id, email: user.email };
+    
+    const accessToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '15m',
+    });
+    
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'secretKey',
+      expiresIn: '7d',
+    });
+
+    return { accessToken, refreshToken };
+  }
 
   async register(data: any) {
     const existingUser = await this.usersService.findByEmail(data.email);
@@ -27,11 +50,9 @@ export class AuthService {
     });
     const { password: _, ...userWithoutPassword } = user;
 
-    // Generate JWT for auto-login after register
-    const payload = { sub: user.id, email: user.email };
-    const token = await this.jwtService.signAsync(payload);
+    const tokens = await this.generateTokens(user);
 
-    return { token, user: userWithoutPassword };
+    return { tokens, user: userWithoutPassword };
   }
 
   async login(data: any) {
@@ -45,11 +66,10 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user.id, email: user.email };
-    const token = await this.jwtService.signAsync(payload);
+    const tokens = await this.generateTokens(user);
 
     return {
-      token,
+      tokens,
       user: {
         id: user.id,
         email: user.email,
@@ -58,6 +78,34 @@ export class AuthService {
         avatarUrl: user.avatarUrl,
       },
     };
+  }
+
+  async refreshTokens(refreshToken: string): Promise<TokenPair> {
+    if (invalidatedRefreshTokens.has(refreshToken)) {
+      throw new UnauthorizedException('Refresh token inválido');
+    }
+
+    try {
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'secretKey',
+      });
+      
+      const user = await this.usersService.findOne(payload.sub);
+      if (!user) {
+        throw new UnauthorizedException('Usuario no encontrado');
+      }
+
+      // Invalidate old refresh token
+      invalidatedRefreshTokens.add(refreshToken);
+
+      return this.generateTokens(user);
+    } catch {
+      throw new UnauthorizedException('Refresh token inválido o expirado');
+    }
+  }
+
+  invalidateRefreshToken(refreshToken: string) {
+    invalidatedRefreshTokens.add(refreshToken);
   }
 
   async getMe(token: string) {
