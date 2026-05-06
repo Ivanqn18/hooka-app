@@ -30,12 +30,14 @@ const storage = diskStorage({
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
 // En producción (HTTPS via Caddy) las cookies necesitan secure:true y sameSite:'none'
-const IS_PROD = !!process.env.FRONTEND_URL;
+// FRONTEND_URL sólo se define en producción (se pasa por variable de entorno en docker-compose)
+const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
 const COOKIE_OPTIONS = {
   httpOnly: true,
+  path: '/',          // Imprescindible: la cookie aplica a toda la app, no sólo a /api/auth/
   maxAge: COOKIE_MAX_AGE,
   sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
-  secure: IS_PROD,
+  secure: IS_PROD,    // Requerido junto a SameSite=None en HTTPS
 };
 
 @Controller('auth')
@@ -100,6 +102,7 @@ export class AuthController {
   logout(@Res({ passthrough: true }) res: express.Response) {
     res.clearCookie('token', {
       httpOnly: true,
+      path: '/',
       sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
       secure: IS_PROD,
     });
