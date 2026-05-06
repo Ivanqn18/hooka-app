@@ -59,14 +59,13 @@ export class MezclasService {
   }
 
 
-  // 1.5 Obtener Mezcla de la Semana
   async getMezclaDeLaSemana() {
-    const hace7Dias = new Date();
-    hace7Dias.setDate(hace7Dias.getDate() - 7);
+    const hace30Dias = new Date();
+    hace30Dias.setDate(hace30Dias.getDate() - 30);
 
     const mezcla = await this.prisma.mix.findFirst({
       where: {
-        createdAt: { gte: hace7Dias },
+        createdAt: { gte: hace30Dias },
       },
       include: {
         ingredients: true,
