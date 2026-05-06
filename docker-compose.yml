@@ -22,6 +22,8 @@ services:
       - FRONTEND_URL=${FRONTEND_URL}
     depends_on:
       - db
+    volumes:
+      - uploads_data:/app/uploads
 
   frontend:
     image: ${FRONTEND_IMAGE:-ghcr.io/ivanqn18/hookaapp-frontend:latest}
@@ -47,3 +49,4 @@ volumes:
   postgres_data:
   caddy_data:
   caddy_config:
+  uploads_data:

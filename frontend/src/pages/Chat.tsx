@@ -25,12 +25,13 @@ export default function Chat() {
             .catch(console.error);
 
         // En producción: conecta al mismo origen → Caddy enruta /socket.io/* al backend
-        // Se construye explícitamente la URL para garantizar wss:// en HTTPS
-        const socketUrl = import.meta.env.VITE_SOCKET_URL as string | undefined
-            || window.location.origin;  // e.g. https://hookahub.me → usa wss://
+        const socketUrl = import.meta.env.VITE_SOCKET_URL || window.location.origin;
+        
         const socketOptions = {
             withCredentials: true,
             transports: ['websocket', 'polling'],
+            secure: window.location.protocol === 'https:',
+            reconnectionAttempts: 5,
         };
         socketRef.current = io(socketUrl, socketOptions);
 

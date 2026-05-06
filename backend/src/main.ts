@@ -8,6 +8,9 @@ import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
+  // Importante para que las cookies 'secure' funcionen detrás de un proxy (Caddy/Nginx)
+  app.getHttpAdapter().getInstance().set('trust proxy', 1);
+  
   const allowedOrigins = process.env.FRONTEND_URL
     ? [process.env.FRONTEND_URL, 'http://localhost:5173']
     : ['http://localhost:5173'];
