@@ -59,17 +59,17 @@ export class AuthController {
   }
 
   private clearAuthCookies(res: express.Response) {
-    res.clearCookie('token', { 
-      httpOnly: true, 
-      path: '/', 
-      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax', 
-      secure: true 
+    res.clearCookie('token', {
+      httpOnly: true,
+      path: '/',
+      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+      secure: true
     });
-    res.clearCookie('refresh_token', { 
-      httpOnly: true, 
-      path: '/', 
-      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax', 
-      secure: true 
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      path: '/',
+      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+      secure: true
     });
   }
 
@@ -123,7 +123,7 @@ export class AuthController {
     @Req() req: express.Request,
     @Res({ passthrough: true }) res: express.Response,
   ) {
-    const refreshToken = req.cookies?.refresh_token;
+    const refreshToken = req.cookies.refresh_token;
     if (!refreshToken) {
       throw new UnauthorizedException('No refresh token');
     }
