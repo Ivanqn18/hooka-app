@@ -117,7 +117,8 @@ export class AuthService {
       }
       const { password: _, ...userWithoutPassword } = user;
       return userWithoutPassword;
-    } catch {
+    } catch (error) {
+      console.error('JWT verification error:', error);
       throw new UnauthorizedException('Token inválido o expirado');
     }
   }

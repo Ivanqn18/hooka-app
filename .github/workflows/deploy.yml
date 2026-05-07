@@ -84,7 +84,7 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,JWT_REFRESH_SECRET,GH_TOKEN,FRONTEND_URL,ACME_EMAIL,DOMAIN
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,JWT_REFRESH_SECRET,GH_TOKEN,FRONTEND_URL,ACME_EMAIL,DOMAIN,NODE_ENV
           script: |
             # 1. Crear directorio si no existe y navegar
             mkdir -p /var/www/hookaapp
@@ -105,7 +105,7 @@ jobs:
             printf "DATABASE_URL=%s\n"    "$DATABASE_URL"    >> .env
             printf "JWT_SECRET=%s\n"      "$JWT_SECRET"      >> .env
             printf "JWT_REFRESH_SECRET=%s\n" "$JWT_REFRESH_SECRET" >> .env
-            printf "NODE_ENV=%s\n" "NODE_ENV" >> .env
+            printf "NODE_ENV=%s\n" "$NODE_ENV" >> .env
             printf "BACKEND_IMAGE=%s\n"   "$BACKEND_IMAGE"   >> .env
             printf "FRONTEND_IMAGE=%s\n"  "$FRONTEND_IMAGE"  >> .env
             printf "FRONTEND_URL=%s\n"    "$FRONTEND_URL"    >> .env

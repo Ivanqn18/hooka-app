@@ -134,7 +134,7 @@ export class AuthController {
 
   @Get('me')
   async me(@Req() req: express.Request) {
-    this.logger.debug(`Cookies received: ${JSON.stringify(req.cookies)}`);
+    this.logger.log(`Cookies received: ${JSON.stringify(req.cookies)}`);
     const token = req.cookies?.token;
     if (!token) {
       this.logger.warn('No token cookie found');
