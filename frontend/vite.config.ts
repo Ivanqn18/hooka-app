@@ -2,12 +2,24 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { compression } from "vite-plugin-compression2";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     tailwindcss(),
     react(),
+    compression({
+      algorithms: ["gzip", "brotliCompress"],
+      exclude: [/\.(br)$/, /\.(gz)$/, /\.html$/],
+    }),
+    visualizer({
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+      filename: "dist/stats.html",
+    }),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["vite.svg"],
