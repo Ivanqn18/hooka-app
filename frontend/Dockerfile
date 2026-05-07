@@ -10,8 +10,8 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-# --- Production Image (Nginx) ---
-FROM nginx:alpine
+# --- Production Image (Nginx with Brotli) ---
+FROM fholzer/nginx-brotli
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html

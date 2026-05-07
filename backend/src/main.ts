@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import { MulterExceptionFilter } from './common/filters/multer-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -33,11 +35,16 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
   app.use(cookieParser());
+  app.use(compression({ filter: () => true }));
 
   // Servir archivos estáticos subidos desde /uploads
-  app.useStaticAssets(join(process.cwd(), 'uploads'), {
+  const uploadsPath = join(process.cwd(), 'uploads');
+  app.useStaticAssets(uploadsPath, {
     prefix: '/uploads/',
   });
+  console.log(`Serving static files from: ${uploadsPath}`);
+
+  app.useGlobalFilters(new MulterExceptionFilter());
 
   app.useGlobalPipes(
     new ValidationPipe({ 

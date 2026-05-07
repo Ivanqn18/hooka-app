@@ -2,8 +2,14 @@ FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Install build dependencies
-RUN apt-get update -y && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
+# Install build dependencies (including sharp/image processing deps)
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    openssl \
+    python3 \
+    make \
+    g++ \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 COPY prisma ./prisma/
@@ -23,10 +29,14 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# Install runtime dependencies (chromium for puppeteer)
+# Create uploads directory
+RUN mkdir -p uploads/avatars uploads/mezclas uploads/products
+
+# Install runtime dependencies (chromium for puppeteer + sharp deps)
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     openssl \
     chromium \
+    libvips \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium

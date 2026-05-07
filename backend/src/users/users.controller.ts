@@ -18,6 +18,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AddStashDto, AddSellerReviewDto } from './dto/user-actions.dto';
+import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
 
 // Configuración de Multer para avatares (mismo patrón que auth.controller.ts)
 const avatarStorage = diskStorage({
@@ -59,6 +60,7 @@ export class UsersController {
   // Subir avatar de perfil (multipart/form-data)
   @Post(':id/avatar')
   @UseInterceptors(
+    ImageCompressionInterceptor,
     FileInterceptor('avatar', {
       storage: avatarStorage,
       fileFilter: (req, file, cb) => {

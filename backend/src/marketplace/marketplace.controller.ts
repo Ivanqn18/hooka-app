@@ -18,6 +18,7 @@ import { extname } from 'path';
 import { MarketplaceService } from './marketplace.service';
 import { CreateMarketplaceDto } from './dto/create-marketplace.dto';
 import { UpdateMarketplaceDto } from './dto/update-marketplace.dto';
+import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
 
 // Configuración de almacenamiento para Multer
 const storage = diskStorage({
@@ -34,6 +35,7 @@ export class MarketplaceController {
 
   @Post('products')
   @UseInterceptors(
+    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {

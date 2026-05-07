@@ -17,6 +17,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { MezclasService } from './mezclas.service';
 import { CreateMezclaDto } from './dto/create-mezcla.dto';
+import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
 
 // Configuración de almacenamiento para Multer
 const storage = diskStorage({
@@ -33,6 +34,7 @@ export class MezclasController {
 
   @Post()
   @UseInterceptors(
+    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -77,6 +79,7 @@ export class MezclasController {
 
   @Put(':id')
   @UseInterceptors(
+    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {

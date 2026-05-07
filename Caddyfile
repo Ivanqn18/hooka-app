@@ -5,6 +5,9 @@
 
 # Usa el dominio configurado en .env, si no hay, usa el puerto 80 por defecto
 hookahub.me {
+    # Compresión automática (Brotli, Gzip, Zstd)
+    encode gzip zstd
+
     # WebSockets para el chat (Socket.IO)
     handle /socket.io/* {
         reverse_proxy backend:3000 {
@@ -15,13 +18,10 @@ hookahub.me {
     }
 
     # Archivos estáticos subidos por usuarios (avatares, imágenes de productos)
-    # NestJS los sirve en /uploads — se exponen directamente sin quitar el prefijo
-    handle /uploads/* {
-        reverse_proxy backend:3000 {
-            header_up Host {host}
-            header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-Proto {scheme}
-        }
+    # Servidos directamente desde el volumen compartido para mejor rendimiento
+    handle_path /uploads/* {
+        root * /var/www/uploads
+        file_server
     }
 
     # Redirigir el API al contenedor del backend (NestJS)

@@ -17,6 +17,7 @@ import { extname } from 'path';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
 import * as express from 'express';
 
 // Configuración de almacenamiento para Multer
@@ -73,6 +74,7 @@ export class AuthController {
 
   @Post('register')
   @UseInterceptors(
+    ImageCompressionInterceptor,
     FileInterceptor('avatar', {
       storage,
       fileFilter: (req, file, cb) => {
