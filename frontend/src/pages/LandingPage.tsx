@@ -19,7 +19,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-[900px] flex flex-col items-center gap-8 z-10 relative">
           <div className="inline-flex items-center glass-panel px-6 py-2 rounded-full shadow-2xl mb-4 animate-reveal-up [animation-delay:0.2s]">
             <Sparkles size={16} className="mr-2 text-shisha-ember" />
-            <span className="text-shisha-text-muted font-bold tracking-[0.2em] text-[10px] uppercase">HookaApp Premium Experience</span>
+            <span className="text-shisha-text-muted font-bold tracking-[0.2em] text-[10px] uppercase">HookaHub Premium Experience</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-[1.1] m-0 animate-reveal-up [animation-delay:0.4s]">

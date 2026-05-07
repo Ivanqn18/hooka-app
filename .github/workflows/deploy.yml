@@ -1,4 +1,4 @@
-name: Deploy HookaApp to DigitalOcean via Docker
+name: Deploy HookaHub to DigitalOcean via Docker
 
 on:
   push:
