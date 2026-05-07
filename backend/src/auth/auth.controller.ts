@@ -31,14 +31,12 @@ const storage = diskStorage({
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 const ACCESS_TOKEN_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
-const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
-
 function getCookieOptions(maxAge: number) {
   return {
     httpOnly: true,
     path: '/',
     maxAge,
-    sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+    sameSite: 'lax' as 'lax',
     secure: true, // Always true - browsers reject secure cookies on HTTP anyway
   };
 }
@@ -62,13 +60,13 @@ export class AuthController {
     res.clearCookie('token', {
       httpOnly: true,
       path: '/',
-      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+      sameSite: 'lax' as 'lax',
       secure: true
     });
     res.clearCookie('refresh_token', {
       httpOnly: true,
       path: '/',
-      sameSite: (IS_PROD ? 'none' : 'lax') as 'none' | 'lax',
+      sameSite: 'lax' as 'lax',
       secure: true
     });
   }
