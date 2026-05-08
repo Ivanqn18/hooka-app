@@ -3,9 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { Trash2, Plus, Tag, Pipette, Package, Star } from 'lucide-react';
 import api from '../services/api';
 
+interface XmlTaste {
+    name: string;
+    price: string;
+}
+
 interface XmlBrand {
     name: string;
-    tastes: string[];
+    tastes: XmlTaste[];
 }
 
 export default function StashTab() {
@@ -52,7 +57,7 @@ export default function StashTab() {
     const saboresFiltrados = (() => {
         const brand = xmlBrands.find(b => b.name.toLowerCase() === marca.toLowerCase());
         const tastes = brand ? brand.tastes : [];
-        return tastes.filter(t => t.toLowerCase().includes(nombreTabaco.toLowerCase()));
+        return tastes.filter(t => t.name.toLowerCase().includes(nombreTabaco.toLowerCase()));
     })();
 
     const handleAdd = async (e: React.FormEvent) => {
@@ -155,14 +160,15 @@ export default function StashTab() {
                                 {saboresFiltrados.map(t => (
                                     <button
                                         type="button"
-                                        key={t}
-                                        onClick={() => setNombreTabaco(t)}
-                                        className="w-full text-left px-5 py-2.5 hover:bg-white/5 text-white font-medium text-sm"
+                                        key={t.name}
+                                        onClick={() => setNombreTabaco(t.name)}
+                                        className="w-full text-left px-5 py-2.5 hover:bg-white/5 text-white font-medium text-sm flex items-center justify-between"
                                     >
-                                        {t}
+                                        <span>{t.name}</span>
+                                        {t.price && <span className="text-[10px] bg-shisha-ember/10 text-shisha-ember px-2 py-0.5 rounded-lg font-black">{t.price}€</span>}
                                     </button>
                                 ))}
-                                {nombreTabaco && !saboresFiltrados.some(t => t.toLowerCase() === nombreTabaco.toLowerCase()) && (
+                                {nombreTabaco && !saboresFiltrados.some(t => t.name.toLowerCase() === nombreTabaco.toLowerCase()) && (
                                     <div className="px-5 py-2.5 text-shisha-text-dim text-xs italic">
                                         Nuevo sabor: <strong className="text-white">{nombreTabaco}</strong>
                                     </div>

@@ -49,10 +49,10 @@ export default function CreateMezcla() {
                 if (Array.isArray(brands)) {
                     const flatTabacos: ProductoBase[] = [];
                     brands.forEach((b: any) => {
-                        b.tastes.forEach((t: string) => {
+                        b.tastes.forEach((t: any) => {
                             flatTabacos.push({
                                 id: Math.random(),
-                                nombre: t,
+                                nombre: t.name,
                                 marca: b.name,
                                 tipo: 'TABACO'
                             });

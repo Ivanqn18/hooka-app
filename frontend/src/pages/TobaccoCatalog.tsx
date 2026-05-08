@@ -2,9 +2,14 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Search, ArrowLeft, Package, Sparkles, Database } from 'lucide-react';
 import api from '../services/api';
 
+interface XmlTaste {
+    name: string;
+    price: string;
+}
+
 interface XmlBrand {
     name: string;
-    tastes: string[];
+    tastes: XmlTaste[];
 }
 
 // Colores vibrantes para los avatares de marca (basados en hash del nombre)
@@ -47,7 +52,7 @@ export const TobaccoCatalog: React.FC = () => {
         const q = searchQuery.toLowerCase();
         return allBrands.filter(b =>
             b.name.toLowerCase().includes(q) ||
-            b.tastes.some(t => t.toLowerCase().includes(q))
+            b.tastes.some(t => t.name.toLowerCase().includes(q))
         );
     }, [allBrands, searchQuery]);
 
@@ -230,13 +235,20 @@ export const TobaccoCatalog: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {selectedBrand.tastes
-                            .filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+                            .filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))
                             .map((taste, idx) => {
                                 const [c1] = getBrandGradient(selectedBrand.name);
                                 return (
-                                    <div key={idx} className="glass-panel px-6 py-4 rounded-2xl border-white/5 flex items-center gap-4 transition-all hover:border-white/10 hover:bg-white/[0.04] shadow-xl">
-                                        <div className="w-2 h-8 rounded-full opacity-40 shrink-0" style={{ background: c1 }} />
-                                        <span className="font-bold text-white">{taste}</span>
+                                    <div key={idx} className="glass-panel px-6 py-4 rounded-2xl border-white/5 flex items-center justify-between hover:border-white/10 hover:bg-white/[0.04] shadow-xl group">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-2 h-8 rounded-full opacity-40 shrink-0" style={{ background: c1 }} />
+                                            <span className="font-bold text-white text-sm md:text-base">{taste.name}</span>
+                                        </div>
+                                        {taste.price && (
+                                            <div className="px-3 py-1 bg-shisha-ember/10 border border-shisha-ember/20 rounded-lg text-shisha-ember font-black text-xs md:text-sm shrink-0">
+                                                {taste.price}€
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}

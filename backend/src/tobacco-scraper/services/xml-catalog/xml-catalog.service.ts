@@ -3,9 +3,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 
+export interface XmlTaste {
+  name: string;
+  price: string;
+}
+
 export interface XmlBrandCatalog {
   name: string;
-  tastes: string[];
+  tastes: XmlTaste[];
 }
 
 @Injectable()
@@ -57,10 +62,13 @@ export class XmlCatalogService {
       .filter((b: any) => b.name)
       .map((b: any) => {
         const products: any[] = Array.isArray(b.product) ? b.product : b.product ? [b.product] : [];
-        const tastes = products
-          .map((p: any) => (p.name ?? '').trim())
-          .filter((n: string) => n.length > 0)
-          .sort((a: string, b: string) => a.localeCompare(b));
+        const tastes: XmlTaste[] = products
+          .map((p: any) => ({
+            name: (p.name ?? '').trim(),
+            price: (p.price ?? '').trim(),
+          }))
+          .filter((t: XmlTaste) => t.name.length > 0)
+          .sort((a, b) => a.name.localeCompare(b.name));
 
         return {
           name: (b.name as string).trim(),
