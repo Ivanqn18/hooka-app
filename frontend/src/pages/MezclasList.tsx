@@ -103,7 +103,11 @@ export default function MezclasList() {
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {mezclas.map((mix: any) => (
-                                <div key={mix.id} className="glass-panel group rounded-[2.5rem] overflow-hidden flex flex-col hover:border-shisha-ember/30 transition-all duration-500">
+                                <Link 
+                                    to={`/mezcla/${mix.id}`} 
+                                    key={mix.id} 
+                                    className="glass-panel group rounded-[2.5rem] overflow-hidden flex flex-col hover:border-shisha-ember/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-shisha-ember/10"
+                                >
                                     <div className="relative h-56 overflow-hidden">
                                         {mix.imagenUrl ? (
                                             <img 
@@ -147,22 +151,29 @@ export default function MezclasList() {
 
                                         <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 rounded-full bg-shisha-ember/10 border border-shisha-ember/20 flex items-center justify-center text-[10px] font-black text-shisha-ember">
-                                                    {mix.author?.nombre?.[0].toUpperCase() || '?'}
+                                                <div className="w-8 h-8 rounded-full bg-shisha-ember/10 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                                                    {mix.author?.avatarUrl ? (
+                                                        <img 
+                                                            src={imageUrl(mix.author.avatarUrl)} 
+                                                            alt={mix.author.nombre} 
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <span className="text-[10px] font-black text-shisha-ember">
+                                                            {mix.author?.nombre?.[0].toUpperCase() || '?'}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <span className="text-[11px] font-bold text-shisha-text-muted">
                                                     {mix.author?.nombre || 'Anónimo'}
                                                 </span>
                                             </div>
-                                            <Link 
-                                                to={`/mezcla/${mix.id}`} 
-                                                className="text-xs font-black text-shisha-ember uppercase tracking-widest hover:translate-x-1 transition-transform"
-                                            >
+                                            <span className="text-xs font-black text-shisha-ember uppercase tracking-widest group-hover:translate-x-1 transition-transform">
                                                 Ver Detalles →
-                                            </Link>
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
 
                             {mezclas.length === 0 && (

@@ -177,8 +177,16 @@ export default function MezclaDetail() {
                 <div className="p-6 md:p-14 space-y-12">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                         <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 rounded-2xl bg-shisha-ember/20 flex items-center justify-center border-2 border-shisha-ember/40 text-shisha-ember font-black text-xl shadow-lg">
-                                {mix.author?.nombre?.charAt(0) || 'A'}
+                            <div className="w-14 h-14 rounded-2xl bg-shisha-ember/20 flex items-center justify-center border-2 border-shisha-ember/40 text-shisha-ember font-black text-xl shadow-lg overflow-hidden shrink-0">
+                                {mix.author?.avatarUrl ? (
+                                    <img 
+                                        src={imageUrl(mix.author.avatarUrl)} 
+                                        alt={mix.author.nombre} 
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <span>{mix.author?.nombre?.charAt(0) || 'A'}</span>
+                                )}
                             </div>
                             <div className="space-y-1">
                                 <p className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Creado por</p>
@@ -223,14 +231,14 @@ export default function MezclaDetail() {
                             )}
                             <button 
                                 onClick={handleLike} 
-                                className="flex flex-col items-center gap-1 glass-panel px-6 py-4 rounded-[2rem] hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all group"
+                                className="flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all group shadow-xl"
                             >
                                 <Heart size={24} className="text-shisha-text-dim group-hover:text-emerald-500 transition-colors" /> 
                                 <span className="text-sm font-black text-white">{mix._count?.likes || 0}</span>
                             </button>
                             <button 
                                 onClick={handleDislike} 
-                                className="flex flex-col items-center gap-1 glass-panel px-6 py-4 rounded-[2rem] hover:bg-rose-500/10 hover:border-rose-500/30 transition-all group"
+                                className="flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/10 hover:bg-rose-500/10 hover:border-rose-500/30 transition-all group shadow-xl"
                             >
                                 <HeartOff size={24} className="text-shisha-text-dim group-hover:text-rose-500 transition-colors" /> 
                                 <span className="text-sm font-black text-white">{mix._count?.dislikes || 0}</span>
@@ -266,7 +274,7 @@ export default function MezclaDetail() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {mix.ingredients?.map((ing: any) => (
-                                    <div key={ing.id} className="glass-panel p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] flex items-center justify-between group hover:bg-white/[0.04] transition-all border-white/5 hover:border-shisha-neon/30">
+                                    <div key={ing.id} className="bg-shisha-surface/95 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] flex items-center justify-between group hover:bg-shisha-surface transition-all border border-white/5 hover:border-shisha-neon/30 shadow-lg">
                                         <div className="space-y-1">
                                             <p className="font-black text-lg md:text-xl text-white group-hover:text-shisha-neon transition-colors">{ing.nombreTabaco}</p>
                                             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">{ing.marca || 'Marca Desconocida'}</p>

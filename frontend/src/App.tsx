@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="flex justify-between items-center px-6 md:px-10 py-5 sticky top-0 z-[100] bg-shisha-bg/70 backdrop-blur-xl border-b border-white/5">
+      <nav className="flex justify-between items-center px-6 md:px-10 py-5 sticky top-0 z-[100] bg-shisha-bg/95 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/20">
         <Link to="/" onClick={closeMenu} className="text-xl md:text-2xl font-black text-white tracking-tighter hover:scale-105 transition-transform no-underline">
           <span className="text-shisha-ember">Hooka</span>App
         </Link>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Bell } from 'lucide-react';
+import { Bell, CheckCircle, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
@@ -20,7 +20,7 @@ export default function NotificationBell() {
 
     useEffect(() => {
         fetchNotifications();
-        const interval = setInterval(fetchNotifications, 30000); // Poll constanly for unread msgs and likes
+        const interval = setInterval(fetchNotifications, 30000);
         return () => clearInterval(interval);
     }, [user]);
 
@@ -54,77 +54,76 @@ export default function NotificationBell() {
     if (!user) return null;
 
     return (
-        <div ref={dropdownRef} style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <div ref={dropdownRef} className="relative flex items-center">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'relative', padding: '0.4rem', display: 'flex', alignItems: 'center' }}
+                className="relative p-2.5 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all group"
                 title="Notificaciones"
             >
-                <Bell size={20} color="white" />
+                <Bell size={20} className={`transition-colors ${unreadCount > 0 ? 'text-shisha-ember' : 'text-white'}`} />
                 {unreadCount > 0 && (
-                    <span style={{
-                        position: 'absolute', top: 0, right: 0,
-                        background: 'var(--danger-color)', color: 'white',
-                        fontSize: '0.65rem', fontWeight: 'bold',
-                        borderRadius: '50%', width: '16px', height: '16px',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
-                    }}>
+                    <span className="absolute -top-1 -right-1 bg-shisha-ember text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-lg shadow-shisha-ember/20 ring-2 ring-shisha-bg animate-pulse">
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
             </button>
 
             {isOpen && (
-                <div style={{
-                    position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem',
-                    background: 'var(--bg-surface)', border: 'var(--glass-border)',
-                    borderRadius: '12px', width: '300px', maxHeight: '400px', overflowY: 'auto',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.5)', zIndex: 100,
-                    display: 'flex', flexDirection: 'column'
-                }}>
-                    <div style={{ padding: '1rem', borderBottom: 'var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h4 style={{ margin: 0 }}>Notificaciones</h4>
+                <div className="absolute top-full right-0 mt-3 w-80 md:w-96 max-h-[500px] overflow-hidden z-[110] glass-panel-premium rounded-3xl shadow-3xl flex flex-col border border-white/10 animate-reveal-up bg-shisha-bg">
+                    {/* Header */}
+                    <div className="p-5 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+                        <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-black text-white uppercase tracking-widest m-0">Notificaciones</h4>
+                            {unreadCount > 0 && <div className="w-2 h-2 rounded-full bg-shisha-ember animate-pulse" />}
+                        </div>
                         {unreadCount > 0 && (
                             <button
                                 onClick={() => {
                                     api.put('/notificaciones/leer-todas', { userId: user.id })
                                         .then(() => fetchNotifications());
                                 }}
-                                style={{ background: 'none', border: 'none', color: 'var(--accent-color)', fontSize: '0.8rem', cursor: 'pointer' }}
+                                className="text-[10px] font-black text-shisha-neon uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1.5"
                             >
+                                <CheckCircle size={12} />
                                 Marcar todas
                             </button>
                         )}
                     </div>
-                    {notifications.length === 0 ? (
-                        <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                            No tienes notificaciones
-                        </div>
-                    ) : (
-                        notifications.map(notif => (
-                            <div
-                                key={notif.id}
-                                onClick={() => handleNotificationClick(notif)}
-                                style={{
-                                    padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)',
-                                    cursor: 'pointer', background: notif.leido ? 'transparent' : 'rgba(255,75,75,0.05)',
-                                    display: 'flex', gap: '0.75rem', alignItems: 'flex-start',
-                                    transition: 'background 0.2s ease'
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-surface-glass)'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = notif.leido ? 'transparent' : 'rgba(255,75,75,0.05)'}
-                            >
-                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: notif.leido ? 'transparent' : 'var(--danger-color)', marginTop: '0.4rem', flexShrink: 0 }} />
-                                <div>
-                                    <p style={{ margin: 0, fontSize: '0.9rem', color: notif.leido ? 'var(--text-secondary)' : 'var(--text-primary)', lineHeight: 1.4 }}>
-                                        {notif.mensaje}
-                                    </p>
-                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
-                                        {new Date(notif.createdAt).toLocaleDateString()} {new Date(notif.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </span>
-                                </div>
+
+                    {/* List */}
+                    <div className="overflow-y-auto max-h-[400px] scrollbar-hide">
+                        {notifications.length === 0 ? (
+                            <div className="p-12 text-center space-y-3">
+                                <Bell size={32} className="mx-auto text-white/5" />
+                                <p className="text-shisha-text-dim text-xs font-bold italic">No hay nada nuevo por aquí</p>
                             </div>
-                        ))
+                        ) : (
+                            notifications.map(notif => (
+                                <div
+                                    key={notif.id}
+                                    onClick={() => handleNotificationClick(notif)}
+                                    className={`p-5 border-b border-white/5 cursor-pointer flex gap-4 items-start transition-all hover:bg-white/5 ${notif.leido ? 'opacity-60' : 'bg-shisha-ember/[0.03]'}`}
+                                >
+                                    <div className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${notif.leido ? 'bg-white/10' : 'bg-shisha-ember shadow-[0_0_8px_rgba(255,75,75,0.4)]'}`} />
+                                    <div className="flex-1 space-y-1">
+                                        <p className={`text-[13px] leading-relaxed font-medium ${notif.leido ? 'text-shisha-text-muted' : 'text-white'}`}>
+                                            {notif.mensaje}
+                                        </p>
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-shisha-text-dim flex items-center gap-1.5">
+                                            <Info size={10} />
+                                            {new Date(notif.createdAt).toLocaleDateString()} • {new Date(notif.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    {/* Footer */}
+                    {notifications.length > 0 && (
+                        <div className="p-4 bg-white/[0.01] text-center border-t border-white/5">
+                            <p className="text-[9px] font-black text-shisha-text-dim uppercase tracking-[0.2em]">Fin de las notificaciones</p>
+                        </div>
                     )}
                 </div>
             )}

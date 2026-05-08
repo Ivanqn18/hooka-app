@@ -2,9 +2,14 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Search, ArrowLeft, Package, Sparkles, Database } from 'lucide-react';
 import api from '../services/api';
 
+interface XmlFormat {
+    grams: string;
+    price: string;
+}
+
 interface XmlTaste {
     name: string;
-    price: string;
+    formats: XmlFormat[];
 }
 
 interface XmlBrand {
@@ -239,16 +244,21 @@ export const TobaccoCatalog: React.FC = () => {
                             .map((taste, idx) => {
                                 const [c1] = getBrandGradient(selectedBrand.name);
                                 return (
-                                    <div key={idx} className="glass-panel px-6 py-4 rounded-2xl border-white/5 flex items-center justify-between hover:border-white/10 hover:bg-white/[0.04] shadow-xl group">
+                                    <div key={idx} className="glass-panel px-6 py-4 rounded-2xl border-white/5 flex flex-col md:flex-row md:items-center justify-between hover:border-white/10 hover:bg-white/[0.04] shadow-xl group gap-4">
                                         <div className="flex items-center gap-4">
                                             <div className="w-2 h-8 rounded-full opacity-40 shrink-0" style={{ background: c1 }} />
                                             <span className="font-bold text-white text-sm md:text-base">{taste.name}</span>
                                         </div>
-                                        {taste.price && (
-                                            <div className="px-3 py-1 bg-shisha-ember/10 border border-shisha-ember/20 rounded-lg text-shisha-ember font-black text-xs md:text-sm shrink-0">
-                                                {taste.price}€
-                                            </div>
-                                        )}
+                                        <div className="flex flex-wrap md:justify-end gap-3 ml-6 md:ml-0">
+                                            {taste.formats.map((f, fIdx) => (
+                                                <div key={fIdx} className="flex flex-col items-center md:items-end min-w-[50px]">
+                                                    <span className="text-[8px] font-black uppercase text-shisha-text-muted leading-none mb-1">{f.grams}</span>
+                                                    <div className="w-full text-center px-2 py-0.5 bg-shisha-ember/10 border border-shisha-ember/20 rounded-lg text-shisha-ember font-black text-[10px] md:text-xs">
+                                                        {f.price}€
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 );
                             })}

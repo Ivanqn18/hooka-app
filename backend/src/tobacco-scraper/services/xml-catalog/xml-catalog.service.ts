@@ -3,9 +3,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 
+export interface XmlFormat {
+  grams: string;
+  price: string;
+}
+
 export interface XmlTaste {
   name: string;
-  price: string;
+  formats: XmlFormat[];
 }
 
 export interface XmlBrandCatalog {
@@ -62,13 +67,35 @@ export class XmlCatalogService {
       .filter((b: any) => b.name)
       .map((b: any) => {
         const products: any[] = Array.isArray(b.product) ? b.product : b.product ? [b.product] : [];
-        const tastes: XmlTaste[] = products
-          .map((p: any) => ({
-            name: (p.name ?? '').trim(),
-            price: (p.price ?? '').trim(),
-          }))
-          .filter((t: XmlTaste) => t.name.length > 0)
+        const tasteMap = new Map<string, XmlTaste>();
+
+        products.forEach((p: any) => {
+          const fullName = (p.name ?? '').trim();
+          const price = (p.price ?? '').trim();
+          if (!fullName) return;
+
+          // Extraer sabor y gramos: "Nombre (200 g)" -> "Nombre" y "200 g"
+          const match = fullName.match(/(.+?)\s*\(([\d,.]+)\s*g\)/i);
+          const flavorName = match ? match[1].trim() : fullName;
+          const grams = match ? `${match[2].trim()}g` : 'N/A';
+
+          if (!tasteMap.has(flavorName)) {
+            tasteMap.set(flavorName, { name: flavorName, formats: [] });
+          }
+          tasteMap.get(flavorName)!.formats.push({ grams, price });
+        });
+
+        const tastes: XmlTaste[] = Array.from(tasteMap.values())
           .sort((a, b) => a.name.localeCompare(b.name));
+
+        // Ordenar formatos por gramos (ascendente)
+        tastes.forEach(t => {
+          t.formats.sort((a, b) => {
+            const ga = parseInt(a.grams) || 0;
+            const gb = parseInt(b.grams) || 0;
+            return ga - gb;
+          });
+        });
 
         return {
           name: (b.name as string).trim(),

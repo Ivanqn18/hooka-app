@@ -3,9 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { Trash2, Plus, Tag, Pipette, Package, Star } from 'lucide-react';
 import api from '../services/api';
 
+interface XmlFormat {
+    grams: string;
+    price: string;
+}
+
 interface XmlTaste {
     name: string;
-    price: string;
+    formats: XmlFormat[];
 }
 
 interface XmlBrand {
@@ -162,10 +167,16 @@ export default function StashTab() {
                                         type="button"
                                         key={t.name}
                                         onClick={() => setNombreTabaco(t.name)}
-                                        className="w-full text-left px-5 py-2.5 hover:bg-white/5 text-white font-medium text-sm flex items-center justify-between"
+                                        className="w-full text-left px-5 py-2.5 hover:bg-white/5 text-white font-medium text-sm flex items-center justify-between group"
                                     >
                                         <span>{t.name}</span>
-                                        {t.price && <span className="text-[10px] bg-shisha-ember/10 text-shisha-ember px-2 py-0.5 rounded-lg font-black">{t.price}€</span>}
+                                        <div className="flex gap-1.5">
+                                            {t.formats.map((f, i) => (
+                                                <span key={i} className="text-[9px] bg-shisha-ember/5 text-shisha-text-muted px-1.5 py-0.5 rounded border border-white/5 group-hover:border-shisha-ember/30 transition-colors">
+                                                    {f.grams}: <span className="text-shisha-ember font-bold">{f.price}€</span>
+                                                </span>
+                                            ))}
+                                        </div>
                                     </button>
                                 ))}
                                 {nombreTabaco && !saboresFiltrados.some(t => t.name.toLowerCase() === nombreTabaco.toLowerCase()) && (
