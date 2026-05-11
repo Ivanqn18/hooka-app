@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Param,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -20,5 +21,15 @@ export class UsersController {
     const pageNum = page ? parseInt(page, 10) : 1;
 
     return this.usersService.findAll(limitNum, pageNum);
+  }
+
+  @Get(':id')
+  getProfile(@Param('id') id: string) {
+    return this.usersService.getProfile(Number(id));
+  }
+
+  @Get(':id/stats')
+  getStats(@Param('id') id: string) {
+    return this.usersService.getUserStats(Number(id));
   }
 }
