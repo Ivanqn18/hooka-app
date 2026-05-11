@@ -34,24 +34,33 @@ export default function AdminDashboard() {
     }, [user, activeTab]);
 
     const fetchData = () => {
-        api.get('/mezclas')
-            .then((res: any) => setMezclas(Array.isArray(res) ? res : res.data || []))
+        // Función auxiliar para extraer el array de datos sin importar la estructura de paginación del backend
+        const extractData = (res: any) => {
+            if (Array.isArray(res)) return res;
+            if (res && Array.isArray(res.data)) return res.data;
+            if (res && Array.isArray(res.items)) return res.items;
+            if (res && Array.isArray(res.users)) return res.users;
+            return [];
+        };
+
+        api.get('/mezclas', { params: { limit: 100 } })
+            .then((res: any) => setMezclas(extractData(res)))
             .catch(err => console.error("Error fetching mezclas:", err));
 
-        api.get('/marketplace/products')
-            .then((res: any) => setProductos(Array.isArray(res) ? res : res.data || []))
+        api.get('/marketplace/products', { params: { limit: 100 } })
+            .then((res: any) => setProductos(extractData(res)))
             .catch(err => console.error("Error fetching products:", err));
 
-        api.get('/bares')
-            .then((res: any) => setBares(Array.isArray(res) ? res : res.data || []))
+        api.get('/bares', { params: { limit: 100 } })
+            .then((res: any) => setBares(extractData(res)))
             .catch(err => console.error("Error fetching bares:", err));
 
         api.get('/bares/admin/pending')
-            .then((res: any) => setPendingBares(Array.isArray(res) ? res : res.data || []))
+            .then((res: any) => setPendingBares(extractData(res)))
             .catch(err => console.error("Error fetching pending:", err));
 
-        api.get('/users')
-            .then((res: any) => setUsers(Array.isArray(res) ? res : res.data || []))
+        api.get('/users', { params: { limit: 100 } })
+            .then((res: any) => setUsers(extractData(res)))
             .catch(err => console.error("Error fetching users:", err));
     };
 
@@ -130,8 +139,8 @@ export default function AdminDashboard() {
         <button
             onClick={() => setActiveTab(tab)}
             className={`flex items-center justify-center lg:justify-start gap-2.5 md:gap-3.5 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all w-full border ${activeTab === tab
-                    ? 'bg-shisha-ember border-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
-                    : 'bg-transparent border-transparent text-shisha-text-dim hover:text-white hover:bg-white/5'
+                ? 'bg-shisha-ember border-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
+                : 'bg-transparent border-transparent text-shisha-text-dim hover:text-white hover:bg-white/5'
                 }`}
         >
             <Icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
