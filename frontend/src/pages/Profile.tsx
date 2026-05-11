@@ -20,6 +20,7 @@ export default function Profile() {
     const [stats, setStats] = useState({ totalMezclas: 0, productosActivos: 0 });
     const [fullUser, setFullUser] = useState<any>(null);
     const [activeTab, setActiveTab] = useState('overview'); // overview | reviews
+    const [userProducts, setUserProducts] = useState<any[]>([]);
     const [userMixes, setUserMixes] = useState<any[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -64,10 +65,18 @@ export default function Profile() {
         // Obtener las mezclas del usuario
         api.get('/mezclas', { params: { limit: 100 } })
             .then((res: any) => {
-                const all = res.data || [];
-                setUserMixes(all.filter((m: any) => m.autorId === user.id));
+                const allMixes = Array.isArray(res) ? res : res.data || [];
+                setUserMixes(allMixes.filter((m: any) => m.autorId === user.id));
             })
             .catch(err => console.error("Error fetching user mixes:", err));
+
+        // Obtener los productos del usuario
+        api.get('/marketplace/products', { params: { limit: 100 } })
+            .then((res: any) => {
+                const allProducts = Array.isArray(res) ? res : res.data || [];
+                setUserProducts(allProducts.filter((p: any) => p.vendedorId === user.id));
+            })
+            .catch(err => console.error("Error fetching user products:", err));
 
     }, [user, navigate]);
 
@@ -231,15 +240,16 @@ export default function Profile() {
             <nav className="flex items-center justify-start md:justify-center gap-2 md:gap-4 p-2 bg-white/5 rounded-2xl md:rounded-[2rem] border border-white/5 overflow-x-auto scrollbar-hide">
                 {[
                     { id: 'overview', icon: LayoutGrid, label: 'Resumen' },
+                    { id: 'mezclas', icon: FlaskConical, label: 'Mis Mezclas' },
+                    { id: 'productos', icon: ShoppingBag, label: 'Mis Ofertas' },
                     { id: 'reviews', icon: Star, label: 'Valoraciones' },
-                    { id: 'mezclas', icon: FlaskConical, label: 'Mis Mezclas' }
                 ].map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-[1.5rem] flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all shrink-0 ${activeTab === tab.id
-                                ? 'bg-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
-                                : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
+                            ? 'bg-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
+                            : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
                             }`}
                     >
                         <tab.icon size={14} />
@@ -254,45 +264,82 @@ export default function Profile() {
             {/* Tab Content */}
             <div className="animate-reveal-up pt-4">
                 {activeTab === 'overview' ? (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                        <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-shisha-ember border-l-4">
-                            <div className="w-12 h-12 md:w-16 md:h-16 bg-shisha-ember/10 rounded-xl md:rounded-2xl flex items-center justify-center text-shisha-ember shrink-0">
-                                <FlaskConical className="w-6 h-6 md:w-8 md:h-8" />
+                    <div className="space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-shisha-ember border-l-4">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-shisha-ember/10 rounded-xl md:rounded-2xl flex items-center justify-center text-shisha-ember shrink-0">
+                                    <FlaskConical className="w-6 h-6 md:w-8 md:h-8" />
+                                </div>
+                                <div>
+                                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Mezclas</p>
+                                    <h2 className="text-3xl md:text-4xl font-black text-white">{stats.totalMezclas}</h2>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Mezclas</p>
-                                <h2 className="text-3xl md:text-4xl font-black text-white">{stats.totalMezclas}</h2>
+
+                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-[#fbbf24] border-l-4">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-[#fbbf24]/10 rounded-xl md:rounded-2xl flex items-center justify-center text-[#fbbf24] shrink-0">
+                                    <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" />
+                                </div>
+                                <div>
+                                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Ofertas</p>
+                                    <h2 className="text-3xl md:text-4xl font-black text-white">{stats.productosActivos}</h2>
+                                </div>
+                            </div>
+
+                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col items-start justify-center gap-4 shadow-xl border-l-indigo-500 border-l-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 md:w-12 md:h-12 bg-indigo-500/10 rounded-xl md:rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
+                                        <Users className="w-5 h-5 md:w-6 md:h-6" />
+                                    </div>
+                                    <p className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white">Comunidad</p>
+                                </div>
+                                <div className="flex w-full gap-6 mt-1 overflow-hidden">
+                                    <div className="flex-[1]">
+                                        <h2 className="text-2xl md:text-3xl font-black text-white leading-none">{fullUser?.followers?.length || 0}</h2>
+                                        <p className="text-[8px] md:text-[9px] font-bold text-shisha-text-dim uppercase tracking-widest mt-1">Sgds</p>
+                                    </div>
+                                    <div className="flex-[1]">
+                                        <h2 className="text-2xl md:text-3xl font-black text-white leading-none">{fullUser?.following?.length || 0}</h2>
+                                        <p className="text-[8px] md:text-[9px] font-bold text-shisha-text-dim uppercase tracking-widest mt-1">Siguiendo</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-[#fbbf24] border-l-4">
-                            <div className="w-12 h-12 md:w-16 md:h-16 bg-[#fbbf24]/10 rounded-xl md:rounded-2xl flex items-center justify-center text-[#fbbf24] shrink-0">
-                                <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" />
-                            </div>
-                            <div>
-                                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Ofertas</p>
-                                <h2 className="text-3xl md:text-4xl font-black text-white">{stats.productosActivos}</h2>
-                            </div>
-                        </div>
-
-                        <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col items-start justify-center gap-4 shadow-xl border-l-indigo-500 border-l-4">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 md:w-12 md:h-12 bg-indigo-500/10 rounded-xl md:rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
-                                    <Users className="w-5 h-5 md:w-6 md:h-6" />
+                        {/* Previsualización de Últimas Mezclas */}
+                        {userMixes.length > 0 && (
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between px-2">
+                                    <h3 className="text-lg font-black text-white flex items-center gap-2">
+                                        <FlaskConical size={18} className="text-shisha-ember" />
+                                        Tus Últimas Creaciones
+                                    </h3>
+                                    <button onClick={() => setActiveTab('mezclas')} className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim hover:text-white transition-colors">
+                                        Ver todas →
+                                    </button>
                                 </div>
-                                <p className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white">Comunidad</p>
-                            </div>
-                            <div className="flex w-full gap-6 mt-1 overflow-hidden">
-                                <div className="flex-[1]">
-                                    <h2 className="text-2xl md:text-3xl font-black text-white leading-none">{fullUser?.followers?.length || 0}</h2>
-                                    <p className="text-[8px] md:text-[9px] font-bold text-shisha-text-dim uppercase tracking-widest mt-1">Sgds</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {userMixes.slice(0, 4).map((mix: any) => (
+                                        <Link to={`/mezcla/${mix.id}`} key={mix.id} className="glass-panel p-5 rounded-2xl border-white/5 hover:border-shisha-ember/30 transition-all flex items-center gap-4 group shadow-lg">
+                                            <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-shisha-ember/5 border border-shisha-ember/10 group-hover:border-shisha-ember/30 transition-colors">
+                                                {mix.imagenUrl ? (
+                                                    <img src={imageUrl(mix.imagenUrl)} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="mix" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-shisha-ember"><FlaskConical size={18} /></div>
+                                                )}
+                                            </div>
+                                            <div className="overflow-hidden flex-1">
+                                                <h4 className="text-base font-black text-white truncate group-hover:text-shisha-ember transition-colors leading-none mb-1.5">{mix.titulo}</h4>
+                                                {mix.descripcion && (
+                                                    <p className="text-[10px] text-shisha-text-muted font-medium line-clamp-1 mb-1.5">{mix.descripcion}</p>
+                                                )}
+                                                <span className="text-[9px] font-black uppercase tracking-widest text-shisha-text-dim">{mix._count?.likes || 0} Likes</span>
+                                            </div>
+                                        </Link>
+                                    ))}
                                 </div>
-                                <div className="flex-[1]">
-                                    <h2 className="text-2xl md:text-3xl font-black text-white leading-none">{fullUser?.following?.length || 0}</h2>
-                                    <p className="text-[8px] md:text-[9px] font-bold text-shisha-text-dim uppercase tracking-widest mt-1">Siguiendo</p>
-                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 ) : activeTab === 'mezclas' ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -305,13 +352,46 @@ export default function Profile() {
                                         <div className="w-full h-full flex items-center justify-center text-shisha-ember"><FlaskConical size={24} /></div>
                                     )}
                                 </div>
-                                <div className="overflow-hidden">
-                                    <h4 className="text-xl font-black text-white truncate group-hover:text-shisha-ember transition-colors leading-none mb-1">{mix.titulo}</h4>
+                                <div className="overflow-hidden flex-1">
+                                    <h4 className="text-xl font-black text-white truncate group-hover:text-shisha-ember transition-colors leading-none mb-2">{mix.titulo}</h4>
+                                    {mix.descripcion && (
+                                        <p className="text-xs text-shisha-text-muted font-medium line-clamp-2 mb-2 leading-relaxed">
+                                            {mix.descripcion}
+                                        </p>
+                                    )}
                                     <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">{mix._count?.likes || 0} Likes</span>
                                 </div>
                             </Link>
                         )) : (
                             <div className="col-span-full py-20 text-center text-shisha-text-dim font-medium border-2 border-dashed border-white/5 rounded-[3rem]">Aún no has creado ninguna mezcla.</div>
+                        )}
+                    </div>
+                ) : activeTab === 'productos' ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {userProducts.length > 0 ? userProducts.map((product: any) => (
+                            <Link to={`/marketplace/product/${product.id}`} key={product.id} className="glass-panel p-6 rounded-[2rem] border-white/5 hover:border-emerald-500/30 transition-all flex items-center gap-6 group shadow-xl">
+                                <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-emerald-500/5 border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                                    {product.imagenUrl ? (
+                                        <img src={imageUrl(product.imagenUrl)} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="product" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-emerald-500"><ShoppingBag size={24} /></div>
+                                    )}
+                                </div>
+                                <div className="overflow-hidden flex-1">
+                                    <h4 className="text-xl font-black text-white truncate group-hover:text-emerald-400 transition-colors leading-none mb-1.5">{product.titulo}</h4>
+                                    {product.descripcion && (
+                                        <p className="text-xs text-shisha-text-muted font-medium line-clamp-2 mb-2 leading-relaxed">
+                                            {product.descripcion}
+                                        </p>
+                                    )}
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim bg-white/5 px-2 py-0.5 rounded">{product.categoria}</span>
+                                        <span className="text-lg font-black text-emerald-400">{Number(product.precio).toFixed(2)}€</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        )) : (
+                            <div className="col-span-full py-20 text-center text-shisha-text-dim font-medium border-2 border-dashed border-white/5 rounded-[3rem]">Aún no tienes ninguna oferta activa en el marketplace.</div>
                         )}
                     </div>
                 ) : (

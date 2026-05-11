@@ -80,4 +80,21 @@ export class UsersService {
       return { totalMezclas: 0, productosActivos: 0 };
     }
   }
+
+  async update(id: number, data: any) {
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        nombre: data.nombre,
+        avatarUrl: data.avatarUrl,
+        bio: data.bio,
+      },
+    });
+  }
+
+  async remove(id: number) {
+    return this.prisma.user.delete({
+      where: { id },
+    });
+  }
 }
