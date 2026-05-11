@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Users, Upload } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
 import { imageUrl } from '../utils/imageUrl';
 import api from '../services/api';
@@ -20,6 +20,7 @@ export default function Profile() {
     const [stats, setStats] = useState({ totalMezclas: 0, productosActivos: 0 });
     const [fullUser, setFullUser] = useState<any>(null);
     const [activeTab, setActiveTab] = useState('overview'); // overview | reviews
+    const [userMixes, setUserMixes] = useState<any[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         nombre: '',
@@ -60,6 +61,14 @@ export default function Profile() {
             .then((data: any) => setFullUser(data))
             .catch(err => console.error("Error fetching full user:", err));
 
+        // Obtener las mezclas del usuario
+        api.get('/mezclas', { params: { limit: 100 } })
+            .then((res: any) => {
+                const all = res.data || [];
+                setUserMixes(all.filter((m: any) => m.autorId === user.id));
+            })
+            .catch(err => console.error("Error fetching user mixes:", err));
+
     }, [user, navigate]);
 
     const handleSave = async () => {
@@ -98,7 +107,7 @@ export default function Profile() {
             <div className="glass-panel-premium rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 relative overflow-hidden flex flex-col items-center text-center shadow-3xl">
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-shisha-ember/20 blur-[80px] rounded-full -translate-y-1/2 pointer-events-none" />
-                
+
                 <div className="relative z-10 mb-8 group">
                     {(() => {
                         const avatarSrc = avatarPreview || imageUrl(formData.avatarUrl);
@@ -158,12 +167,12 @@ export default function Profile() {
                 <div className="relative z-10 space-y-4 w-full max-w-xl">
                     {isEditing ? (
                         <div className="space-y-4 w-full md:w-[400px] mx-auto animate-reveal-up">
-                            <input 
-                                type="text" 
-                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-center focus:border-shisha-ember outline-none transition-all placeholder:text-shisha-text-dim/20" 
-                                value={formData.nombre} 
-                                onChange={e => setFormData({ ...formData, nombre: e.target.value })} 
-                                placeholder="Tu apodo en el gremio..." 
+                            <input
+                                type="text"
+                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-center focus:border-shisha-ember outline-none transition-all placeholder:text-shisha-text-dim/20"
+                                value={formData.nombre}
+                                onChange={e => setFormData({ ...formData, nombre: e.target.value })}
+                                placeholder="Tu apodo en el gremio..."
                             />
                             <button
                                 type="button"
@@ -175,12 +184,12 @@ export default function Profile() {
                                     {avatarFile ? avatarFile.name : 'Seleccionar imagen de perfil...'}
                                 </span>
                             </button>
-                            <textarea 
-                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium focus:border-shisha-ember outline-none transition-all resize-none placeholder:text-shisha-text-dim/20" 
-                                rows={3} 
-                                value={formData.bio} 
-                                onChange={e => setFormData({ ...formData, bio: e.target.value })} 
-                                placeholder="Escribe una breve leyenda sobre tu experiencia..." 
+                            <textarea
+                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-medium focus:border-shisha-ember outline-none transition-all resize-none placeholder:text-shisha-text-dim/20"
+                                rows={3}
+                                value={formData.bio}
+                                onChange={e => setFormData({ ...formData, bio: e.target.value })}
+                                placeholder="Escribe una breve leyenda sobre tu experiencia..."
                             />
 
                             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2">
@@ -222,16 +231,16 @@ export default function Profile() {
             <nav className="flex items-center justify-start md:justify-center gap-2 md:gap-4 p-2 bg-white/5 rounded-2xl md:rounded-[2rem] border border-white/5 overflow-x-auto scrollbar-hide">
                 {[
                     { id: 'overview', icon: LayoutGrid, label: 'Resumen' },
-                    { id: 'reviews', icon: Star, label: 'Valoraciones' }
+                    { id: 'reviews', icon: Star, label: 'Valoraciones' },
+                    { id: 'mezclas', icon: FlaskConical, label: 'Mis Mezclas' }
                 ].map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-[1.5rem] flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all shrink-0 ${
-                            activeTab === tab.id 
-                            ? 'bg-shisha-ember text-white shadow-xl shadow-shisha-ember/20' 
-                            : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
-                        }`}
+                        className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-[1.5rem] flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all shrink-0 ${activeTab === tab.id
+                                ? 'bg-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
+                                : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
+                            }`}
                     >
                         <tab.icon size={14} />
                         {tab.label}
@@ -285,6 +294,26 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
+                ) : activeTab === 'mezclas' ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {userMixes.length > 0 ? userMixes.map((mix: any) => (
+                            <Link to={`/mezcla/${mix.id}`} key={mix.id} className="glass-panel p-6 rounded-[2rem] border-white/5 hover:border-shisha-ember/30 transition-all flex items-center gap-6 group shadow-xl">
+                                <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-shisha-ember/5 border border-shisha-ember/10 group-hover:border-shisha-ember/30 transition-colors">
+                                    {mix.imagenUrl ? (
+                                        <img src={imageUrl(mix.imagenUrl)} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="mix" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-shisha-ember"><FlaskConical size={24} /></div>
+                                    )}
+                                </div>
+                                <div className="overflow-hidden">
+                                    <h4 className="text-xl font-black text-white truncate group-hover:text-shisha-ember transition-colors leading-none mb-1">{mix.titulo}</h4>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">{mix._count?.likes || 0} Likes</span>
+                                </div>
+                            </Link>
+                        )) : (
+                            <div className="col-span-full py-20 text-center text-shisha-text-dim font-medium border-2 border-dashed border-white/5 rounded-[3rem]">Aún no has creado ninguna mezcla.</div>
+                        )}
+                    </div>
                 ) : (
                     <div className="space-y-6">
                         {!fullUser ? (
@@ -306,9 +335,9 @@ export default function Profile() {
                                         <div key={rev.id} className="glass-panel p-8 rounded-[2rem] border-white/5 hover:border-white/10 transition-colors shadow-xl">
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="flex items-center gap-4">
-                                                    <img 
-                                                        src={imageUrl(rev.comprador?.avatarUrl) || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'} 
-                                                        className="w-12 h-12 rounded-2xl object-cover border-2 border-shisha-ember" 
+                                                    <img
+                                                        src={imageUrl(rev.comprador?.avatarUrl) || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}
+                                                        className="w-12 h-12 rounded-2xl object-cover border-2 border-shisha-ember"
                                                     />
                                                     <div>
                                                         <p className="font-black text-white">{rev.comprador?.nombre || 'Miembro Anónimo'}</p>

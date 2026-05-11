@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-    Trash2, AlertTriangle, ShieldCheck, LayoutDashboard, 
-    Flame, ShoppingCart, MapPin, CheckCircle, 
+import {
+    Trash2, AlertTriangle, ShieldCheck, LayoutDashboard,
+    Flame, ShoppingCart, MapPin, CheckCircle, Users,
     Plus, Clock
 } from 'lucide-react';
 import { imageUrl } from '../utils/imageUrl';
@@ -10,9 +10,10 @@ import api from '../services/api';
 
 export default function AdminDashboard() {
     const { user } = useAuth();
-    const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares' | 'users'>('overview');
 
     const [mezclas, setMezclas] = useState<any[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
     const [productos, setProductos] = useState<any[]>([]);
     const [bares, setBares] = useState<any[]>([]);
     const [pendingBares, setPendingBares] = useState<any[]>([]);
@@ -48,9 +49,17 @@ export default function AdminDashboard() {
         api.get('/bares/admin/pending')
             .then((res: any) => setPendingBares(Array.isArray(res) ? res : res.data || []))
             .catch(err => console.error("Error fetching pending:", err));
+
+        api.get('/users')
+            .then((res: any) => setUsers(Array.isArray(res) ? res : res.data || []))
+            .catch(err => console.error("Error fetching users:", err));
     };
 
-    const handleDelete = async (id: number, type: 'mezclas' | 'marketplace/products' | 'bares') => {
+    const handleDelete = async (id: number, type: 'mezclas' | 'marketplace/products' | 'bares' | 'users') => {
+        if (type === 'users' && id === user?.id) {
+            alert('No puedes eliminar tu propia cuenta de administrador desde aquí.');
+            return;
+        }
         if (!confirm(`¿Estás seguro de que deseas eliminar este elemento?`)) return;
 
         try {
@@ -100,12 +109,12 @@ export default function AdminDashboard() {
 
     const StatCard = ({ title, value, icon: Icon, colorClass }: any) => {
         const textColor = colorClass.replace('bg-', 'text-');
-        
+
         return (
             <div className="glass-panel p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border-white/5 shadow-xl flex items-center justify-between group transition-all hover:border-white/10 overflow-hidden relative">
                 {/* Subtle background glow */}
                 <div className={`absolute -right-4 -top-4 w-24 h-24 ${colorClass} blur-[40px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
-                
+
                 <div className="space-y-1 relative z-10">
                     <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim group-hover:text-shisha-text-muted transition-colors">{title}</p>
                     <h3 className="text-2xl md:text-3xl font-black text-white tracking-tighter">{value}</h3>
@@ -118,13 +127,12 @@ export default function AdminDashboard() {
     };
 
     const NavButton = ({ tab, icon: Icon, label, lgLabel }: any) => (
-        <button 
-            onClick={() => setActiveTab(tab)} 
-            className={`flex items-center justify-center lg:justify-start gap-2.5 md:gap-3.5 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all w-full border ${
-                activeTab === tab 
-                ? 'bg-shisha-ember border-shisha-ember text-white shadow-xl shadow-shisha-ember/20' 
-                : 'bg-transparent border-transparent text-shisha-text-dim hover:text-white hover:bg-white/5'
-            }`}
+        <button
+            onClick={() => setActiveTab(tab)}
+            className={`flex items-center justify-center lg:justify-start gap-2.5 md:gap-3.5 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all w-full border ${activeTab === tab
+                    ? 'bg-shisha-ember border-shisha-ember text-white shadow-xl shadow-shisha-ember/20'
+                    : 'bg-transparent border-transparent text-shisha-text-dim hover:text-white hover:bg-white/5'
+                }`}
         >
             <Icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
             <span className="hidden lg:inline">{lgLabel || label}</span>
@@ -134,7 +142,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up flex flex-col lg:flex-row gap-6 md:gap-8 min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-140px)]">
-            
+
             {/* Sidebar Navigation */}
             <aside className="lg:w-80 flex flex-col gap-6 md:gap-8 shrink-0">
                 <div className="glass-panel p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border-white/5 shadow-2xl flex flex-col h-full">
@@ -161,6 +169,9 @@ export default function AdminDashboard() {
                         <div className="flex-1 min-w-[120px] lg:min-w-0">
                             <NavButton tab="bares" icon={MapPin} label="Maps" lgLabel="Lounges" />
                         </div>
+                        <div className="flex-1 min-w-[120px] lg:min-w-0">
+                            <NavButton tab="users" icon={Users} label="Users" lgLabel="Usuarios" />
+                        </div>
                     </nav>
 
                     <div className="mt-6 md:mt-10 pt-6 md:pt-8 border-t border-white/5 hidden md:block">
@@ -186,12 +197,13 @@ export default function AdminDashboard() {
 
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col gap-8">
-                
+
                 {/* Stats Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     <StatCard title="Mezclas" value={mezclas.length} icon={Flame} colorClass="bg-shisha-ember" />
                     <StatCard title="Mercado" value={productos.length} icon={ShoppingCart} colorClass="bg-emerald-500" />
                     <StatCard title="Bares" value={bares.length} icon={MapPin} colorClass="bg-blue-500" />
+                    <StatCard title="Usuarios" value={users.length} icon={Users} colorClass="bg-violet-500" />
                     <StatCard title="Espera" value={pendingBares.length} icon={Clock} colorClass="bg-amber-500" />
                 </div>
 
@@ -202,6 +214,7 @@ export default function AdminDashboard() {
                         {activeTab === 'mezclas' && <Flame className="w-[120px] h-[120px]" />}
                         {activeTab === 'productos' && <ShoppingCart className="w-[120px] h-[120px]" />}
                         {activeTab === 'bares' && <MapPin className="w-[120px] h-[120px]" />}
+                        {activeTab === 'users' && <Users className="w-[120px] h-[120px]" />}
                     </div>
 
                     <div className="relative z-10">
@@ -211,7 +224,7 @@ export default function AdminDashboard() {
                                     <h2 className="text-3xl font-black text-white tracking-tight">Actividad Global</h2>
                                     <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Actualizado en tiempo real</span>
                                 </div>
-                                
+
                                 {pendingBares.length > 0 ? (
                                     <div className="bg-amber-500/10 border border-amber-500/20 p-8 rounded-[2rem] flex flex-col md:flex-row items-center gap-6 animate-pulse-subtle">
                                         <div className="w-14 h-14 bg-amber-500/20 rounded-2xl flex items-center justify-center text-amber-500 shrink-0">
@@ -289,8 +302,8 @@ export default function AdminDashboard() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button 
-                                                onClick={() => handleDelete(m.id, 'mezclas')} 
+                                            <button
+                                                onClick={() => handleDelete(m.id, 'mezclas')}
                                                 className="w-12 h-12 rounded-2xl bg-rose-500/5 text-rose-500 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center shadow-lg"
                                             >
                                                 <Trash2 size={20} />
@@ -334,12 +347,62 @@ export default function AdminDashboard() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button 
-                                                onClick={() => handleDelete(p.id, 'marketplace/products')} 
+                                            <button
+                                                onClick={() => handleDelete(p.id, 'marketplace/products')}
                                                 className="px-6 py-4 rounded-2xl bg-rose-500/5 text-rose-500 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center gap-2 font-black text-xs uppercase tracking-widest"
                                             >
                                                 <Trash2 size={16} /> Eliminar
                                             </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'users' && (
+                            <div className="space-y-8">
+                                <div className="flex items-center justify-between">
+                                    <h2 className="text-3xl font-black text-white tracking-tight">Gestión de Usuarios</h2>
+                                    <div className="px-4 py-2 bg-white/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">
+                                        {users.length} usuarios registrados
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 gap-4">
+                                    {users.map((u: any) => (
+                                        <div key={u.id} className="group flex items-center justify-between p-5 bg-white/2 border border-white/5 rounded-[2rem] hover:bg-white/5 hover:border-white/10 transition-all">
+                                            <div className="flex items-center gap-6 overflow-hidden">
+                                                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-white/5 group-hover:border-violet-500/30 transition-colors shrink-0">
+                                                    {u.avatarUrl ? (
+                                                        <img src={imageUrl(u.avatarUrl)} className="w-full h-full object-cover" alt="avatar" />
+                                                    ) : (
+                                                        <div className="w-full h-full bg-violet-500/10 flex items-center justify-center text-violet-500">
+                                                            <Users size={32} />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <div className="flex items-center gap-3 mb-1.5">
+                                                        <h4 className="text-xl font-black text-white group-hover:text-violet-400 transition-colors leading-none truncate">{u.nombre}</h4>
+                                                        {u.isAdmin && (
+                                                            <span className="px-3 py-1 bg-shisha-ember text-white text-[9px] font-black rounded-lg uppercase tracking-widest shrink-0">Admin</span>
+                                                        )}
+                                                    </div>
+                                                    <div className="flex items-center gap-3 text-shisha-text-dim text-[10px] font-black uppercase tracking-widest leading-none">
+                                                        <span className="truncate">ID: {u.id}</span>
+                                                        <span className="w-1 h-1 bg-white/10 rounded-full shrink-0"></span>
+                                                        <span className="truncate">{u.email}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {user?.id !== u.id && (
+                                                <button
+                                                    onClick={() => handleDelete(u.id, 'users')}
+                                                    className="shrink-0 px-6 py-4 rounded-2xl bg-rose-500/5 text-rose-500 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center gap-2 font-black text-xs uppercase tracking-widest"
+                                                >
+                                                    <Trash2 size={16} />
+                                                    <span className="hidden md:inline">Eliminar</span>
+                                                </button>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -368,21 +431,21 @@ export default function AdminDashboard() {
                                                             </p>
                                                         </div>
                                                         <div className="flex gap-3 shrink-0">
-                                                            <button 
-                                                                onClick={() => handleUpdateBarStatus(b.id, 'APPROVED')} 
+                                                            <button
+                                                                onClick={() => handleUpdateBarStatus(b.id, 'APPROVED')}
                                                                 className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-500/20"
                                                             >
                                                                 Aprobar
                                                             </button>
-                                                            <button 
-                                                                onClick={() => handleUpdateBarStatus(b.id, 'REJECTED')} 
+                                                            <button
+                                                                onClick={() => handleUpdateBarStatus(b.id, 'REJECTED')}
                                                                 className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-rose-500/20"
                                                             >
                                                                 Rechazar
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-white/5">
                                                         <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-2xl border border-white/5">
                                                             <div className="relative">
