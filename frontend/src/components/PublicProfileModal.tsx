@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Star, Users, FlaskConical, ShoppingBag, ShieldCheck } from 'lucide-react';
 import { imageUrl } from '../utils/imageUrl';
 import { Facehash, stringHash } from 'facehash';
