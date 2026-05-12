@@ -49,6 +49,16 @@ export class ChatService {
     });
   }
 
+  getChat(chatId: number) {
+    return this.prisma.chat.findUnique({
+      where: { id: chatId },
+      include: {
+        product: true,
+        buyer: { select: { id: true, nombre: true, avatarUrl: true } },
+      },
+    });
+  }
+
   getMessages(chatId: number) {
     return this.prisma.message.findMany({
       where: { chatId },

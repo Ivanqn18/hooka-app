@@ -20,6 +20,7 @@ import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from '../auth/admin.guard';
 import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
+import { AddStashDto } from './dto/user-actions.dto';
 
 const avatarStorage = diskStorage({
   destination: './uploads/avatars',
@@ -91,5 +92,36 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, AdminGuard)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
+  }
+
+  // ========== STASH ==========
+
+  @Get(':id/stash')
+  @UseGuards(JwtAuthGuard)
+  getStash(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.getStash(id);
+  }
+
+  @Post('stash')
+  @UseGuards(JwtAuthGuard)
+  addStash(@Body() addStashDto: AddStashDto) {
+    return this.usersService.addStash(addStashDto);
+  }
+
+  @Delete('stash/:id')
+  @UseGuards(JwtAuthGuard)
+  removeStash(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.removeStash(id);
+  }
+
+  // ========== FOLLOW ==========
+
+  @Post(':id/follow')
+  @UseGuards(JwtAuthGuard)
+  toggleFollow(
+    @Param('id', ParseIntPipe) followingId: number,
+    @Body('followerId', ParseIntPipe) followerId: number,
+  ) {
+    return this.usersService.toggleFollow(followerId, followingId);
   }
 }

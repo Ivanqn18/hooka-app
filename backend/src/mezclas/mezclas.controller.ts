@@ -101,13 +101,23 @@ export class MezclasController {
     @Body() updateMezclaDto: any,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    const ingredientes = typeof updateMezclaDto.ingredientes === 'string'
+    const rawIngredientes = typeof updateMezclaDto.ingredientes === 'string'
       ? JSON.parse(updateMezclaDto.ingredientes)
       : updateMezclaDto.ingredientes;
 
-    const tagIds = typeof updateMezclaDto.tagIds === 'string'
+    const rawTagIds = typeof updateMezclaDto.tagIds === 'string'
       ? JSON.parse(updateMezclaDto.tagIds)
       : (updateMezclaDto.tagIds ?? []);
+
+    const ingredientes = Array.isArray(rawIngredientes)
+      ? rawIngredientes.map((ing: any) => ({
+          nombreTabaco: ing.nombreTabaco,
+          marca: ing.marca || null,
+          porcentaje: Number(ing.porcentaje) || 0,
+        }))
+      : [];
+
+    const tagIds = Array.isArray(rawTagIds) ? rawTagIds.map(Number) : [];
 
     const data: any = {
       ...updateMezclaDto,
@@ -116,8 +126,13 @@ export class MezclasController {
     };
     
     // Convertir autorId a numero (viene como string en form-data)
-    if (data.autorId) {
+    if (data.autorId !== undefined) {
       data.autorId = Number(data.autorId);
+    }
+
+    // Convertir privada a booleano
+    if (data.privada !== undefined) {
+      data.privada = data.privada === 'true' || data.privada === true;
     }
 
     if (file) {

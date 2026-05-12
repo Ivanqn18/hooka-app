@@ -9,6 +9,7 @@ import api from '../services/api';
 export default function Chat() {
     const { id } = useParams();
     const [messages, setMessages] = useState<any[]>([]);
+    const [chatInfo, setChatInfo] = useState<any>(null);
     const [text, setText] = useState('');
     const [showOfferModal, setShowOfferModal] = useState(false);
     const [offerAmount, setOfferAmount] = useState('');
@@ -22,6 +23,11 @@ export default function Chat() {
         // 1. Fetch initial DB messages
         api.get(`/chats/${id}/messages`)
             .then((data: any) => setMessages(data))
+            .catch(console.error);
+
+        // 2. Fetch Chat & Product info
+        api.get(`/chats/${id}`)
+            .then((data: any) => setChatInfo(data))
             .catch(console.error);
 
         // En producción: conecta al mismo origen → Caddy enruta /socket.io/* al backend
@@ -99,19 +105,93 @@ export default function Chat() {
         setOfferAmount('');
     };
 
-    const renderMessageContent = (texto: string, isMe: boolean) => {
+    const handleAcceptOffer = async (amount: string) => {
+        // Emitir mensaje de oferta aceptada
+        socketRef.current?.emit('sendMessage', {
+            chatId: Number(id),
+            emisorId: currentUserId,
+            texto: `[OFERTA_ACEPTADA:${amount}€]`
+        });
+
+        // Actualizar estado del producto a RESERVADO en el marketplace
+        if (chatInfo?.productoId) {
+            try {
+                await api.patch(`/marketplace/products/${chatInfo.productoId}`, { estado: 'RESERVADO' });
+            } catch (err) {
+                console.error("Error al reservar el producto", err);
+            }
+        }
+    };
+
+    const handleRejectOffer = (amount: string) => {
+        // Emitir mensaje de oferta rechazada
+        socketRef.current?.emit('sendMessage', {
+            chatId: Number(id),
+            emisorId: currentUserId,
+            texto: `[OFERTA_RECHAZADA:${amount}€]`
+        });
+    };
+
+    const renderMessageContent = (m: any, index: number, isMe: boolean) => {
+        const texto = m.texto || '';
+
+        // 1. Oferta Aceptada
+        const acceptedMatch = texto.match(/^\[OFERTA_ACEPTADA:(\d+(?:\.\d+)?)€\]$/);
+        if (acceptedMatch) {
+            return (
+                <div className="glass-panel p-5 rounded-3xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col gap-2 max-w-xs animate-reveal-up">
+                    <div className="flex items-center gap-2 text-emerald-400 font-black text-base">
+                        <CheckCheck size={18} />
+                        <span>¡Oferta Aceptada: {acceptedMatch[1]}€!</span>
+                    </div>
+                    <p className="text-[11px] text-emerald-300/80 font-medium leading-tight">
+                        Acuerdo cerrado. Por favor, coordinad el pago y envío a continuación.
+                    </p>
+                </div>
+            );
+        }
+
+        // 2. Oferta Rechazada
+        const rejectedMatch = texto.match(/^\[OFERTA_RECHAZADA:(\d+(?:\.\d+)?)€\]$/);
+        if (rejectedMatch) {
+            return (
+                <div className="glass-panel p-4 rounded-2xl border border-rose-500/20 bg-rose-500/5 flex items-center gap-2 text-rose-400/80 text-xs font-bold animate-reveal-up">
+                    <X size={14} className="shrink-0" />
+                    <span className="line-through">Oferta de {rejectedMatch[1]}€ rechazada</span>
+                </div>
+            );
+        }
+
+        // 3. Oferta Original
         const offerMatch = texto.match(/^\[OFERTA:(\d+(?:\.\d+)?)€\]$/);
         if (offerMatch) {
+            const amount = offerMatch[1];
+            // Comprobar si hay alguna respuesta posterior a esta oferta en el chat
+            const isAnswered = messages.slice(index + 1).some((subMsg: any) => 
+                subMsg.texto?.startsWith('[OFERTA_ACEPTADA:') || subMsg.texto?.startsWith('[OFERTA_RECHAZADA:')
+            );
+
             return (
                 <div className={`glass-panel p-6 rounded-3xl border ${isMe ? 'border-amber-400/50 bg-amber-400/10' : 'border-amber-400/20 bg-amber-400/5'} flex flex-col gap-4 min-w-[240px]`}>
                     <div className="flex items-center gap-3 text-amber-400 font-black text-xl">
                         <Tag size={20} className="animate-pulse" />
-                        <span>OFERTA: {offerMatch[1]}€</span>
+                        <span className={isAnswered ? "opacity-60 line-through" : ""}>OFERTA: {amount}€</span>
                     </div>
-                    {!isMe && (
-                        <div className="flex gap-3">
-                            <button className="flex-1 py-2.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95">Aceptar</button>
-                            <button className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-shisha-text-muted hover:text-white border border-white/5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95">Rechazar</button>
+                    {!isMe && !isAnswered && (
+                        <div className="flex gap-3 animate-fade-in">
+                            <button 
+                                onClick={() => handleAcceptOffer(amount)}
+                                className="flex-1 py-2.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95"
+                            >Aceptar</button>
+                            <button 
+                                onClick={() => handleRejectOffer(amount)}
+                                className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-shisha-text-muted hover:text-white border border-white/5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95"
+                            >Rechazar</button>
+                        </div>
+                    )}
+                    {isAnswered && (
+                        <div className="text-[9px] font-black text-shisha-text-dim uppercase tracking-widest text-center">
+                            Oferta Respondida
                         </div>
                     )}
                 </div>
@@ -144,9 +224,13 @@ export default function Chat() {
                             <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
                         <div>
-                            <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-none">Canal de Negociación</h2>
+                            <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-none">
+                                {chatInfo?.product?.titulo || 'Canal de Negociación'}
+                            </h2>
                             <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-shisha-text-dim mt-1 flex items-center gap-1.5">
-                                <Sparkles size={10} className="text-shisha-ember" /> Cifrado de extremo a extremo
+                                <Sparkles size={10} className="text-shisha-ember" /> 
+                                {chatInfo?.product?.precio ? `${Number(chatInfo.product.precio).toFixed(2)}€ • ` : ''}
+                                Cifrado de extremo a extremo
                             </p>
                         </div>
                     </div>
@@ -158,7 +242,7 @@ export default function Chat() {
                         const isMe = m.emisorId === currentUserId;
                         return (
                             <div key={i} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} max-w-[85%] ${isMe ? 'self-end' : 'self-start'} animate-reveal-up`}>
-                                {renderMessageContent(m.texto, isMe)}
+                                {renderMessageContent(m, i, isMe)}
                                 <div className="flex items-center gap-2 mt-2 px-1">
                                     <span className="text-[9px] font-black text-shisha-text-dim uppercase tracking-tighter">
                                         {new Date(m.createdAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

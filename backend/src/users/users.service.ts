@@ -97,4 +97,67 @@ export class UsersService {
       where: { id },
     });
   }
+
+  // ========== STASH ==========
+
+  async getStash(userId: number) {
+    return this.prisma.userStash.findMany({
+      where: { usuarioId: userId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async addStash(data: any) {
+    return this.prisma.userStash.create({
+      data: {
+        usuarioId: data.usuarioId,
+        nombreTabaco: data.nombreTabaco,
+        marca: data.marca || null,
+        tipo: data.tipo,
+      },
+    });
+  }
+
+  async removeStash(id: number) {
+    return this.prisma.userStash.delete({
+      where: { id },
+    });
+  }
+
+  // ========== FOLLOW ==========
+
+  async toggleFollow(followerId: number, followingId: number) {
+    if (followerId === followingId) {
+      return { following: false };
+    }
+
+    const existing = await this.prisma.userFollow.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId,
+          followingId,
+        },
+      },
+    });
+
+    if (existing) {
+      await this.prisma.userFollow.delete({
+        where: {
+          followerId_followingId: {
+            followerId,
+            followingId,
+          },
+        },
+      });
+      return { following: false };
+    } else {
+      await this.prisma.userFollow.create({
+        data: {
+          followerId,
+          followingId,
+        },
+      });
+      return { following: true };
+    }
+  }
 }
