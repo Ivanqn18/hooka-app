@@ -49,7 +49,7 @@ function App() {
           <Link to="/tobaccos" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Tabacos</Link>
           <Link to="/mapa" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mapa</Link>
           {user && (
-              <Link to="/stash" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mi Stash</Link>
+            <Link to="/stash" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mi Stash</Link>
           )}
           {user?.isAdmin && (
             <Link to="/admin" className="text-shisha-ember font-black text-[0.8rem] uppercase tracking-wider hover:glow-pulse">Admin</Link>
@@ -60,9 +60,9 @@ function App() {
               <Link to="/perfil" className="text-white font-black text-sm hover:text-shisha-ember transition-colors flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full overflow-hidden bg-shisha-ember/20 border-2 border-shisha-ember/40 flex items-center justify-center text-[10px] shadow-lg shadow-shisha-ember/10 group-hover:scale-105 transition-transform">
                   {user.avatarUrl ? (
-                    <img 
-                      src={imageUrl(user.avatarUrl)} 
-                      alt={user.nombre} 
+                    <img
+                      src={imageUrl(user.avatarUrl)}
+                      alt={user.nombre}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -88,7 +88,7 @@ function App() {
         {/* Mobile / Tablet Controls */}
         <div className="flex lg:hidden items-center gap-4">
           {user && <NotificationBell />}
-          <button 
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white"
           >
@@ -114,9 +114,9 @@ function App() {
               Mapa <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
             </Link>
             {user && (
-                <Link to="/stash" onClick={closeMenu} className="py-4 text-2xl font-black text-white border-b border-white/5 flex justify-between items-center group">
-                  Mi Stash <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                </Link>
+              <Link to="/stash" onClick={closeMenu} className="py-4 text-2xl font-black text-white border-b border-white/5 flex justify-between items-center group">
+                Mi Stash <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+              </Link>
             )}
             {user?.isAdmin && (
               <Link to="/admin" onClick={closeMenu} className="py-4 text-2xl font-black text-shisha-ember border-b border-white/5 flex justify-between items-center">
@@ -141,7 +141,7 @@ function App() {
                     <span className="text-shisha-text-dim text-[10px] uppercase font-bold tracking-widest">Mi Perfil</span>
                   </div>
                 </Link>
-                <button 
+                <button
                   onClick={handleLogout}
                   className="w-full py-4 bg-rose-500/10 text-rose-500 font-black uppercase tracking-[0.2em] rounded-2xl border border-rose-500/20 flex items-center justify-center gap-2"
                 >

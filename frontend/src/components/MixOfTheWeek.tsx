@@ -67,20 +67,18 @@ export default function MixOfTheWeek() {
                     </div>
                 </div>
 
-                 <div className="hidden lg:block w-1/3 relative">
-                      <div className="absolute inset-0 bg-shisha-ember/20 blur-[100px] rounded-full animate-pulse"></div>
-                      <div className="relative glass-panel-premium aspect-square rounded-[3rem] border-white/10 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl overflow-hidden">
-                         {mix.imagenUrl ? (
-                             <img 
-                                 src={imageUrl(mix.imagenUrl)} 
-                                 alt={mix.titulo}
-                                 className="w-full h-full object-cover"
-                             />
-                         ) : (
-                             <Sparkles size={80} className="text-shisha-ember" />
-                         )}
-                      </div>
-                 </div>
+                 {mix.imagenUrl && (
+                     <div className="hidden lg:block w-1/3 relative">
+                          <div className="absolute inset-0 bg-shisha-ember/20 blur-[100px] rounded-full animate-pulse"></div>
+                          <div className="relative glass-panel-premium aspect-square rounded-[3rem] border-white/10 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl overflow-hidden">
+                                 <img 
+                                     src={imageUrl(mix.imagenUrl)} 
+                                     alt={mix.titulo}
+                                     className="w-full h-full object-cover"
+                                 />
+                          </div>
+                     </div>
+                 )}
             </div>
         </div>
     );

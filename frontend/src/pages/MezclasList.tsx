@@ -108,27 +108,30 @@ export default function MezclasList() {
                                     key={mix.id} 
                                     className="glass-panel group rounded-[2.5rem] overflow-hidden flex flex-col hover:border-shisha-ember/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-shisha-ember/10"
                                 >
-                                    <div className="relative h-56 overflow-hidden">
-                                        {mix.imagenUrl ? (
+                                    {mix.imagenUrl ? (
+                                        <div className="relative h-56 overflow-hidden shrink-0">
                                             <img 
                                                 src={imageUrl(mix.imagenUrl)} 
                                                 alt={mix.titulo} 
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                             />
-                                        ) : (
-                                            <div className="w-full h-full bg-gradient-to-br from-shisha-surface to-shisha-bg flex items-center justify-center">
-                                                <Sparkles size={48} className="text-shisha-text-dim/20" />
+                                            <div className="absolute top-4 right-4 flex gap-2">
+                                                <div className="px-3 py-1.5 glass-panel rounded-full flex items-center gap-1.5 shadow-xl backdrop-blur-md">
+                                                    <Heart size={14} className="text-rose-500 fill-rose-500/10" />
+                                                    <span className="text-xs font-black text-white">{mix._count?.likes || 0}</span>
+                                                </div>
                                             </div>
-                                        )}
-                                        <div className="absolute top-4 right-4 flex gap-2">
-                                            <div className="px-3 py-1.5 glass-panel rounded-full flex items-center gap-1.5 shadow-xl">
+                                        </div>
+                                    ) : (
+                                        <div className="pt-6 px-6 md:pt-8 md:px-8 flex justify-end">
+                                            <div className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full flex items-center gap-1.5 shadow-xl">
                                                 <Heart size={14} className="text-rose-500 fill-rose-500/10" />
                                                 <span className="text-xs font-black text-white">{mix._count?.likes || 0}</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
 
-                                    <div className="p-6 md:p-8 flex flex-col flex-1 gap-6">
+                                    <div className={`p-6 md:p-8 flex flex-col flex-1 gap-6 ${!mix.imagenUrl ? 'pt-2 md:pt-2' : ''}`}>
                                         <div>
                                             <h3 className="text-lg md:text-xl font-black text-white mb-2 line-clamp-1 group-hover:text-shisha-ember transition-colors">{mix.titulo}</h3>
                                             <p className="text-shisha-text-muted text-xs md:text-sm font-medium line-clamp-2 leading-relaxed">
