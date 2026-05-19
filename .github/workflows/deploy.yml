@@ -63,7 +63,7 @@ jobs:
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.yml,Caddyfile"
-          target: "/var/www/hookaapp"
+          target: "/var/www/hookahub"
 
       - name: Deploy to Droplet via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -87,8 +87,8 @@ jobs:
           envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,POSTGRES_PORT,DATABASE_URL,JWT_SECRET,JWT_REFRESH_SECRET,GH_TOKEN,FRONTEND_URL,ACME_EMAIL,DOMAIN,NODE_ENV
           script: |
             # 1. Crear directorio si no existe y navegar
-            mkdir -p /var/www/hookaapp
-            cd /var/www/hookaapp
+            mkdir -p /var/www/hookahub
+            cd /var/www/hookahub
 
             # 2. Login en GitHub Container Registry
             echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin

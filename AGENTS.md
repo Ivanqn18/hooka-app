@@ -93,7 +93,7 @@ docker compose up -d   # Starts: db, backend, frontend, caddy
 
 ### Backend (.env)
 ```
-DATABASE_URL=postgresql://user:pass@localhost:5432/hookaapp?schema=public
+DATABASE_URL=postgresql://user:pass@localhost:5432/hookahub?schema=public
 JWT_SECRET=<generate-strong-secret>
 JWT_REFRESH_SECRET=<generate-strong-secret>
 FRONTEND_URL=https://hookahub.me
@@ -114,7 +114,7 @@ FRONTEND_URL, ACME_EMAIL, DOMAIN, NODE_ENV
 
 1. Push to `main` triggers GitHub Actions workflow (`.github/workflows/deploy.yml`)
 2. Builds Docker images for backend + frontend
-3. Pushes to GitHub Container Registry (`ghcr.io/ivanqn18/hookaapp-{backend,frontend}:latest`)
+3. Pushes to GitHub Container Registry (`ghcr.io/ivanqn18/hookahub-{backend,frontend}:latest`)
 4. SCPs `docker-compose.yml` + `Caddyfile` to DigitalOcean droplet
 5. SSHs into droplet, writes `.env`, pulls images, starts containers
 6. Runs `prisma migrate deploy` against production database

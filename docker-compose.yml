@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    image: ${BACKEND_IMAGE:-ghcr.io/ivanqn18/hookaapp-backend:latest}
+    image: ${BACKEND_IMAGE:-ghcr.io/ivanqn18/hookahub-backend:latest}
     container_name: shisha_backend
     restart: always
     environment:
@@ -28,7 +28,7 @@ services:
       - uploads_data:/app/uploads
 
   frontend:
-    image: ${FRONTEND_IMAGE:-ghcr.io/ivanqn18/hookaapp-frontend:latest}
+    image: ${FRONTEND_IMAGE:-ghcr.io/ivanqn18/hookahub-frontend:latest}
     container_name: shisha_frontend
     restart: always
 

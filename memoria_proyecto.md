@@ -1,19 +1,19 @@
-# MEMORIA TÉCNICA DEL PROYECTO: HookaApp
+# MEMORIA TÉCNICA DEL PROYECTO: HookaHub
 
 ## 1 Identificación proyecto
-**Nombre del Proyecto:** HookaApp
+**Nombre del Proyecto:** HookaHub
 **Autor:** [Tu Nombre / Nombre del equipo]
 **Fecha:** Abril 2026
 **Módulo / Asignatura:** [Nombre del Módulo o Asignatura]
 **Centro / Institución:** [Nombre del Centro Educativo]
 
 ## 2 Organización de la memoria
-La presente memoria documenta exhaustivamente el ciclo de vida del desarrollo de **HookaApp**. Está estructurada en diez apartados que cubren desde la concepción de la idea y descripción general, pasando por la planificación metodológica y financiera, hasta llegar al detalle técnico del análisis, diseño, implementación y pruebas realizadas. Finalmente, se exponen los manuales para el usuario final, conclusiones del proyecto y posibles vías de ampliación futuras acompañadas de la bibliografía correspondiente.
+La presente memoria documenta exhaustivamente el ciclo de vida del desarrollo de **HookaHub**. Está estructurada en diez apartados que cubren desde la concepción de la idea y descripción general, pasando por la planificación metodológica y financiera, hasta llegar al detalle técnico del análisis, diseño, implementación y pruebas realizadas. Finalmente, se exponen los manuales para el usuario final, conclusiones del proyecto y posibles vías de ampliación futuras acompañadas de la bibliografía correspondiente.
 
 ## 3 Descripción general del proyecto
 
 ### 3.1 Objetivos
-El objetivo principal de HookaApp es proporcionar una plataforma integral para los entusiastas de la cachimba (hookah/shisha), facilitando la gestión de inventarios, la creación y descubrimiento de mezclas de tabaco, y la conexión de la comunidad. 
+El objetivo principal de HookaHub es proporcionar una plataforma integral para los entusiastas de la cachimba (hookah/shisha), facilitando la gestión de inventarios, la creación y descubrimiento de mezclas de tabaco, y la conexión de la comunidad. 
 
 **Objetivos específicos:**
 *   **Alimentación automatizada del catálogo:** Implementar técnicas avanzadas de Web Scraping para alimentar la base de datos de manera autónoma con las marcas, sabores (tastes) y formatos desde catálogos XML y directivas oficiales.
@@ -22,7 +22,7 @@ El objetivo principal de HookaApp es proporcionar una plataforma integral para l
 *   **Geoservicios:** Implementar funcionalidades PWA y mapas de Leaflet para mapear y georreferenciar locales de interés (lounges), posibilitando que los usuarios los valoren mediante reseñas.
 
 ### 3.2 Cuestiones metodológicas
-Dado que HookaApp es un proyecto con módulos heterogéneos y fuertemente entrelazados (una DB compleja, Scraping e interfaz asíncrona), la metodología tradicional "En Cascada" no resultaba operativa. En su lugar se han implementado metodologías ágiles, concretamente una adaptación de **Scrum**.
+Dado que HookaHub es un proyecto con módulos heterogéneos y fuertemente entrelazados (una DB compleja, Scraping e interfaz asíncrona), la metodología tradicional "En Cascada" no resultaba operativa. En su lugar se han implementado metodologías ágiles, concretamente una adaptación de **Scrum**.
 El ciclo de vida del desarrollo se ha organizado estructurando el *Product Backlog* iterando todos los requerimientos en tareas. Se planificaron ciclos bimensuales y semanales (Sprints). Se ha hecho uso intensivo del control de versiones con Git/GitHub mediante el modelo de ramificación `GitFlow` funcional (`feature/cart`, `fix/scraper`) para la integración continua.
 
 ### 3.3 Entorno de trabajo (tecnologías de desarrollo y herramientas)
@@ -36,7 +36,7 @@ El ecosistema tecnológico elegido es moderno y robusto, basado íntegramente en
 
 ### 4.1 Visión general del sistema: límites del sistema, funcionalidades básicas, usuarios y/o otros sistemas con los que pueda interactuar.
 **Límites y Entorno:**
-HookaApp opera como una aplicación web accesible desde dispositivos móviles y de escritorio (con soporte PWA), operando como hub central para el sector.
+HookaHub opera como una aplicación web accesible desde dispositivos móviles y de escritorio (con soporte PWA), operando como hub central para el sector.
 **Tipos de Usuarios:**
 *   **Usuarios Invitados (Anónimos):** Pueden visualizar el catálogo general de tabacos, el marketplace y el mapa de ubicaciones de manera pasiva.
 *   **Usuarios Registrados:** Disponen del abanico completo. Pueden crear y comentar mezclas, votarlas (Like/Dislike), añadir tabacos a su inventario personal (Stash), publicar y comprar artículos en el Marketplace conversando por Chat interno, puntuar a vendedores y bares con clasificación de estrellas, y seguir a otros usuarios.
@@ -138,7 +138,7 @@ Se exponen las exigencias de despliegue para el *Technical Administrador*:
 
 ## 8 Conclusiones y posibles ampliaciones
 **Conclusiones:**
-HookaApp ha logrado unificar tecnologías Full-Stack (NestJS/Prisma/React/Tailwind) en un único proyecto disruptivo, rompiendo los obsoletos estándares del nicho (foros crudos). El proyecto soporta hoy una catalogación oficial perpetuamente rastreada mediante Web-Scraping para centralizar la información. Y sobre esta base de datos relacional sólida y estructurada (PostgreSQL/Prisma), se ha elevado un auténtico ecosistema sociocomercial asimétrico que abarca el inventario cruzado de los participantes `UserStash` junto al flujo asíncrono e integrado de las transacciones Marketplace modelando la comunicación por `Sockets`.
+HookaHub ha logrado unificar tecnologías Full-Stack (NestJS/Prisma/React/Tailwind) en un único proyecto disruptivo, rompiendo los obsoletos estándares del nicho (foros crudos). El proyecto soporta hoy una catalogación oficial perpetuamente rastreada mediante Web-Scraping para centralizar la información. Y sobre esta base de datos relacional sólida y estructurada (PostgreSQL/Prisma), se ha elevado un auténtico ecosistema sociocomercial asimétrico que abarca el inventario cruzado de los participantes `UserStash` junto al flujo asíncrono e integrado de las transacciones Marketplace modelando la comunicación por `Sockets`.
 
 **Posibles Ampliaciones (Ampliaciones Futuras):**
 *   **Algoritmo Predictivo de Matchmaking de Inventario:** Aprovechando que la base de datos ya domina con certeza un inventario riguroso (`UserStash`), a medio plazo se pretendería diseñar un algoritmo en memoria que cruce tu "Stash" local con todas las recetas que posee el "Catálogo Global". Como desenlace devolviendo matemáticamente: *"Puedes prepararte exactamente estas 5 recetas distintas hoy, combinando el Tabaco Físico que detentas en tu posesión en este preciso instante"*.

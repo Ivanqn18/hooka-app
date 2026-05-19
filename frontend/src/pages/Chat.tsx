@@ -117,6 +117,13 @@ export default function Chat() {
         if (chatInfo?.productoId) {
             try {
                 await api.patch(`/marketplace/products/${chatInfo.productoId}`, { estado: 'RESERVADO' });
+                setChatInfo((prev: any) => ({
+                    ...prev,
+                    product: {
+                        ...prev.product,
+                        estado: 'RESERVADO'
+                    }
+                }));
             } catch (err) {
                 console.error("Error al reservar el producto", err);
             }
@@ -130,6 +137,10 @@ export default function Chat() {
             emisorId: currentUserId,
             texto: `[OFERTA_RECHAZADA:${amount}€]`
         });
+        
+        // Abrir modal para contraoferta
+        setShowOfferModal(true);
+        setOfferAmount('');
     };
 
     const renderMessageContent = (m: any, index: number, isMe: boolean) => {
@@ -224,8 +235,13 @@ export default function Chat() {
                             <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
                         <div>
-                            <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-none">
-                                {chatInfo?.product?.titulo || 'Canal de Negociación'}
+                            <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-none flex items-center gap-2 flex-wrap">
+                                <span>{chatInfo?.product?.titulo || 'Canal de Negociación'}</span>
+                                {chatInfo?.product?.estado === 'RESERVADO' && (
+                                    <span className="flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md border border-emerald-500/30 tracking-widest uppercase">
+                                        <Check size={12} /> Reservado
+                                    </span>
+                                )}
                             </h2>
                             <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-shisha-text-dim mt-1 flex items-center gap-1.5">
                                 <Sparkles size={10} className="text-shisha-ember" /> 

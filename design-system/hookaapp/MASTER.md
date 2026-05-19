@@ -6,7 +6,7 @@
 
 ---
 
-**Project:** HookaApp
+**Project:** HookaHub
 **Generated:** 2026-03-10 12:43:01
 **Category:** Beauty/Spa/Wellness Service
 
