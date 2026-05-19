@@ -49,7 +49,7 @@ function App() {
           <Link to="/tobaccos" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Tabacos</Link>
           <Link to="/mapa" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mapa</Link>
           {user && (
-            <Link to="/stash" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mi Stash</Link>
+            <Link to="/stash" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mi Almacén</Link>
           )}
           {user?.isAdmin && (
             <Link to="/admin" className="text-shisha-ember font-black text-[0.8rem] uppercase tracking-wider hover:glow-pulse">Admin</Link>
@@ -115,7 +115,7 @@ function App() {
             </Link>
             {user && (
               <Link to="/stash" onClick={closeMenu} className="py-4 text-2xl font-black text-white border-b border-white/5 flex justify-between items-center group">
-                Mi Stash <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                Mi Almacén <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </Link>
             )}
             {user?.isAdmin && (

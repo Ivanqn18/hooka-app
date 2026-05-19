@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Query, Body, Param, ParseIntPipe, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HookymiaSeedService } from './services/hookymia-seed/hookymia-seed.service';
 import { BoeScannerService } from './services/boe-scanner/boe-scanner.service';
@@ -103,5 +103,53 @@ export class TobaccoScraperController {
   async forceBoeScan() {
     const added = await this.boeScanner.parseNewTobaccoPrices();
     return { message: 'Escaneo forzado terminado', addedTastes: added };
+  }
+
+  // POST /tobaccos/brands
+  @Post('brands')
+  async createBrand(@Body('name') name: string) {
+    if (!name) {
+      throw new BadRequestException('El nombre de la marca es requerido');
+    }
+    return this.prisma.brand.create({
+      data: { name },
+    });
+  }
+
+  // DELETE /tobaccos/brands/:id
+  @Delete('brands/:id')
+  async deleteBrand(@Param('id', ParseIntPipe) id: number) {
+    return this.prisma.brand.delete({
+      where: { id },
+    });
+  }
+
+  // POST /tobaccos/tastes
+  @Post('tastes')
+  async createTaste(
+    @Body('name') name: string,
+    @Body('brandId') brandId: number,
+    @Body('linea') linea?: string,
+    @Body('descripcion') descripcion?: string,
+  ) {
+    if (!name || !brandId) {
+      throw new BadRequestException('El nombre del sabor y el brandId son requeridos');
+    }
+    return this.prisma.taste.create({
+      data: {
+        name,
+        brandId,
+        linea,
+        descripcion,
+      },
+    });
+  }
+
+  // DELETE /tobaccos/tastes/:id
+  @Delete('tastes/:id')
+  async deleteTaste(@Param('id', ParseIntPipe) id: number) {
+    return this.prisma.taste.delete({
+      where: { id },
+    });
   }
 }

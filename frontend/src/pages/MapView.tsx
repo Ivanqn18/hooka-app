@@ -51,6 +51,8 @@ export default function MapView() {
     });
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [geocoding, setGeocoding] = useState(false);
+    const [suggestions, setSuggestions] = useState<any[]>([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
     const tileLayerUrl = `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png`
 
@@ -73,33 +75,45 @@ export default function MapView() {
     const handleAddressGeocode = async () => {
         if (!formData.direccion) return;
         setGeocoding(true);
+        setSuggestions([]);
+        setShowSuggestions(false);
         try {
             const query = encodeURIComponent(formData.direccion + ", España");
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`);
+            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=5`);
             const data = await res.json();
             if (data && data.length > 0) {
-                const { lat, lon } = data[0];
-                setFormData(prev => ({
-                    ...prev,
-                    latitud: parseFloat(lat),
-                    longitud: parseFloat(lon)
-                }));
+                setSuggestions(data);
+                setShowSuggestions(true);
             } else {
-                alert("No se pudo encontrar la ubicación. Prueba a hacer clic directamente en el mapa.");
+                alert("No se encontraron resultados para esta dirección. Prueba a hacer clic directamente en el mapa.");
             }
         } catch (e) {
             console.error(e);
+            alert("Error al buscar la dirección.");
         } finally {
             setGeocoding(false);
         }
     };
 
-    const handleMapClick = (latlng: L.LatLng) => {
+    const handleMapClick = async (latlng: L.LatLng) => {
         setFormData(prev => ({
             ...prev,
             latitud: latlng.lat,
             longitud: latlng.lng
         }));
+
+        try {
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}&zoom=18`);
+            const data = await res.json();
+            if (data && data.display_name) {
+                setFormData(prev => ({
+                    ...prev,
+                    direccion: data.display_name
+                }));
+            }
+        } catch (e) {
+            console.error("Error al geocodificar las coordenadas:", e);
+        }
     };
 
     const handleAddSubmit = async (e: React.FormEvent) => {
@@ -124,6 +138,8 @@ export default function MapView() {
                 setShowSidebar(false);
                 setSubmitStatus('idle');
                 setFormData({ nombre: '', direccion: '', descripcion: '', latitud: null, longitud: null });
+                setSuggestions([]);
+                setShowSuggestions(false);
                 fetchBares();
             }, 3000);
 
@@ -213,7 +229,7 @@ export default function MapView() {
                                     <h2 className="text-xl md:text-2xl font-black text-white tracking-tight leading-none">Nueva Solicitud</h2>
                                     <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-shisha-ember">Colaboración del Gremio</span>
                                 </div>
-                                <button onClick={() => setShowSidebar(false)} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-shisha-text-dim hover:text-white transition-colors border border-white/5">
+                                <button onClick={() => { setShowSidebar(false); setSuggestions([]); setShowSuggestions(false); }} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-shisha-text-dim hover:text-white transition-colors border border-white/5">
                                     <X size={20} />
                                 </button>
                             </div>
@@ -240,14 +256,52 @@ export default function MapView() {
                                         <input required value={formData.nombre} onChange={e => setFormData({...formData, nombre: e.target.value})} className="w-full px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base" placeholder="Ej: Elite Shisha Lounge" />
                                     </div>
 
-                                    <div className="space-y-2">
+                                    <div className="space-y-2 relative">
                                         <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-ember ml-1">Dirección Aproximada</label>
                                         <div className="flex gap-3">
-                                            <input required value={formData.direccion} onChange={e => setFormData({...formData, direccion: e.target.value})} className="flex-1 px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base" placeholder="Ej: Gran Via 1, Madrid" />
-                                            <button type="button" onClick={handleAddressGeocode} disabled={geocoding} className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-shisha-ember hover:bg-shisha-ember-deep text-white flex items-center justify-center shadow-lg active:scale-95 disabled:opacity-50 shrink-0">
+                                            <input 
+                                                required 
+                                                value={formData.direccion} 
+                                                onChange={e => {
+                                                    setFormData({...formData, direccion: e.target.value});
+                                                    setShowSuggestions(false);
+                                                }} 
+                                                className="flex-1 px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base" 
+                                                placeholder="Ej: Gran Via 1, Madrid" 
+                                            />
+                                            <button 
+                                                type="button" 
+                                                onClick={handleAddressGeocode} 
+                                                disabled={geocoding} 
+                                                className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-shisha-ember hover:bg-shisha-ember-deep text-white flex items-center justify-center shadow-lg active:scale-95 disabled:opacity-50 shrink-0"
+                                            >
                                                 {geocoding ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : <Search size={20} />}
                                             </button>
                                         </div>
+
+                                        {showSuggestions && suggestions.length > 0 && (
+                                            <div className="absolute top-[75px] left-0 w-full bg-[#1b1e24] border border-white/10 rounded-2xl shadow-2xl z-[2100] max-h-52 overflow-y-auto py-2">
+                                                {suggestions.map((sug, idx) => (
+                                                    <button
+                                                        type="button"
+                                                        key={idx}
+                                                        onClick={() => {
+                                                            setFormData(prev => ({
+                                                                ...prev,
+                                                                direccion: sug.display_name,
+                                                                latitud: parseFloat(sug.lat),
+                                                                longitud: parseFloat(sug.lon)
+                                                            }));
+                                                            setShowSuggestions(false);
+                                                        }}
+                                                        className="w-full text-left px-5 py-3 hover:bg-white/5 text-white font-medium text-xs flex flex-col gap-1 border-b border-white/5 last:border-b-0"
+                                                    >
+                                                        <span className="font-bold text-shisha-text-main line-clamp-1">{sug.display_name.split(',')[0]}</span>
+                                                        <span className="text-shisha-text-dim text-[10px] line-clamp-1">{sug.display_name}</span>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="p-6 bg-white/[0.02] rounded-3xl border border-white/5 space-y-4">

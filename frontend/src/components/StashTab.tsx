@@ -68,8 +68,35 @@ export default function StashTab() {
     const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!nombreTabaco || !user) return;
+
+        const normalizedNombre = nombreTabaco.trim();
+        const normalizedMarca = marca ? marca.trim() : '';
+
+        // Validación local de duplicados y conflictos
+        const duplicate = stash.find(item => 
+            item.nombreTabaco.trim().toLowerCase() === normalizedNombre.toLowerCase() &&
+            (item.marca || '').trim().toLowerCase() === normalizedMarca.toLowerCase()
+        );
+
+        if (duplicate) {
+            if (duplicate.tipo === tipo) {
+                if (tipo === 'HAVE') {
+                    alert('Este tabaco ya está en tu estantería');
+                } else {
+                    alert('Este tabaco ya está en tu lista de deseos');
+                }
+            } else {
+                if (tipo === 'HAVE') {
+                    alert('Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.');
+                } else {
+                    alert('Este tabaco ya está en tu estantería. ¡Ya lo tienes!');
+                }
+            }
+            return;
+        }
+
         try {
-            await api.post(`/users/stash`, { usuarioId: user.id, nombreTabaco, marca, tipo });
+            await api.post(`/users/stash`, { usuarioId: user.id, nombreTabaco: normalizedNombre, marca: normalizedMarca, tipo });
             setMarca('');
             setNombreTabaco('');
             setTipo('HAVE');
@@ -79,7 +106,7 @@ export default function StashTab() {
                 logout();
                 alert('Se detectó un problema con tu sesión. Inicia sesión de nuevo.');
             } else {
-                alert('No se pudo añadir al stash: ' + (error.response?.data?.message || ''));
+                alert('No se pudo añadir al almacén: ' + (error.response?.data?.message || ''));
             }
         }
     };
@@ -97,7 +124,7 @@ export default function StashTab() {
     if (loading) return (
         <div className="py-20 flex flex-col items-center justify-center gap-4 text-center">
             <div className="w-8 h-8 border-4 border-shisha-ember/20 border-t-shisha-ember rounded-full animate-spin"></div>
-            <p className="text-shisha-text-dim font-black animate-pulse uppercase tracking-[0.2rem] text-[11px]">Cargando stash...</p>
+            <p className="text-shisha-text-dim font-black animate-pulse uppercase tracking-[0.2rem] text-[11px]">Cargando almacén...</p>
         </div>
     );
 

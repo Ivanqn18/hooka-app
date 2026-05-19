@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -108,11 +108,41 @@ export class UsersService {
   }
 
   async addStash(data: any) {
+    const normalizedNombre = data.nombreTabaco.trim();
+    const normalizedMarca = data.marca && data.marca.trim() !== '' ? data.marca.trim() : null;
+
+    // Obtener los elementos actuales del stash del usuario
+    const stashItems = await this.prisma.userStash.findMany({
+      where: { usuarioId: data.usuarioId },
+    });
+
+    // Buscar duplicados (sin importar mayúsculas/minúsculas ni espacios)
+    const duplicate = stashItems.find(item => 
+      item.nombreTabaco.trim().toLowerCase() === normalizedNombre.toLowerCase() &&
+      (item.marca || '').trim().toLowerCase() === (normalizedMarca || '').toLowerCase()
+    );
+
+    if (duplicate) {
+      if (duplicate.tipo === data.tipo) {
+        if (data.tipo === 'HAVE') {
+          throw new BadRequestException('Este tabaco ya está en tu estantería');
+        } else {
+          throw new BadRequestException('Este tabaco ya está en tu lista de deseos');
+        }
+      } else {
+        if (data.tipo === 'HAVE') {
+          throw new BadRequestException('Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.');
+        } else {
+          throw new BadRequestException('Este tabaco ya está en tu estantería. ¡Ya lo tienes!');
+        }
+      }
+    }
+
     return this.prisma.userStash.create({
       data: {
         usuarioId: data.usuarioId,
-        nombreTabaco: data.nombreTabaco,
-        marca: data.marca || null,
+        nombreTabaco: normalizedNombre,
+        marca: normalizedMarca,
         tipo: data.tipo,
       },
     });

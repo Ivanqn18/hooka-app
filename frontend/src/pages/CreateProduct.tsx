@@ -36,15 +36,29 @@ export default function CreateProduct() {
         setLocationLoading(true);
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setCoords({
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    });
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    setCoords({ lat, lng });
 
-                    // Solo para experiencia visual en la demo (simularemos que sacamos la ciudad)
-                    if (!formData.ubicacion) setFormData({ ...formData, ubicacion: "Mi Ubicación Actual" });
-                    setLocationLoading(false);
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=12`);
+                        const data = await res.json();
+                        if (data && data.address) {
+                            const city = data.address.city || data.address.town || data.address.village || data.address.county || "Ubicación Geocodificada";
+                            setFormData(prev => ({
+                                ...prev,
+                                ubicacion: city
+                            }));
+                        } else {
+                            setFormData(prev => ({ ...prev, ubicacion: "Mi Ubicación" }));
+                        }
+                    } catch (e) {
+                        console.error(e);
+                        setFormData(prev => ({ ...prev, ubicacion: "Mi Ubicación" }));
+                    } finally {
+                        setLocationLoading(false);
+                    }
                 },
                 (error) => {
                     console.error("Error obteniendo ubicación:", error);

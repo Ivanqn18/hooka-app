@@ -103,7 +103,7 @@ const LandingPage: React.FC = () => {
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-black mb-2 px-0">Tu Colección Personal</h3>
-              <p className="text-shisha-text-muted text-base md:text-lg m-0">Gestiona tu stash de tabacos, organiza tu estantería y planifica tus futuras adquisiciones.</p>
+              <p className="text-shisha-text-muted text-base md:text-lg m-0">Gestiona tu almacén de tabacos, organiza tu estantería y planifica tus futuras adquisiciones.</p>
             </div>
           </Link>
 
