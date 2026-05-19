@@ -27,13 +27,13 @@ async function main() {
 
     // 1. Crear Usuarios
     console.log('👤 Creando usuarios...');
-    const passwordHash = await bcrypt.hash('123456', 10);
-    const adminHash = await bcrypt.hash('Admin123', 10);
+    const passwordHash = await bcrypt.hash('ImIvans18', 10);
+    const adminHash = await bcrypt.hash('ImIvans18', 10);
 
     const admin = await prisma.user.create({
         data: {
             nombre: 'Iván Administrador',
-            email: 'ivan@admin.com',
+            email: 'quintananietoivan@gmail.com',
             password: adminHash,
             isAdmin: true,
             avatarUrl: 'https://cdn-icons-png.flaticon.com/512/6024/6024190.png',
