@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Award, Flame, Sparkles, ArrowRight } from 'lucide-react';
+import { Award, Flame, ArrowRight } from 'lucide-react';
 import { imageUrl } from '../utils/imageUrl';
 import api from '../services/api';
 
