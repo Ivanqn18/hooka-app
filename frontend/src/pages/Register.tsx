@@ -67,14 +67,14 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-[90vh] flex items-center justify-center p-6 relative overflow-hidden">
+        <div className="min-h-[90vh] flex items-center justify-center px-4 py-8 md:p-6 relative overflow-hidden">
             {/* Background Glows */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none -z-10">
                 <div className="absolute top-[10%] left-[10%] w-[35vw] h-[35vw] bg-shisha-ember/10 blur-[120px] rounded-full animate-float-slow"></div>
                 <div className="absolute bottom-[10%] right-[10%] w-[35vw] h-[35vw] bg-shisha-neon/10 blur-[120px] rounded-full [animation-delay:-3s]"></div>
             </div>
 
-            <div className="glass-panel w-full max-w-lg p-10 md:p-12 rounded-[3rem] shadow-2xl animate-reveal-up overflow-hidden">
+            <div className="glass-panel w-full max-w-lg p-6 md:p-12 rounded-2xl md:rounded-[3rem] shadow-2xl animate-reveal-up overflow-hidden">
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-shisha-neon/10 border border-shisha-neon/20 mb-4 group rotate-3">
                         <UserPlus size={24} className="text-shisha-neon group-hover:scale-110 transition-transform" />

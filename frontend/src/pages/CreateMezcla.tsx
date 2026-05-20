@@ -184,7 +184,7 @@ export default function CreateMezcla() {
     }
 
     return (
-        <div className="max-w-4xl mx-auto px-6 py-8 animate-reveal-up">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up">
             <header className="mb-8 md:mb-12 text-center">
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-shisha-ember/10 rounded-[1.25rem] md:rounded-[1.5rem] flex items-center justify-center mx-auto mb-4 md:mb-6 text-shisha-ember border border-shisha-ember/20 shadow-xl shadow-shisha-ember/5">
                     <Pipette size={28} />
@@ -194,7 +194,7 @@ export default function CreateMezcla() {
             </header>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-10">
-                <div className="glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border-white/5 shadow-2xl space-y-6 md:space-y-8 relative">
+                <div className="glass-panel p-5 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border-white/5 shadow-2xl space-y-6 md:space-y-8 relative">
                     <div className="absolute top-0 right-0 p-8 md:p-12 text-shisha-ember opacity-[0.02] scale-[1] md:scale-150 rotate-12 pointer-events-none">
                         <Flame size={180} />
                     </div>
@@ -254,7 +254,7 @@ export default function CreateMezcla() {
                             </label>
                             
                             {/* Image Upload Input */}
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
                                 <input 
                                     type="file" 
                                     id="image-upload" 
@@ -264,7 +264,7 @@ export default function CreateMezcla() {
                                 />
                                 <label 
                                     htmlFor="image-upload" 
-                                    className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-shisha-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-lg"
+                                    className="flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-shisha-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-lg"
                                 >
                                     {selectedImage ? <ImageIcon size={14} /> : <Camera size={14} />}
                                     {selectedImage ? "Imagen Lista" : "Subir Foto (Opcional)"}
@@ -273,7 +273,7 @@ export default function CreateMezcla() {
                                 <button 
                                     type="button" 
                                     onClick={addIngredient} 
-                                    className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all shadow-lg"
+                                    className="flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all shadow-lg"
                                 >
                                     <Plus size={14} /> Añadir Componente
                                 </button>

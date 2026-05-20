@@ -66,20 +66,20 @@ const ShishaServices: React.FC = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 px-8 max-w-7xl mx-auto relative z-10 space-y-20">
+      <section className="py-16 md:py-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10 space-y-16 md:space-y-20">
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">Servicios de Élite</h2>
           <div className="w-16 md:w-20 h-1.5 bg-shisha-ember mx-auto rounded-full"></div>
           <p className="text-sm md:text-base text-shisha-text-dim font-medium">Desde eventos corporativos hasta fiestas privadas clandestinas.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
                 { icon: Flame, title: "Alquimia Artesanal", desc: "Mezclas exclusivas diseñadas para una producción de humo máxima y sabores intensos.", color: "text-shisha-ember" },
                 { icon: Zap, title: "Gestión Integral", desc: "Servicio completo con sommeliers expertos, gestión térmica y cristalería de lujo.", color: "text-indigo-400" },
                 { icon: Crown, title: "Hardware Premium", desc: "Cachimba de aluminio aeroespacial y cristal bohemio para el tiro más fluido del mercado.", color: "text-amber-400" }
             ].map((service, i) => (
-                <div key={i} className="glass-panel p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border-white/5 shadow-2xl group hover:-translate-y-2 transition-all hover:border-white/10 animate-reveal-up" style={{ animationDelay: `${i * 150}ms` }}>
+                <div key={i} className="glass-panel p-6 md:p-10 rounded-2xl md:rounded-[3rem] border-white/5 shadow-2xl group hover:-translate-y-2 transition-all hover:border-white/10 animate-reveal-up" style={{ animationDelay: `${i * 150}ms` }}>
                     <div className={`w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-6 md:mb-8 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 group-hover:scale-110 transition-transform ${service.color}`}>
                         <service.icon className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
@@ -91,15 +91,15 @@ const ShishaServices: React.FC = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 px-8 max-w-7xl mx-auto relative z-10 space-y-20">
+      <section className="py-16 md:py-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10 space-y-16 md:space-y-20">
          <div className="text-center space-y-4 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">Honor del Gremio</h2>
           <div className="w-16 md:w-20 h-1.5 bg-shisha-ember mx-auto rounded-full"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {MOCK_TESTIMONIALS.map((testimonial, i) => (
-            <div key={testimonial.id} className="glass-panel p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border-white/5 shadow-2xl flex flex-col gap-6 md:gap-8 animate-reveal-up" style={{ animationDelay: `${i * 200}ms` }}>
+            <div key={testimonial.id} className="glass-panel p-6 md:p-10 rounded-2xl md:rounded-[3rem] border-white/5 shadow-2xl flex flex-col gap-6 md:gap-8 animate-reveal-up" style={{ animationDelay: `${i * 200}ms` }}>
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={14} fill="#FF5722" className="text-shisha-ember" />
@@ -120,7 +120,7 @@ const ShishaServices: React.FC = () => {
 
       {/* Final CTA */}
       <section className="py-12 md:py-24 px-4 md:px-8 max-w-5xl mx-auto">
-        <div className="glass-panel-premium p-10 md:p-16 rounded-[2.5rem] md:rounded-[4rem] text-center space-y-8 md:space-y-10 relative overflow-hidden shadow-3xl">
+        <div className="glass-panel-premium p-6 md:p-16 rounded-2xl md:rounded-[4rem] text-center space-y-8 md:space-y-10 relative overflow-hidden shadow-3xl">
           <div className="absolute inset-0 bg-gradient-to-br from-shisha-ember/10 to-indigo-500/10 animate-pulse pointer-events-none opacity-50" />
           
           <div className="relative z-10 space-y-2 md:space-y-4">

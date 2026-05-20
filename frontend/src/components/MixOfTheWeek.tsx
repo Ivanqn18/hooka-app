@@ -20,12 +20,12 @@ export default function MixOfTheWeek() {
     if (!mix) return null;
 
     return (
-        <div className="glass-panel-premium rounded-[3rem] p-10 md:p-14 mb-12 relative overflow-hidden group shadow-3xl animate-reveal-up">
+        <div className="glass-panel-premium rounded-2xl md:rounded-[3rem] p-6 md:p-14 mb-8 md:mb-12 relative overflow-hidden group shadow-3xl animate-reveal-up">
             <div className="absolute -top-20 -right-20 text-white/5 rotate-12 transition-transform duration-1000 group-hover:rotate-45 group-hover:scale-125">
                 <Award size={320} />
             </div>
 
-            <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
+            <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-12 items-center">
                 <div className="flex-1 space-y-8">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 px-4 py-1.5 bg-shisha-ember/20 border border-shisha-ember/30 backdrop-blur-md rounded-full text-shisha-ember text-[10px] font-black uppercase tracking-widest animate-glow-pulse">
@@ -34,7 +34,7 @@ export default function MixOfTheWeek() {
                     </div>
 
                     <div className="space-y-4">
-                        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter m-0 leading-none">
+                        <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter m-0 leading-tight md:leading-none">
                             {mix.titulo}
                         </h2>
                         <p className="text-xl text-shisha-text-muted font-medium italic leading-relaxed max-w-2xl">
@@ -50,9 +50,9 @@ export default function MixOfTheWeek() {
                         ))}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center pt-4">
-                        <Link to={`/mezcla/${mix.id}`}>
-                            <button className="px-10 py-4 bg-white text-shisha-bg font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center gap-2 active:scale-95">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center pt-4 w-full">
+                        <Link to={`/mezcla/${mix.id}`} className="w-full sm:w-auto">
+                            <button className="w-full sm:w-auto px-10 py-4 bg-white text-shisha-bg font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 active:scale-95">
                                 Ver Alquimia <ArrowRight size={16} />
                             </button>
                         </Link>

@@ -113,7 +113,7 @@ export default function Profile() {
     return (
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 animate-reveal-up space-y-6 md:space-y-8">
             {/* Header / Avatar Card */}
-            <div className="glass-panel-premium rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 relative overflow-hidden flex flex-col items-center text-center shadow-3xl">
+            <div className="glass-panel-premium rounded-[2rem] md:rounded-[3rem] p-5 md:p-12 relative overflow-hidden flex flex-col items-center text-center shadow-3xl">
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-shisha-ember/20 blur-[80px] rounded-full -translate-y-1/2 pointer-events-none" />
 
@@ -237,7 +237,7 @@ export default function Profile() {
             </div>
 
             {/* Navigation Tabs */}
-            <nav className="flex items-center justify-start md:justify-center gap-2 md:gap-4 p-2 bg-white/5 rounded-2xl md:rounded-[2rem] border border-white/5 overflow-x-auto scrollbar-hide">
+            <nav className="flex items-center justify-start md:justify-center gap-2 md:gap-4 p-2 bg-white/5 rounded-2xl md:rounded-[2rem] border border-white/5 overflow-x-auto scrollbar-hide scroll-smooth select-none">
                 {[
                     { id: 'overview', icon: LayoutGrid, label: 'Resumen' },
                     { id: 'mezclas', icon: FlaskConical, label: 'Mis Mezclas' },
@@ -266,7 +266,7 @@ export default function Profile() {
                 {activeTab === 'overview' ? (
                     <div className="space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-shisha-ember border-l-4">
+                            <div className="glass-panel p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-shisha-ember border-l-4">
                                 <div className="w-12 h-12 md:w-16 md:h-16 bg-shisha-ember/10 rounded-xl md:rounded-2xl flex items-center justify-center text-shisha-ember shrink-0">
                                     <FlaskConical className="w-6 h-6 md:w-8 md:h-8" />
                                 </div>
@@ -276,7 +276,7 @@ export default function Profile() {
                                 </div>
                             </div>
 
-                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-[#fbbf24] border-l-4">
+                            <div className="glass-panel p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 shadow-xl border-l-[#fbbf24] border-l-4">
                                 <div className="w-12 h-12 md:w-16 md:h-16 bg-[#fbbf24]/10 rounded-xl md:rounded-2xl flex items-center justify-center text-[#fbbf24] shrink-0">
                                     <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" />
                                 </div>
@@ -286,7 +286,7 @@ export default function Profile() {
                                 </div>
                             </div>
 
-                            <div className="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col items-start justify-center gap-4 shadow-xl border-l-indigo-500 border-l-4">
+                            <div className="glass-panel p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 flex flex-col items-start justify-center gap-4 shadow-xl border-l-indigo-500 border-l-4">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 md:w-12 md:h-12 bg-indigo-500/10 rounded-xl md:rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
                                         <Users className="w-5 h-5 md:w-6 md:h-6" />
@@ -344,7 +344,7 @@ export default function Profile() {
                 ) : activeTab === 'mezclas' ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {userMixes.length > 0 ? userMixes.map((mix: any) => (
-                            <Link to={`/mezcla/${mix.id}`} key={mix.id} className="glass-panel p-6 rounded-[2rem] border-white/5 hover:border-shisha-ember/30 transition-all flex items-center gap-6 group shadow-xl">
+                            <Link to={`/mezcla/${mix.id}`} key={mix.id} className="glass-panel p-5 rounded-2xl border-white/5 hover:border-shisha-ember/30 transition-all flex items-center gap-4 md:gap-6 group shadow-xl">
                                 <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-shisha-ember/5 border border-shisha-ember/10 group-hover:border-shisha-ember/30 transition-colors">
                                     {mix.imagenUrl ? (
                                         <img src={imageUrl(mix.imagenUrl)} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="mix" />
@@ -369,7 +369,7 @@ export default function Profile() {
                 ) : activeTab === 'productos' ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {userProducts.length > 0 ? userProducts.map((product: any) => (
-                            <Link to={`/marketplace/product/${product.id}`} key={product.id} className="glass-panel p-6 rounded-[2rem] border-white/5 hover:border-emerald-500/30 transition-all flex items-center gap-6 group shadow-xl">
+                            <Link to={`/marketplace/${product.id}`} key={product.id} className="glass-panel p-5 rounded-2xl border-white/5 hover:border-emerald-500/30 transition-all flex items-center gap-4 md:gap-6 group shadow-xl">
                                 <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-emerald-500/5 border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
                                     {product.imagenUrl ? (
                                         <img src={imageUrl(product.imagenUrl)} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="product" />
@@ -400,20 +400,20 @@ export default function Profile() {
                             <div className="py-20 text-center text-shisha-text-dim font-black animate-pulse">CARGANDO REPUTACIÓN...</div>
                         ) : fullUser.reviewsReceived?.length > 0 ? (
                             <>
-                                <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 bg-amber-500/5 border-amber-500/10 flex items-center gap-8 shadow-2xl">
-                                    <div className="w-20 h-20 bg-amber-500/10 rounded-3xl flex items-center justify-center text-amber-500 shadow-xl border border-amber-500/20">
+                                <div className="glass-panel p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] border-white/5 bg-amber-500/5 border-amber-500/10 flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 md:gap-8 shadow-2xl">
+                                    <div className="w-20 h-20 bg-amber-500/10 rounded-3xl flex items-center justify-center text-amber-500 shadow-xl border border-amber-500/20 shrink-0">
                                         <Star fill="currentColor" size={40} />
                                     </div>
                                     <div>
-                                        <h3 className="text-5xl font-black text-white">{fullUser.rating?.toFixed(1) || '0.0'}</h3>
+                                        <h3 className="text-4xl md:text-5xl font-black text-white">{fullUser.rating?.toFixed(1) || '0.0'}</h3>
                                         <p className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Media de confianza en el gremio</p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4">
                                     {fullUser.reviewsReceived.map((rev: any) => (
-                                        <div key={rev.id} className="glass-panel p-8 rounded-[2rem] border-white/5 hover:border-white/10 transition-colors shadow-xl">
-                                            <div className="flex justify-between items-start mb-6">
+                                        <div key={rev.id} className="glass-panel p-5 md:p-8 rounded-2xl border-white/5 hover:border-white/10 transition-colors shadow-xl">
+                                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                                                 <div className="flex items-center gap-4">
                                                     <img
                                                         src={imageUrl(rev.comprador?.avatarUrl) || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}
@@ -430,7 +430,7 @@ export default function Profile() {
                                                     ))}
                                                 </div>
                                             </div>
-                                            <p className="text-lg text-white font-medium italic leading-relaxed">"{rev.comentario}"</p>
+                                            <p className="text-base md:text-lg text-white font-medium italic leading-relaxed">"{rev.comentario}"</p>
                                         </div>
                                     ))}
                                 </div>

@@ -221,7 +221,7 @@ export default function Chat() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 md:py-6 h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] flex flex-col gap-4 animate-reveal-up overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 md:py-6 h-[calc(100vh-130px)] md:h-[calc(100vh-140px)] flex flex-col gap-4 animate-reveal-up overflow-hidden">
             <Link to="/market" className="flex items-center gap-2 text-shisha-text-dim hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors mb-1 md:mb-2 group w-fit">
                 <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                 Volver al mercado
@@ -229,17 +229,17 @@ export default function Chat() {
 
             <div className="glass-panel flex-1 rounded-[2rem] md:rounded-[2.5rem] border-white/5 shadow-2xl flex flex-col overflow-hidden relative">
                 {/* Header */}
-                <header className="px-6 md:px-8 py-4 md:py-6 border-b border-white/5 bg-white/[0.02] flex items-center justify-between shrink-0">
+                <header className="px-4 md:px-8 py-4 md:py-6 border-b border-white/5 bg-white/[0.02] flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-3 md:gap-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-shisha-ember/10 rounded-xl md:rounded-2xl flex items-center justify-center text-shisha-ember border border-shisha-ember/20">
                             <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
                         <div>
-                            <h2 className="text-lg md:text-xl font-black text-white tracking-tight leading-none flex items-center gap-2 flex-wrap">
+                            <h2 className="text-base md:text-xl font-black text-white tracking-tight leading-none flex items-center gap-2 flex-wrap">
                                 <span>{chatInfo?.product?.titulo || 'Canal de Negociación'}</span>
                                 {chatInfo?.product?.estado === 'RESERVADO' && (
-                                    <span className="flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md border border-emerald-500/30 tracking-widest uppercase">
-                                        <Check size={12} /> Reservado
+                                    <span className="flex items-center gap-1 text-[8px] md:text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/30 tracking-widest uppercase">
+                                        <Check size={10} /> Reservado
                                     </span>
                                 )}
                             </h2>
@@ -253,7 +253,7 @@ export default function Chat() {
                 </header>
 
                 {/* Messages Area */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-4 md:gap-6 custom-scrollbar bg-white/[0.01]">
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 md:p-8 flex flex-col gap-3 md:gap-6 custom-scrollbar bg-white/[0.01]">
                     {messages.map((m, i) => {
                         const isMe = m.emisorId === currentUserId;
                         return (
@@ -283,10 +283,10 @@ export default function Chat() {
                 </div>
 
                 {/* Input Bar */}
-                <div className="px-4 md:px-8 py-4 md:py-6 border-t border-white/5 bg-white/[0.02] shrink-0 space-y-3 md:space-y-4">
+                <div className="px-3 md:px-8 py-3 md:py-6 border-t border-white/5 bg-white/[0.02] shrink-0 space-y-3 md:space-y-4">
                     <button 
                         onClick={handleOffer} 
-                        className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white border border-amber-500/20 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all group shadow-lg active:scale-95"
+                        className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white border border-amber-500/20 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all group shadow-lg active:scale-95"
                     >
                         <Tag size={12} className="group-hover:rotate-12 transition-transform" />
                         Oferta Comercial
@@ -297,7 +297,7 @@ export default function Chat() {
                             value={text}
                             onChange={e => setText(e.target.value)}
                             placeholder="Mensaje..."
-                            className="flex-1 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base"
+                            className="flex-1 px-3.5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base"
                         />
                         <button 
                             type="submit" 

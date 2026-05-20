@@ -92,8 +92,8 @@ export default function MarketplaceList() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-8 animate-reveal-up">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 mb-10 md:mb-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 mb-8 md:mb-12">
                 <div className="flex items-center gap-4 md:gap-5">
                     <div className="w-12 h-12 md:w-16 md:h-16 rounded-[1.5rem] md:rounded-[2rem] bg-shisha-ember/10 flex items-center justify-center border border-shisha-ember/20 shadow-xl shadow-shisha-ember/5 text-shisha-ember">
                         <ShoppingBag className="w-6 h-6 md:w-8 md:h-8" />
@@ -104,8 +104,8 @@ export default function MarketplaceList() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4">
-                    <div className="glass-panel px-5 py-3 rounded-2xl flex items-center gap-4 border-white/5 shadow-xl">
+                <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
+                    <div className="glass-panel px-4 md:px-5 py-3 rounded-2xl flex flex-wrap items-center justify-between sm:justify-start gap-4 border-white/5 shadow-xl w-full sm:w-auto">
                         <div className="flex items-center gap-3">
                             <button
                                 onClick={handleGetLocation}
@@ -146,8 +146,8 @@ export default function MarketplaceList() {
                         )}
                     </div>
 
-                    <Link to="/market/nuevo" className="shrink-0 text-white">
-                        <button className="flex items-center gap-2 px-4 md:px-6 py-3 md:py-3.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-2xl shadow-xl shadow-shisha-ember/20 hover:shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 group">
+                    <Link to="/market/nuevo" className="shrink-0 text-white w-full sm:w-auto">
+                        <button className="flex items-center justify-center gap-2 px-4 md:px-6 py-3 md:py-3.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-2xl shadow-xl shadow-shisha-ember/20 hover:shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 group w-full sm:w-auto">
                             <Plus className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-90 transition-transform" />
                             <span className="text-xs md:text-sm">Vender</span>
                         </button>

@@ -78,7 +78,7 @@ export const TobaccoCatalog: React.FC = () => {
     );
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-8 animate-reveal-up">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up">
             {/* Header */}
             <header className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-2">
@@ -89,7 +89,7 @@ export const TobaccoCatalog: React.FC = () => {
                         <Sparkles size={12} className="text-shisha-ember" /> {allBrands.length} marcas · {allBrands.reduce((a, b) => a + b.tastes.length, 0)} sabores disponibles
                     </p>
                 </div>
-                <div className="glass-panel px-6 py-3 rounded-2xl border-white/5 flex items-center gap-4">
+                <div className="glass-panel px-4 md:px-6 py-3 rounded-2xl border-white/5 flex items-center justify-between md:justify-start gap-4">
                     <div className="text-right">
                         <p className="text-[10px] font-black uppercase tracking-widest text-shisha-text-muted">Directorio</p>
                         <p className="text-lg font-black text-white">
@@ -118,7 +118,7 @@ export const TobaccoCatalog: React.FC = () => {
 
             {/* Estado vacío */}
             {filteredBrands.length === 0 && (
-                <div className="glass-panel p-20 rounded-[3rem] border-white/5 border-dashed border-2 flex flex-col items-center text-center gap-8 shadow-2xl">
+                <div className="glass-panel p-10 md:p-20 rounded-[3rem] border-white/5 border-dashed border-2 flex flex-col items-center text-center gap-8 shadow-2xl">
                     <div className="w-24 h-24 bg-shisha-ember/5 rounded-full flex items-center justify-center text-shisha-ember/20">
                         <Package size={64} />
                     </div>
@@ -132,14 +132,14 @@ export const TobaccoCatalog: React.FC = () => {
             {/* Vista de Marcas (Grid) — sin detalle seleccionado */}
             {!selectedBrand && pagedBrands.length > 0 && (
                 <div className="space-y-12">
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
                         {pagedBrands.map((brand) => {
                             const [c1, c2] = getBrandGradient(brand.name);
                             return (
                                 <div
                                     key={brand.name}
                                     onClick={() => setSelectedBrand(brand)}
-                                    className="glass-panel group p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 cursor-pointer flex flex-col items-center gap-4 md:gap-6 transition-all hover:-translate-y-2 hover:border-shisha-ember/20 shadow-xl relative overflow-hidden"
+                                    className="glass-panel group p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] border-white/5 cursor-pointer flex flex-col items-center gap-3 md:gap-6 transition-all hover:-translate-y-2 hover:border-shisha-ember/20 shadow-xl relative overflow-hidden"
                                 >
                                     <div
                                         className="absolute top-0 left-0 right-0 h-1.5 opacity-50 transition-opacity group-hover:opacity-100"
@@ -201,7 +201,7 @@ export const TobaccoCatalog: React.FC = () => {
                     {(() => {
                         const [c1, c2] = getBrandGradient(selectedBrand.name);
                         return (
-                            <div className="glass-panel-premium p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border-white/10 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-8 shadow-3xl">
+                            <div className="glass-panel-premium p-5 md:p-10 rounded-2xl md:rounded-[3rem] border-white/10 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-8 shadow-3xl">
                                 <div
                                     className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-[60px] opacity-20"
                                     style={{ background: c1 }}

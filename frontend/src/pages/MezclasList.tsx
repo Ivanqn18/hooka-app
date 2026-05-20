@@ -45,14 +45,14 @@ export default function MezclasList() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 animate-reveal-up">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
                 <div>
                     <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">Explora Mezclas</h1>
                     <p className="text-shisha-text-muted font-medium text-sm md:text-base">Descubre y comparte las mejores combinaciones de la comunidad.</p>
                 </div>
-                <Link to="/mezcla/nueva" className="shrink-0">
-                    <button className="flex items-center gap-2 px-6 py-3 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-2xl shadow-xl shadow-shisha-ember/20 hover:shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 group">
+                <Link to="/mezcla/nueva" className="shrink-0 w-full md:w-auto">
+                    <button className="flex items-center justify-center gap-2 px-6 py-3 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-2xl shadow-xl shadow-shisha-ember/20 hover:shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 group w-full md:w-auto">
                         <Plus size={22} className="group-hover:rotate-90 transition-transform" />
                         <span>Crear Mi Mezcla</span>
                     </button>
@@ -61,7 +61,7 @@ export default function MezclasList() {
 
             {/* Tags Filter */}
             {tags.length > 0 && (
-                <div className="glass-panel p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border-white/5 mb-10">
+                <div className="glass-panel p-4 md:p-6 rounded-2xl md:rounded-[2rem] border-white/5 mb-8 md:mb-10">
                     <div className="flex items-center gap-2 mb-4 text-shisha-text-dim">
                         <Filter size={14} className="uppercase" />
                         <span className="text-[10px] font-black uppercase tracking-widest">Filtrar por Nota Sabor</span>
@@ -86,7 +86,7 @@ export default function MezclasList() {
 
             <MixOfTheWeek />
 
-            <div className="mt-16">
+            <div className="mt-12 md:mt-16">
                 <div className="flex items-center gap-3 mb-8">
                     <Sparkles className="text-shisha-ember" size={24} />
                     <h2 className="text-2xl font-black text-white tracking-tight">
@@ -101,12 +101,12 @@ export default function MezclasList() {
                     </div>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                             {mezclas.map((mix: any) => (
                                 <Link 
                                     to={`/mezcla/${mix.id}`} 
                                     key={mix.id} 
-                                    className="glass-panel group rounded-[2.5rem] overflow-hidden flex flex-col hover:border-shisha-ember/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-shisha-ember/10"
+                                    className="glass-panel group rounded-2xl md:rounded-[2.5rem] overflow-hidden flex flex-col hover:border-shisha-ember/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-shisha-ember/10"
                                 >
                                     {mix.imagenUrl ? (
                                         <div className="relative h-56 overflow-hidden shrink-0">
@@ -131,7 +131,7 @@ export default function MezclasList() {
                                         </div>
                                     )}
 
-                                    <div className={`p-6 md:p-8 flex flex-col flex-1 gap-6 ${!mix.imagenUrl ? 'pt-2 md:pt-2' : ''}`}>
+                                    <div className={`p-5 md:p-8 flex flex-col flex-1 gap-6 ${!mix.imagenUrl ? 'pt-2 md:pt-2' : ''}`}>
                                         <div>
                                             <h3 className="text-lg md:text-xl font-black text-white mb-2 line-clamp-1 group-hover:text-shisha-ember transition-colors">{mix.titulo}</h3>
                                             <p className="text-shisha-text-muted text-xs md:text-sm font-medium line-clamp-2 leading-relaxed">

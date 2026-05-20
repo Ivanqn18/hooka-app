@@ -162,7 +162,7 @@ export default function ProductDetail() {
                     </div>
                 </div>
 
-                <div className="p-6 md:p-14 flex flex-col gap-8 md:gap-10">
+                <div className="p-5 md:p-14 flex flex-col gap-8 md:gap-10">
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div className="space-y-2 md:space-y-4 max-w-2xl">
                             <div className="flex items-center gap-3 text-shisha-text-dim">
@@ -213,10 +213,10 @@ export default function ProductDetail() {
 
             {/* SECCIÓN DEL VENDEDOR */}
             {seller && (
-                <div className="glass-panel w-full p-8 md:p-14 rounded-[2rem] md:rounded-[3rem] border-white/5 shadow-xl mt-8 md:mt-10 animate-reveal-up">
+                <div className="glass-panel w-full p-5 md:p-14 rounded-2xl md:rounded-[3rem] border-white/5 shadow-xl mt-8 md:mt-10 animate-reveal-up">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-10">
-                        <div className="flex items-center gap-6">
-                            <div className="relative">
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6">
+                            <div className="relative shrink-0">
                                 <img 
                                     src={imageUrl(seller.avatarUrl) || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'} 
                                     className="w-20 h-20 md:w-24 md:h-24 rounded-2xl md:rounded-[2rem] object-cover border-4 border-shisha-surface shadow-2xl" 
@@ -226,9 +226,9 @@ export default function ProductDetail() {
                                     <Star size={10} fill="currentColor" />
                                 </div>
                             </div>
-                            <div className="space-y-1 md:space-y-2">
+                            <div className="space-y-1 md:space-y-2 flex flex-col items-center sm:items-start">
                                 <h4 className="text-xl md:text-2xl font-black text-white tracking-tight">{seller.nombre}</h4>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center justify-center sm:justify-start gap-4">
                                     <div className="flex items-center gap-1.5 text-amber-400">
                                         <Star fill="currentColor" size={16} />
                                         <span className="text-base md:text-lg font-black">{seller.rating ? seller.rating.toFixed(1) : 'Nuevo'}</span>
@@ -239,7 +239,7 @@ export default function ProductDetail() {
                                         </span>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-4 py-1">
+                                <div className="flex items-center justify-center sm:justify-start gap-4 py-1">
                                     <div className="flex items-center gap-2">
                                         <Users size={14} className="text-shisha-text-dim" />
                                         <span className="text-xs md:text-sm font-black text-white">{seller.followers?.length || 0}</span>
@@ -250,7 +250,7 @@ export default function ProductDetail() {
                                         <span className="text-[9px] uppercase font-bold text-shisha-text-dim">Siguiendo</span>
                                     </div>
                                 </div>
-                                <div className="flex flex-wrap items-center gap-3 mt-2">
+                                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2 w-full">
                                     {currentUserId !== seller.id && (
                                         <button 
                                             onClick={() => {
@@ -282,14 +282,14 @@ export default function ProductDetail() {
                         </div>
 
                         {currentUserId && currentUserId !== seller.id && (
-                            <div className="w-full md:w-auto">
+                            <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-6 md:mt-0">
                                 {reviewStatus === 'success' ? (
-                                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl text-emerald-400 text-xs font-bold animate-fade-in">
+                                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl text-emerald-400 text-xs font-bold animate-fade-in text-center md:text-left">
                                         ¡Valoración publicada! Gracias por tu aporte.
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4">
-                                        <div className="flex gap-2">
+                                    <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
+                                        <div className="flex gap-2 justify-center md:justify-start">
                                             {[1, 2, 3, 4, 5].map(num => (
                                                 <button
                                                     key={num} type="button"
@@ -300,7 +300,7 @@ export default function ProductDetail() {
                                                 </button>
                                             ))}
                                         </div>
-                                        <div className="relative">
+                                        <div className="relative w-full">
                                             <textarea
                                                 className="px-5 py-4 rounded-xl bg-white/5 border border-white/5 text-white text-sm font-medium w-full md:w-80 h-24 focus:border-shisha-ember/50 outline-none transition-all resize-none"
                                                 placeholder="Opinión rápida sobre el vendedor..."
@@ -312,7 +312,7 @@ export default function ProductDetail() {
                                         <button 
                                             type="submit" 
                                             disabled={reviewStatus === 'loading'} 
-                                            className="px-6 py-3.5 bg-white/5 hover:bg-shisha-ember hover:text-white text-shisha-text-muted font-black rounded-2xl text-[10px] uppercase tracking-widest transition-all disabled:opacity-50"
+                                            className="w-full md:w-auto px-6 py-3.5 bg-white/5 hover:bg-shisha-ember hover:text-white text-shisha-text-muted font-black rounded-2xl text-[10px] uppercase tracking-widest transition-all disabled:opacity-50"
                                         >
                                             {reviewStatus === 'loading' ? 'Enviando...' : 'Valorar Vendedor'}
                                         </button>

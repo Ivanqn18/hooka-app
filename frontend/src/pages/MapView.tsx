@@ -165,7 +165,7 @@ export default function MapView() {
                 {user && (
                     <button 
                         onClick={() => setShowSidebar(true)} 
-                        className="px-5 md:px-6 py-3 md:py-3.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest rounded-xl md:rounded-2xl shadow-xl shadow-shisha-ember/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 group"
+                        className="w-full md:w-auto px-5 md:px-6 py-3 md:py-3.5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest rounded-xl md:rounded-2xl shadow-xl shadow-shisha-ember/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 group"
                     >
                         <Plus className="w-4 h-4 md:w-[16px] md:h-[16px] group-hover:rotate-90 transition-transform" />
                         Solicitar Nuevo Lounge
@@ -208,7 +208,7 @@ export default function MapView() {
                                 </Popup>
                             </Marker>
                         ))}
-
+ 
                         {showSidebar && formData.latitud && (
                             <Marker position={[formData.latitud, formData.longitud]} icon={new L.Icon({
                                 iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
@@ -219,11 +219,11 @@ export default function MapView() {
                         )}
                     </LeafletMap>
                 </div>
-
+ 
                 {/* Sidebar for Solicitar Lounge */}
                 {showSidebar && (
                     <div className="fixed inset-y-0 right-0 w-full md:w-[450px] z-[2000] pointer-events-none md:p-4 lg:p-8">
-                        <div className="w-full h-full glass-panel-premium bg-shisha-surface/95 backdrop-blur-2xl border-l md:border border-white/10 shadow-3xl animate-fade-in-right p-6 md:p-10 flex flex-col gap-6 md:gap-8 overflow-y-auto pointer-events-auto md:rounded-[2.5rem] lg:rounded-[3rem]">
+                        <div className="w-full h-full glass-panel-premium bg-shisha-surface/95 backdrop-blur-2xl border-l md:border border-white/10 shadow-3xl animate-fade-in-right p-5 md:p-10 flex flex-col gap-6 md:gap-8 overflow-y-auto pointer-events-auto md:rounded-[2.5rem] lg:rounded-[3rem]">
                             <div className="flex justify-between items-center">
                                 <div className="space-y-1">
                                     <h2 className="text-xl md:text-2xl font-black text-white tracking-tight leading-none">Nueva Solicitud</h2>

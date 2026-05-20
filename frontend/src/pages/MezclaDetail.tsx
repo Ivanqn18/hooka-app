@@ -171,7 +171,7 @@ export default function MezclaDetail() {
 
             {/* Main Content Card */}
             <div className="glass-panel-premium rounded-[3rem] overflow-hidden shadow-3xl">
-                {mix.imagenUrl && (
+                {mix.imagenUrl ? (
                     <div className="relative h-[300px] md:h-[450px] w-full group">
                         <img
                             src={imageUrl(mix.imagenUrl)}
@@ -192,10 +192,23 @@ export default function MezclaDetail() {
                             </h1>
                         </div>
                     </div>
+                ) : (
+                    <div className="relative p-6 md:p-14 bg-gradient-to-br from-shisha-ember/20 via-indigo-500/10 to-transparent border-b border-white/5">
+                        <div className="flex flex-wrap gap-2 md:gap-3 mb-4">
+                            {mix.tags?.map((mt: any) => (
+                                <span key={mt.tag?.id || mt.tagId} className="px-3 py-1 md:px-4 md:py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest">
+                                    #{mt.tag?.nombre || mt.tagId}
+                                </span>
+                            ))}
+                        </div>
+                        <h1 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-none m-0">
+                            {mix.titulo}
+                        </h1>
+                    </div>
                 )}
 
-                <div className="p-6 md:p-14 space-y-12">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div className="p-5 md:p-14 space-y-12">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8">
                         <div className="flex items-center gap-5">
                             <button
                                 onClick={() => openProfileModal(mix.autorId)}
@@ -242,28 +255,28 @@ export default function MezclaDetail() {
                             </div>
                         </div>
 
-                        <div className="flex gap-4 items-center">
+                        <div className="flex flex-wrap sm:flex-nowrap gap-3 sm:gap-4 items-center w-full sm:w-auto">
                             {user && user.id === mix.autorId && (
                                 <Link
                                     to={`/mezcla/editar/${mix.id}`}
-                                    className="px-6 py-4 rounded-[2rem] bg-shisha-ember/10 text-shisha-ember border border-shisha-ember/30 hover:bg-shisha-ember hover:text-white transition-all font-black text-sm uppercase tracking-widest shadow-xl flex items-center gap-2 h-full"
+                                    className="flex-1 sm:flex-initial py-3 md:py-4 px-4 md:px-6 rounded-2xl md:rounded-[2rem] bg-shisha-ember/10 text-shisha-ember border border-shisha-ember/30 hover:bg-shisha-ember hover:text-white transition-all font-black text-xs md:text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-2 h-full"
                                 >
                                     Editar
                                 </Link>
                             )}
                             <button
                                 onClick={handleLike}
-                                className="flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all group shadow-xl"
+                                className="flex-1 sm:flex-initial flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md py-2.5 md:py-4 px-4 md:px-6 rounded-2xl md:rounded-[2rem] border border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all group shadow-xl"
                             >
-                                <Heart size={24} className="text-shisha-text-dim group-hover:text-emerald-500 transition-colors" />
-                                <span className="text-sm font-black text-white">{mix._count?.likes || 0}</span>
+                                <Heart size={20} className="text-shisha-text-dim group-hover:text-emerald-500 transition-colors" />
+                                <span className="text-xs md:text-sm font-black text-white">{mix._count?.likes || 0}</span>
                             </button>
                             <button
                                 onClick={handleDislike}
-                                className="flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/10 hover:bg-rose-500/10 hover:border-rose-500/30 transition-all group shadow-xl"
+                                className="flex-1 sm:flex-initial flex flex-col items-center gap-1 bg-shisha-surface/90 backdrop-blur-md py-2.5 md:py-4 px-4 md:px-6 rounded-2xl md:rounded-[2rem] border border-white/10 hover:bg-rose-500/10 hover:border-rose-500/30 transition-all group shadow-xl"
                             >
-                                <HeartOff size={24} className="text-shisha-text-dim group-hover:text-rose-500 transition-colors" />
-                                <span className="text-sm font-black text-white">{mix._count?.dislikes || 0}</span>
+                                <HeartOff size={20} className="text-shisha-text-dim group-hover:text-rose-500 transition-colors" />
+                                <span className="text-xs md:text-sm font-black text-white">{mix._count?.dislikes || 0}</span>
                             </button>
                         </div>
                     </div>
@@ -277,11 +290,11 @@ export default function MezclaDetail() {
                                     <Sparkles size={20} />
                                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em]">La Visión del Maestro</h3>
                                 </div>
-                                <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white/[0.02] relative overflow-hidden group">
+                                <div className="glass-panel p-5 md:p-10 rounded-2xl md:rounded-[2.5rem] bg-white/[0.02] relative overflow-hidden group">
                                     <div className="absolute -top-10 -right-10 text-white/5 group-hover:rotate-12 transition-transform">
                                         <Info size={120} />
                                     </div>
-                                    <p className="text-xl md:text-2xl leading-relaxed text-shisha-text-muted italic relative z-10 font-medium font-serif">
+                                    <p className="text-lg md:text-2xl leading-relaxed text-shisha-text-muted italic relative z-10 font-medium font-serif">
                                         "{mix.descripcion}"
                                     </p>
                                 </div>
@@ -296,7 +309,7 @@ export default function MezclaDetail() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {mix.ingredients?.map((ing: any) => (
-                                    <div key={ing.id} className="bg-shisha-surface/95 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] flex items-center justify-between group hover:bg-shisha-surface transition-all border border-white/5 hover:border-shisha-neon/30 shadow-lg">
+                                    <div key={ing.id} className="bg-shisha-surface/95 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] flex items-center justify-between group hover:bg-shisha-surface transition-all border border-white/5 hover:border-shisha-neon/30 shadow-lg">
                                         <div className="space-y-1">
                                             <p className="font-black text-lg md:text-xl text-white group-hover:text-shisha-neon transition-colors">{ing.nombreTabaco}</p>
                                             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">{ing.marca || 'Marca Desconocida'}</p>
@@ -310,7 +323,7 @@ export default function MezclaDetail() {
                         </div>
 
                         {mix.cazoletaRecomendada && (
-                            <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-gradient-to-r from-shisha-ember/10 to-transparent border-shisha-ember/20 shadow-2xl flex items-center gap-6 md:gap-8">
+                            <div className="glass-panel p-5 md:p-10 rounded-2xl md:rounded-[3rem] bg-gradient-to-r from-shisha-ember/10 to-transparent border-shisha-ember/20 shadow-2xl flex items-center gap-6 md:gap-8">
                                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] md:rounded-[2rem] bg-shisha-ember flex items-center justify-center text-white shadow-2xl shadow-shisha-ember/40">
                                     <Flame size={32} className="animate-pulse" />
                                 </div>
@@ -335,7 +348,7 @@ export default function MezclaDetail() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {authorMixes.map((m: any) => (
-                            <Link to={`/mezcla/${m.id}`} key={m.id} className="glass-panel p-6 rounded-[2rem] border-white/5 hover:border-shisha-ember/30 shadow-xl transition-all group flex items-center gap-6">
+                            <Link to={`/mezcla/${m.id}`} key={m.id} className="glass-panel p-5 rounded-2xl border-white/5 hover:border-shisha-ember/30 shadow-xl transition-all group flex items-center gap-4">
                                 <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 bg-shisha-ember/5 border border-shisha-ember/10 group-hover:border-shisha-ember/30 transition-colors">
                                     {m.imagenUrl ? (
                                         <img src={imageUrl(m.imagenUrl)} alt={m.titulo} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
@@ -368,10 +381,10 @@ export default function MezclaDetail() {
                 </div>
 
                 {user ? (
-                    <form onSubmit={handleAddComment} className="glass-panel p-4 rounded-[3rem] flex items-center gap-4 group focus-within:border-shisha-neon/40 shadow-2xl transition-all">
-                        <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                    <form onSubmit={handleAddComment} className="glass-panel p-3.5 md:p-4 rounded-2xl md:rounded-[3rem] flex items-center gap-3 md:gap-4 group focus-within:border-shisha-neon/40 shadow-2xl transition-all">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
                             {user.avatarUrl ? (
-                                <img src={imageUrl(user.avatarUrl)} className="w-full h-full object-cover rounded-2xl" alt="" />
+                                <img src={imageUrl(user.avatarUrl)} className="w-full h-full object-cover rounded-xl md:rounded-2xl" alt="" />
                             ) : (
                                 <User size={20} className="text-shisha-text-muted" />
                             )}
@@ -381,14 +394,14 @@ export default function MezclaDetail() {
                             value={commentText}
                             onChange={(e) => setCommentText(e.target.value)}
                             placeholder="Escribe tu veredicto sobre esta alquimia..."
-                            className="flex-1 bg-transparent border-none outline-none px-4 text-lg text-white placeholder:text-shisha-text-dim font-medium"
+                            className="flex-1 bg-transparent border-none outline-none px-2 md:px-4 text-base md:text-lg text-white placeholder:text-shisha-text-dim font-medium animate-none"
                         />
                         <button
                             type="submit"
                             disabled={!commentText.trim()}
-                            className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${commentText.trim() ? 'bg-shisha-neon text-white shadow-lg shadow-shisha-neon/30 hover:scale-105' : 'bg-white/5 text-shisha-text-dim cursor-not-allowed'}`}
+                            className={`w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all ${commentText.trim() ? 'bg-shisha-neon text-white shadow-lg shadow-shisha-neon/30 hover:scale-105' : 'bg-white/5 text-shisha-text-dim cursor-not-allowed'}`}
                         >
-                            <Send size={24} />
+                            <Send size={20} />
                         </button>
                     </form>
                 ) : (
@@ -406,16 +419,16 @@ export default function MezclaDetail() {
                         <div className="py-20 text-center text-shisha-text-dim font-black animate-pulse">CARGANDO REPUTACIÓN...</div>
                     ) : (
                         comments.map((comment: any) => (
-                            <div key={comment.id} className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] group hover:bg-white/[0.04] transition-all relative border-white/5">
+                            <div key={comment.id} className="glass-panel p-5 md:p-10 rounded-2xl md:rounded-[3rem] group hover:bg-white/[0.04] transition-all relative border-white/5">
                                 <div className="flex flex-col sm:flex-row gap-6 md:gap-8">
                                     <button
                                         onClick={() => openProfileModal(comment.user?.id)}
-                                        className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-2xl transition-transform group-hover:scale-110 cursor-pointer"
+                                        className="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-2xl transition-transform group-hover:scale-110 cursor-pointer"
                                     >
                                         {comment.user?.avatarUrl ? (
                                             <img src={imageUrl(comment.user.avatarUrl)} alt="" className="w-full h-full object-cover" />
                                         ) : (
-                                            <span className="font-black text-shisha-neon text-xl md:text-2xl uppercase">{comment.user?.nombre?.[0]}</span>
+                                            <span className="font-black text-shisha-neon text-lg md:text-2xl uppercase">{comment.user?.nombre?.[0]}</span>
                                         )}
                                     </button>
 

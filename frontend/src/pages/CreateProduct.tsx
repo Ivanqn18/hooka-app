@@ -108,7 +108,7 @@ export default function CreateProduct() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto px-6 py-8 animate-reveal-up">
+        <div className="max-w-3xl mx-auto px-4 md:px-6 py-6 md:py-8 animate-reveal-up">
             <header className="mb-8 md:mb-10 text-center px-4">
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-shisha-ember/10 rounded-[1.2rem] md:rounded-[1.5rem] flex items-center justify-center mx-auto mb-4 md:mb-6 text-shisha-ember border border-shisha-ember/20 shadow-xl">
                     <ShoppingBag className="w-7 h-7 md:w-8 md:h-8" />
@@ -117,7 +117,7 @@ export default function CreateProduct() {
                 <p className="text-sm md:text-base text-shisha-text-muted font-medium">Publica tu producto en el mercado de la comunidad</p>
             </header>
 
-            <form onSubmit={handleSubmit} className="glass-panel p-8 md:p-12 rounded-[2.5rem] border-white/5 shadow-2xl flex flex-col gap-8">
+            <form onSubmit={handleSubmit} className="glass-panel p-5 md:p-12 rounded-2xl md:rounded-[2.5rem] border-white/5 shadow-2xl flex flex-col gap-6 md:gap-8">
                 
                 {/* Image Upload */}
                 <div className="space-y-4">
@@ -164,7 +164,7 @@ export default function CreateProduct() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1">Precio</label>
                         <div className="relative">

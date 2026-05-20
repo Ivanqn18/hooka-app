@@ -132,7 +132,7 @@ export default function StashTab() {
         <div className="flex flex-col gap-8">
 
             {/* ——— Formulario Añadir ——— */}
-            <form onSubmit={handleAdd} className="glass-panel relative z-50 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border-white/5 shadow-xl space-y-4 md:space-y-6">
+            <form onSubmit={handleAdd} className="glass-panel relative z-50 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] border-white/5 shadow-xl space-y-4 md:space-y-6">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember flex items-center gap-2">
                     <Plus size={14} /> Añadir a tu colección
                 </p>
@@ -230,7 +230,7 @@ export default function StashTab() {
                     {/* Botón */}
                     <button
                         type="submit"
-                        className="flex items-center justify-center gap-2 px-6 py-3.5 md:py-4 bg-shisha-ember hover:bg-shisha-ember-deep text-white rounded-xl md:rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-shisha-ember/20 transition-all active:scale-95 whitespace-nowrap"
+                        className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3.5 md:py-4 bg-shisha-ember hover:bg-shisha-ember-deep text-white rounded-xl md:rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-shisha-ember/20 transition-all active:scale-95 whitespace-nowrap"
                     >
                         <Plus size={16} /> Añadir
                     </button>
