@@ -113,8 +113,7 @@ jobs:
             printf "DOMAIN=%s\n"          "$DOMAIN"          >> .env
 
             # 5. Bajar contenedores existentes
-            docker compose down || true
-            docker rm -f shisha_backend shisha_frontend shisha_proxy shisha_db || true
+            docker compose down
 
             # 6. Descargar nuevas versiones e iniciar
             docker compose pull
