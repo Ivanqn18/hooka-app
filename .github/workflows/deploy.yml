@@ -125,5 +125,8 @@ jobs:
             # 8. Ejecutar migraciones de Prisma
             docker compose exec -T backend npx prisma migrate deploy
 
-            # 9. Limpiar imágenes antiguas
+            # 9. Asegurar que existe el usuario admin
+            docker compose exec -T backend npx ts-node prisma/ensure-admin.ts
+
+            # 10. Limpiar imágenes antiguas
             docker image prune -a -f
