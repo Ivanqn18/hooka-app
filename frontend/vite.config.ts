@@ -11,7 +11,7 @@ export default defineConfig({
     tailwindcss(),
     react(),
     compression({
-      algorithm: "brotliCompress",
+      algorithms: "brotliCompress",
       exclude: [/\.(br)$/, /\.(gz)$/, /\.html$/],
     }),
     visualizer({
