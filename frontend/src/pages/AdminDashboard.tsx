@@ -34,6 +34,11 @@ export default function AdminDashboard() {
     });
     const [maintenanceLoading, setMaintenanceLoading] = useState(false);
 
+    // Custom Brand Dropdown state
+    const [allBrands, setAllBrands] = useState<any[]>([]);
+    const [brandDropdownOpen, setBrandDropdownOpen] = useState(false);
+    const [brandSearchQuery, setBrandSearchQuery] = useState('');
+
     const [expandedBrands, setExpandedBrands] = useState<{[key: number]: boolean}>({});
 
     const toggleBrand = (id: number) => {
@@ -79,6 +84,15 @@ export default function AdminDashboard() {
         }
     };
 
+    const fetchAllBrands = async () => {
+        try {
+            const res: any = await api.get('/tobaccos/brands');
+            setAllBrands(res || []);
+        } catch (e) {
+            console.error("Error fetching all brands:", e);
+        }
+    };
+
     const handleCreateBrand = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newBrandName.trim()) return;
@@ -86,6 +100,7 @@ export default function AdminDashboard() {
             await api.post('/tobaccos/brands', { name: newBrandName });
             setNewBrandName('');
             fetchBrands();
+            fetchAllBrands();
             alert('Marca creada con éxito');
         } catch (e) {
             console.error(e);
@@ -108,6 +123,7 @@ export default function AdminDashboard() {
             });
             setNewTaste({ name: '', brandId: '', linea: '', descripcion: '' });
             fetchBrands();
+            fetchAllBrands();
             alert('Sabor creado con éxito');
         } catch (e) {
             console.error(e);
@@ -120,6 +136,7 @@ export default function AdminDashboard() {
         try {
             await api.delete(`/tobaccos/brands/${id}`);
             fetchBrands();
+            fetchAllBrands();
         } catch (e) {
             console.error(e);
             alert('Error al eliminar la marca');
@@ -131,6 +148,7 @@ export default function AdminDashboard() {
         try {
             await api.delete(`/tobaccos/tastes/${id}`);
             fetchBrands();
+            fetchAllBrands();
         } catch (e) {
             console.error(e);
             alert('Error al eliminar el sabor');
@@ -153,6 +171,7 @@ export default function AdminDashboard() {
                 alert('Catálogo vaciado.');
             }
             fetchBrands();
+            fetchAllBrands();
         } catch (e) {
             console.error(e);
             alert('Error al ejecutar la acción de mantenimiento.');
@@ -165,6 +184,7 @@ export default function AdminDashboard() {
         if (user?.isAdmin) {
             if (activeTab === 'tabacos') {
                 fetchBrands();
+                fetchAllBrands();
             } else {
                 fetchData();
             }
@@ -285,6 +305,11 @@ export default function AdminDashboard() {
             <span className="hidden lg:inline">{lgLabel || label}</span>
             <span className="lg:hidden">{label}</span>
         </button>
+    );
+
+    const selectedBrandName = allBrands.find(b => String(b.id) === newTaste.brandId)?.name;
+    const filteredBrandsForDropdown = allBrands.filter(b =>
+        b.name.toLowerCase().includes(brandSearchQuery.toLowerCase())
     );
 
     return (
@@ -753,18 +778,63 @@ export default function AdminDashboard() {
                                             <Plus size={16} className="text-shisha-ember" /> Añadir Sabor
                                         </h3>
                                         <form onSubmit={handleCreateTaste} className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                                            <div className="md:col-span-2">
-                                                <select 
-                                                    required 
-                                                    value={newTaste.brandId} 
-                                                    onChange={e => setNewTaste({...newTaste, brandId: e.target.value})} 
-                                                    className="w-full px-4 py-3 rounded-xl bg-shisha-surface border border-white/5 text-white font-bold outline-none transition-all text-sm cursor-pointer"
+                                            <div className="md:col-span-2 relative">
+                                                {brandDropdownOpen && (
+                                                    <div 
+                                                        className="fixed inset-0 z-40 cursor-default" 
+                                                        onClick={() => { setBrandDropdownOpen(false); setBrandSearchQuery(''); }}
+                                                    />
+                                                )}
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setBrandDropdownOpen(!brandDropdownOpen)}
+                                                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 text-white font-bold text-sm text-left flex justify-between items-center transition-all cursor-pointer relative z-30"
                                                 >
-                                                    <option value="" disabled className="text-white/30">Seleccionar Marca...</option>
-                                                    {brands.map(b => (
-                                                        <option key={b.id} value={b.id} className="bg-shisha-surface text-black md:text-white">{b.name}</option>
-                                                    ))}
-                                                </select>
+                                                    <span>
+                                                        {selectedBrandName || <span className="text-white/30 font-medium">Seleccionar Marca...</span>}
+                                                    </span>
+                                                    <ChevronDown size={16} className={`text-white/50 transition-transform duration-300 ${brandDropdownOpen ? 'rotate-180' : ''}`} />
+                                                </button>
+
+                                                {brandDropdownOpen && (
+                                                    <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-[#16181E] border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden animate-reveal-up">
+                                                        <div className="p-2 border-b border-white/5">
+                                                            <input
+                                                                type="text"
+                                                                value={brandSearchQuery}
+                                                                onChange={e => setBrandSearchQuery(e.target.value)}
+                                                                placeholder="Buscar marca..."
+                                                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/5 text-white text-xs outline-none focus:border-shisha-ember/50 transition-all placeholder:text-white/20"
+                                                                onClick={e => e.stopPropagation()}
+                                                            />
+                                                        </div>
+                                                        <div className="max-h-60 overflow-y-auto py-1">
+                                                            {filteredBrandsForDropdown.length === 0 ? (
+                                                                <div className="px-4 py-3 text-xs text-shisha-text-dim text-center">
+                                                                    No se encontraron marcas
+                                                                </div>
+                                                            ) : (
+                                                                filteredBrandsForDropdown.map(b => (
+                                                                    <button
+                                                                        key={b.id}
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            setNewTaste({...newTaste, brandId: String(b.id)});
+                                                                            setBrandDropdownOpen(false);
+                                                                            setBrandSearchQuery('');
+                                                                        }}
+                                                                        className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-white/5 flex items-center justify-between ${String(b.id) === newTaste.brandId ? 'text-shisha-ember font-black bg-shisha-ember/5' : 'text-white font-semibold'}`}
+                                                                    >
+                                                                        <span>{b.name}</span>
+                                                                        {String(b.id) === newTaste.brandId && (
+                                                                            <span className="w-1.5 h-1.5 bg-shisha-ember rounded-full shadow-lg shadow-shisha-ember/50" />
+                                                                        )}
+                                                                    </button>
+                                                                ))
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                             <input 
                                                 required 

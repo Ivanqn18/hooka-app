@@ -18,70 +18,46 @@ export class BoeScannerService {
   @Cron('0 17 * * 5') // Se ejecuta todos los viernes a las 17:00
   async parseNewTobaccoPrices(): Promise<number> {
     let addedTastes = 0;
-    this.logger.log('Iniciando exploración del BOE (Viernes actual)...');
+    this.logger.log('Iniciando exploración del BOE basada en el buscador de resoluciones...');
 
-    // Fechas a buscar (Solo el viernes actual)
-    const fridays: Date[] = [];
-    const d = new Date();
-    // Ajustar 'd' al viernes más reciente (hoy si es viernes, o el anterior)
-    while (d.getDay() !== 5) {
-      d.setDate(d.getDate() - 1);
-    }
-    fridays.push(new Date(d.getTime()));
-
-    const browser = await puppeteer.launch({ 
+     const browser = await puppeteer.launch({ 
       headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
 
     try {
-      const interceptAndFetchXmlText = async (targetUrl: string) => {
+      this.logger.log(`Navegando a la página de búsqueda del BOE...`);
+      await page.goto(this.boeSearchBaseUrl, { waitUntil: 'domcontentloaded' });
+      const html = await page.content();
+      const $ = cheerio.load(html);
+
+      const linksExtraidos: string[] = [];
+      $('.resultado-busqueda .enlaces a').each((_, el) => {
+        const link = $(el).attr('href');
+        if (link && link.includes('doc.php?id=')) {
+          const docId = link.split('id=')[1];
+          linksExtraidos.push(`https://www.boe.es/diario_boe/txt.php?id=${docId}`);
+        }
+      });
+
+      this.logger.log(`Encontradas ${linksExtraidos.length} resoluciones en la primera página de búsqueda.`);
+      
+      // Limitar a las 15 más recientes para optimizar rendimiento y evitar bloqueos WAF
+      const linksToParse = linksExtraidos.slice(0, 15);
+      this.logger.log(`Procediendo a escanear las ${linksToParse.length} resoluciones más recientes...`);
+
+      for (const urlTxt of linksToParse) {
         try {
-          const res = await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
-          if (res) return await res.text();
+          const added = await this.readBoeAndExtractShisha(page, urlTxt);
+          addedTastes += added;
         } catch (e) {
-          this.logger.error(`Error nav to ${targetUrl}`, e);
-        }
-        return "";
-      };
-
-      for (const date of fridays) {
-        const y = date.getFullYear();
-        const m = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const fDate = `${y}${m}${day}`;
-
-        const summaryUrl = `https://www.boe.es/diario_boe/xml.php?id=BOE-S-${fDate}`;
-        this.logger.log(`Consultando sumario: ${summaryUrl}`);
-
-        const xmlText = await interceptAndFetchXmlText(summaryUrl);
-        this.logger.log(`XML Text snippet: ${xmlText.substring(0, 100)}`);
-
-        if (!xmlText || xmlText.includes('errorParametros') || xmlText.includes('Captcha')) {
-          this.logger.error('WAF block or empty XML detected');
-          continue;
-        }
-
-        const $ = cheerio.load(xmlText, { xmlMode: true });
-        let docUrl = "";
-        $('item').each((_, el) => {
-          const titulo = $(el).find('titulo').text()?.toLowerCase() || '';
-          if (titulo.includes('precios') && titulo.includes('tabaco')) {
-            docUrl = $(el).find('url_xml').first().text().trim();
-          }
-        });
-
-        if (docUrl) {
-          const fullXmlUrl = docUrl.startsWith('http') ? docUrl : `https://www.boe.es${docUrl}`;
-          this.logger.log(`Encontrada resolución: ${fullXmlUrl}`);
-          // Enviar a la otra función (usa fetch HTML normal/txt. Ojo: La antigua usa .txt)
-          const txtUrl = fullXmlUrl.replace('xml.php', 'txt.php').replace('/diario_boe/xml/', '');
-          addedTastes += await this.readBoeAndExtractShisha(page, txtUrl);
+          this.logger.error(`Error procesando documento ${urlTxt}:`, e);
         }
       }
     } catch (error) {
-      this.logger.error('Error parseando BOE por fechas', error);
+      this.logger.error('Error parseando BOE', error);
     } finally {
       await browser.close();
     }

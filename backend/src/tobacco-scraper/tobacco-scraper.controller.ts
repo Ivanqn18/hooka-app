@@ -83,6 +83,14 @@ export class TobaccoScraperController {
     return this.xmlCatalog.getLightCatalog();
   }
 
+  // GET /tobaccos/brands (Retorna todas las marcas ordenadas alfabéticamente)
+  @Get('brands')
+  async getBrands() {
+    return this.prisma.brand.findMany({
+      orderBy: { name: 'asc' },
+    });
+  }
+
   // POST /tobaccos/seed
   @Post('seed')
   async forceSeed() {
