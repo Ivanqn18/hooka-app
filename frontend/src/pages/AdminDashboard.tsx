@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import {
     Trash2, AlertTriangle, ShieldCheck, LayoutDashboard,
     Flame, ShoppingCart, MapPin, CheckCircle, Users,
@@ -10,6 +11,7 @@ import api from '../services/api';
 
 export default function AdminDashboard() {
     const { user } = useAuth();
+    const toast = useToast();
     const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares' | 'users' | 'tabacos'>('overview');
 
     const [mezclas, setMezclas] = useState<any[]>([]);
@@ -101,17 +103,17 @@ export default function AdminDashboard() {
             setNewBrandName('');
             fetchBrands();
             fetchAllBrands();
-            alert('Marca creada con éxito');
+            toast.success('Marca creada con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al crear la marca');
+            toast.error('Error al crear la marca');
         }
     };
 
     const handleCreateTaste = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTaste.name.trim() || !newTaste.brandId) {
-            alert('El nombre del sabor y la marca son requeridos');
+            toast.warning('El nombre del sabor y la marca son requeridos');
             return;
         }
         try {
@@ -124,10 +126,10 @@ export default function AdminDashboard() {
             setNewTaste({ name: '', brandId: '', linea: '', descripcion: '' });
             fetchBrands();
             fetchAllBrands();
-            alert('Sabor creado con éxito');
+            toast.success('Sabor creado con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al crear el sabor');
+            toast.error('Error al crear el sabor');
         }
     };
 
@@ -139,7 +141,7 @@ export default function AdminDashboard() {
             fetchAllBrands();
         } catch (e) {
             console.error(e);
-            alert('Error al eliminar la marca');
+            toast.error('Error al eliminar la marca');
         }
     };
 
@@ -151,7 +153,7 @@ export default function AdminDashboard() {
             fetchAllBrands();
         } catch (e) {
             console.error(e);
-            alert('Error al eliminar el sabor');
+            toast.error('Error al eliminar el sabor');
         }
     };
 
@@ -162,19 +164,19 @@ export default function AdminDashboard() {
         try {
             if (action === 'seed') {
                 await api.post('/tobaccos/seed');
-                alert('Semillado del catálogo completado con éxito.');
+                toast.success('Semillado del catálogo completado con éxito.');
             } else if (action === 'scan-boe') {
                 const res: any = await api.post('/tobaccos/scan-boe');
-                alert(`Escaneo de BOE finalizado. Sabores añadidos: ${res.addedTastes || 0}`);
+                toast.success(`Escaneo de BOE finalizado. Sabores añadidos: ${res.addedTastes || 0}`);
             } else if (action === 'clear') {
                 await api.post('/tobaccos/clear');
-                alert('Catálogo vaciado.');
+                toast.success('Catálogo vaciado.');
             }
             fetchBrands();
             fetchAllBrands();
         } catch (e) {
             console.error(e);
-            alert('Error al ejecutar la acción de mantenimiento.');
+            toast.error('Error al ejecutar la acción de mantenimiento.');
         } finally {
             setMaintenanceLoading(false);
         }
@@ -224,7 +226,7 @@ export default function AdminDashboard() {
 
     const handleDelete = async (id: number, type: 'mezclas' | 'marketplace/products' | 'bares' | 'users') => {
         if (type === 'users' && id === user?.id) {
-            alert('No puedes eliminar tu propia cuenta de administrador desde aquí.');
+            toast.warning('No puedes eliminar tu propia cuenta de administrador desde aquí.');
             return;
         }
         if (!confirm(`¿Estás seguro de que deseas eliminar este elemento?`)) return;
@@ -233,7 +235,7 @@ export default function AdminDashboard() {
             await api.delete(`/${type}/${id}`);
             fetchData();
         } catch (e) {
-            alert('Error al eliminar');
+            toast.error('Error al eliminar');
         }
     };
 
@@ -242,7 +244,7 @@ export default function AdminDashboard() {
             await api.patch(`/bares/${id}/status`, { status });
             fetchData();
         } catch (e) {
-            alert('Error al actualizar');
+            toast.error('Error al actualizar');
         }
     };
 
@@ -256,9 +258,9 @@ export default function AdminDashboard() {
             });
             setNewBar({ nombre: '', direccion: '', latitud: '', longitud: '', descripcion: '', imagenUrl: '' });
             fetchData();
-            alert('¡Lounge registrado!');
+            toast.success('¡Lounge registrado!');
         } catch (e) {
-            alert('Error al registrar');
+            toast.error('Error al registrar');
         }
     };
 
@@ -713,7 +715,7 @@ export default function AdminDashboard() {
                                         <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">Catálogo de Tabacos</h2>
                                         <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-ember">Mantenimiento de marcas, sabores e importador oficial</p>
                                     </div>
-                                    <div className="grid grid-cols-3 md:flex md:flex-wrap gap-2 w-full md:w-auto">
+                                    <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 w-full md:w-auto">
                                         <button 
                                             disabled={maintenanceLoading}
                                             onClick={() => handleMaintenanceAction('seed')} 
@@ -723,18 +725,6 @@ export default function AdminDashboard() {
                                                 <>
                                                     <span className="md:hidden">Seed</span>
                                                     <span className="hidden md:inline">Importar Catálogo (Seed)</span>
-                                                </>
-                                            )}
-                                        </button>
-                                        <button 
-                                            disabled={maintenanceLoading}
-                                            onClick={() => handleMaintenanceAction('scan-boe')} 
-                                            className="px-2 md:px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-black text-[8px] sm:text-[9px] uppercase tracking-widest rounded-xl transition-all disabled:opacity-50 text-center flex items-center justify-center"
-                                        >
-                                            {maintenanceLoading ? '...' : (
-                                                <>
-                                                    <span className="md:hidden">BOE</span>
-                                                    <span className="hidden md:inline">Escanear BOE</span>
                                                 </>
                                             )}
                                         </button>

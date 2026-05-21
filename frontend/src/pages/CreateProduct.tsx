@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { MapPin, Navigation, Tag, Euro, ShoppingBag, Sparkles, AlertCircle } from 'lucide-react';
 import api from '../services/api';
 
 export default function CreateProduct() {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const toast = useToast();
     const [formData, setFormData] = useState({
         titulo: '',
         descripcion: '',
@@ -62,12 +64,12 @@ export default function CreateProduct() {
                 },
                 (error) => {
                     console.error("Error obteniendo ubicación:", error);
-                    alert("No se pudo obtener la ubicación. Por favor, introdúcela manualmente.");
+                    toast.warning("No se pudo obtener la ubicación. Por favor, introdúcela manualmente.");
                     setLocationLoading(false);
                 }
             );
         } else {
-            alert("Tu navegador no soporta geolocalización.");
+            toast.warning("Tu navegador no soporta geolocalización.");
             setLocationLoading(false);
         }
     };
@@ -75,7 +77,7 @@ export default function CreateProduct() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!image) {
-            alert("La imagen del producto es obligatoria");
+            toast.error("La imagen del producto es obligatoria");
             return;
         }
 
@@ -101,7 +103,7 @@ export default function CreateProduct() {
             navigate('/market');
         } catch (err) {
             console.error(err);
-            alert("Error al publicar el producto");
+            toast.error("Error al publicar el producto");
         } finally {
             setIsSubmitting(false);
         }

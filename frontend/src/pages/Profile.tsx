@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Users, Upload } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
@@ -15,6 +16,7 @@ const BG_COLORS = [
 
 export default function Profile() {
     const { user, updateUser } = useAuth();
+    const toast = useToast();
     const navigate = useNavigate();
 
     const [stats, setStats] = useState({ totalMezclas: 0, productosActivos: 0 });
@@ -104,7 +106,7 @@ export default function Profile() {
             setIsEditing(false);
         } catch (error) {
             console.error(error);
-            alert("Error al guardar el perfil");
+            toast.error("Error al guardar el perfil");
         }
     };
 

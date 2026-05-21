@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { imageUrl } from '../utils/imageUrl';
 import { ArrowLeft, MessageCircle, Tag, Star, Eye, Calendar, Sparkles, ShieldCheck, UserPlus, UserCheck, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import SellerProfileModal from '../components/SellerProfileModal';
 import api from '../services/api';
 
@@ -13,6 +14,7 @@ export default function ProductDetail() {
     const [seller, setSeller] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const { user } = useAuth();
+    const toast = useToast();
     const currentUserId = user?.id;
     const [isSellerModalOpen, setIsSellerModalOpen] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
@@ -87,13 +89,13 @@ export default function ProductDetail() {
 
     const handleContactSeller = async () => {
         if (!currentUserId) {
-            alert("Necesitas iniciar sesión para contactar con el vendedor.");
+            toast.warning("Necesitas iniciar sesión para contactar con el vendedor.");
             navigate('/login');
             return;
         }
 
         if (product.vendedorId === currentUserId) {
-            alert("No puedes abrir un chat contigo mismo.");
+            toast.warning("No puedes abrir un chat contigo mismo.");
             return;
         }
 
@@ -105,7 +107,7 @@ export default function ProductDetail() {
             navigate(`/chat/${chat.id}`);
         } catch (err: any) {
             console.error("Error al crear el chat", err);
-            alert("Hubo un error al intentar abrir el chat. Si la base de datos se reinició, tu sesión podría ser inválida. Intenta cerrar sesión y volver a entrar.");
+            toast.error("Hubo un error al intentar abrir el chat. Si la base de datos se reinició, tu sesión podría ser inválida. Intenta cerrar sesión y volver a entrar.");
         }
     };
 

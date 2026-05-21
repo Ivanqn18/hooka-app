@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { 
     Flame, Plus, Tag, MessageSquare, Info, 
     Sparkles, Trash2, Sliders, Pipette,
@@ -21,6 +22,7 @@ export default function CreateMezcla() {
     const navigate = useNavigate();
     const { user } = useAuth();
     const { id } = useParams();
+    const toast = useToast();
     
     const [tabacosDisponibles, setTabacosDisponibles] = useState<ProductoBase[]>([]);
     const [loading, setLoading] = useState(true);
@@ -138,7 +140,7 @@ export default function CreateMezcla() {
         
         const total = formData.ingredientes.reduce((acc: number, curr: any) => acc + (Number(curr.porcentaje) || 0), 0);
         if (total !== 100) {
-            alert(`El total debe ser 100%. Actualmente es ${total}%.`);
+            toast.warning(`El total debe ser 100%. Actualmente es ${total}%.`);
             return;
         }
 
@@ -170,7 +172,7 @@ export default function CreateMezcla() {
             navigate('/mezclas');
         } catch (err) {
             console.error("Error al crear mezcla", err);
-            alert("Error al crear la mezcla. Revisa los datos.");
+            toast.error("Error al crear la mezcla. Revisa los datos.");
         }
     };
 

@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, MessageSquare, Camera, Share2, Info } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { imageUrl } from '../utils/imageUrl';
 import api from '../services/api';
 
 export default function BarDetail() {
     const { id } = useParams();
     const { user } = useAuth();
+    const toast = useToast();
     const [bar, setBar] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [rating, setRating] = useState(5);
@@ -29,7 +31,7 @@ export default function BarDetail() {
     const handleSubmitReview = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) {
-            alert("Debes iniciar sesión para valorar este bar");
+            toast.warning("Debes iniciar sesión para valorar este bar");
             return;
         }
 
