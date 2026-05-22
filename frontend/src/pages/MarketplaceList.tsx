@@ -185,6 +185,15 @@ export default function MarketplaceList() {
                                             <Tag className="w-2.5 h-2.5 md:w-3 md:h-3" /> {p.categoria}
                                         </span>
                                     </div>
+                                    {p.estado && p.estado !== 'DISPONIBLE' && (
+                                        <div className="absolute top-3 right-3 md:top-4 md:right-4">
+                                            <span className={`px-2 py-1 md:px-3 md:py-1.5 glass-panel rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-2xl border-white/10 ${
+                                                p.estado === 'RESERVADO' ? 'text-amber-400 border-amber-500/20' : 'text-rose-500 border-rose-500/20'
+                                            }`}>
+                                                {p.estado}
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4">
                                         <div className="px-3 py-1.5 md:px-4 md:py-2 glass-panel rounded-xl md:rounded-2xl shadow-3xl">
                                             <span className="text-lg md:text-xl font-black text-white">{Number(p.precio).toFixed(0)}€</span>

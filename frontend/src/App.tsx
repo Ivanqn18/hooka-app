@@ -9,6 +9,7 @@ import MarketplaceList from './pages/MarketplaceList'
 import CreateProduct from './pages/CreateProduct'
 import ProductDetail from './pages/ProductDetail'
 import Chat from './pages/Chat'
+import ChatsList from './pages/ChatsList'
 import MapView from './pages/MapView'
 import BarDetail from './pages/BarDetail'
 import AdminDashboard from './pages/AdminDashboard'
@@ -50,6 +51,9 @@ function App() {
           <Link to="/mapa" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mapa</Link>
           {user && (
             <Link to="/stash" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Mi Almacén</Link>
+          )}
+          {user && (
+            <Link to="/chats" className="text-shisha-text-muted font-bold text-[0.8rem] uppercase tracking-wider transition-all hover:text-shisha-ember">Chats</Link>
           )}
           {user?.isAdmin && (
             <Link to="/admin" className="text-shisha-ember font-black text-[0.8rem] uppercase tracking-wider hover:glow-pulse">Admin</Link>
@@ -118,6 +122,11 @@ function App() {
                 Mi Almacén <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
               </Link>
             )}
+            {user && (
+              <Link to="/chats" onClick={closeMenu} className="py-4 text-2xl font-black text-white border-b border-white/5 flex justify-between items-center group">
+                Mis Chats <span className="text-shisha-ember opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+              </Link>
+            )}
             {user?.isAdmin && (
               <Link to="/admin" onClick={closeMenu} className="py-4 text-2xl font-black text-shisha-ember border-b border-white/5 flex justify-between items-center">
                 Admin
@@ -174,6 +183,7 @@ function App() {
             <Route path="/mezcla/editar/:id" element={<CreateMezcla />} />
             <Route path="/market/nuevo" element={<CreateProduct />} />
             <Route path="/chat/:id" element={<Chat />} />
+            <Route path="/chats" element={<ChatsList />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/tobaccos" element={<TobaccoCatalog />} />
             <Route path="/stash" element={<StashPage />} />

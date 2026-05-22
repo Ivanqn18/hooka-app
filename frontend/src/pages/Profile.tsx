@@ -389,6 +389,13 @@ export default function Profile() {
                                     <div className="flex items-center gap-3">
                                         <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim bg-white/5 px-2 py-0.5 rounded">{product.categoria}</span>
                                         <span className="text-lg font-black text-emerald-400">{Number(product.precio).toFixed(2)}€</span>
+                                        {product.estado && product.estado !== 'DISPONIBLE' && (
+                                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
+                                                product.estado === 'RESERVADO' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                                            }`}>
+                                                {product.estado}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </Link>

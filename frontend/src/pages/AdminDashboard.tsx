@@ -566,6 +566,13 @@ export default function AdminDashboard() {
                                                     <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-1.5">
                                                         <h4 className="text-sm sm:text-xl font-black text-white group-hover:text-emerald-400 transition-colors leading-snug truncate">{p.titulo}</h4>
                                                         <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-emerald-500 text-white text-[9px] sm:text-[10px] font-black rounded-md sm:rounded-lg shrink-0">{Number(p.precio)}€</span>
+                                                        {p.estado && p.estado !== 'DISPONIBLE' && (
+                                                            <span className={`px-2 py-0.5 text-[9px] sm:text-[10px] font-black rounded uppercase tracking-widest shrink-0 ${
+                                                                p.estado === 'RESERVADO' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                                                            }`}>
+                                                                {p.estado}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     <div className="flex items-center gap-2 sm:gap-3 text-shisha-text-dim text-[9px] sm:text-[10px] font-black uppercase tracking-widest leading-none truncate">
                                                         <span>{p.categoria}</span>
