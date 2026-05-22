@@ -39,7 +39,6 @@ export class MarketplaceController {
 
   @Post('products')
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -55,6 +54,7 @@ export class MarketplaceController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   createProduct(
     @Body() createProductDto: CreateMarketplaceDto,

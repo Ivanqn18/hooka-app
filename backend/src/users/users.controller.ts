@@ -64,7 +64,6 @@ export class UsersController {
   @Post(':id/avatar')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('avatar', {
       storage: avatarStorage,
       fileFilter: (req, file, cb) => {
@@ -78,6 +77,7 @@ export class UsersController {
       },
       limits: { fileSize: 2 * 1024 * 1024 },
     }),
+    ImageCompressionInterceptor,
   )
   async uploadAvatar(
     @Param('id', ParseIntPipe) id: number,

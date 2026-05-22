@@ -34,7 +34,6 @@ export class MezclasController {
 
   @Post()
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -50,6 +49,7 @@ export class MezclasController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   create(
     @Body() createMezclaDto: CreateMezclaDto,
@@ -79,7 +79,6 @@ export class MezclasController {
 
   @Put(':id')
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -95,6 +94,7 @@ export class MezclasController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   update(
     @Param('id', ParseIntPipe) id: number,

@@ -74,7 +74,6 @@ export class AuthController {
 
   @Post('register')
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('avatar', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -90,6 +89,7 @@ export class AuthController {
       },
       limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB limit para avatares
     }),
+    ImageCompressionInterceptor,
   )
   async register(
     @Body() body: RegisterDto,
