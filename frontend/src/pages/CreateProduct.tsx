@@ -15,8 +15,7 @@ export default function CreateProduct() {
         descripcion: '',
         precio: '',
         categoria: 'CACHIMBA',
-        ubicacion: '',
-        vendedorId: user?.id || 1
+        ubicacion: ''
     });
 
     const [image, setImage] = useState<File | null>(null);
@@ -90,7 +89,9 @@ export default function CreateProduct() {
             formDataToSend.append('precio', formData.precio);
             formDataToSend.append('categoria', formData.categoria);
             formDataToSend.append('ubicacion', formData.ubicacion);
-            formDataToSend.append('vendedorId', String(formData.vendedorId));
+            if (user?.id) {
+                formDataToSend.append('vendedorId', String(user.id));
+            }
             formDataToSend.append('imagen', image);
             
             if (coords) {

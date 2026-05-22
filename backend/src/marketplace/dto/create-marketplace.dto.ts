@@ -15,8 +15,9 @@ import {
 
 export class CreateMarketplaceDto {
   @IsNumber()
+  @IsOptional()
   @Type(() => Number)
-  vendedorId: number;
+  vendedorId?: number;
 
   @IsString()
   @MaxLength(100)
