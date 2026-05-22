@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 import {
     Trash2, AlertTriangle, ShieldCheck, LayoutDashboard,
     Flame, ShoppingCart, MapPin, CheckCircle, Users,
@@ -12,6 +13,7 @@ import api from '../services/api';
 export default function AdminDashboard() {
     const { user } = useAuth();
     const toast = useToast();
+    const { confirm } = useConfirm();
     const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares' | 'users' | 'tabacos'>('overview');
 
     const [mezclas, setMezclas] = useState<any[]>([]);
@@ -134,11 +136,19 @@ export default function AdminDashboard() {
     };
 
     const handleDeleteBrand = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar esta marca? Se eliminarán todos sus sabores asociados.')) return;
+        const confirmed = await confirm({
+            title: 'Eliminar Marca',
+            message: '¿Estás seguro de eliminar esta marca? Se eliminarán todos sus sabores asociados.',
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/tobaccos/brands/${id}`);
             fetchBrands();
             fetchAllBrands();
+            toast.success('Marca eliminada con éxito');
         } catch (e) {
             console.error(e);
             toast.error('Error al eliminar la marca');
@@ -146,11 +156,19 @@ export default function AdminDashboard() {
     };
 
     const handleDeleteTaste = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar este sabor?')) return;
+        const confirmed = await confirm({
+            title: 'Eliminar Sabor',
+            message: '¿Estás seguro de eliminar este sabor?',
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/tobaccos/tastes/${id}`);
             fetchBrands();
             fetchAllBrands();
+            toast.success('Sabor eliminado con éxito');
         } catch (e) {
             console.error(e);
             toast.error('Error al eliminar el sabor');
@@ -158,7 +176,16 @@ export default function AdminDashboard() {
     };
 
     const handleMaintenanceAction = async (action: 'seed' | 'scan-boe' | 'clear') => {
-        if (action === 'clear' && !confirm('¿Estás seguro de vaciar COMPLETAMENTE el catálogo de tabacos? Esto no se puede deshacer.')) return;
+        if (action === 'clear') {
+            const confirmed = await confirm({
+                title: 'Vaciar Catálogo de Tabacos',
+                message: '¿Estás seguro de vaciar COMPLETAMENTE el catálogo de tabacos? Esto no se puede deshacer.',
+                confirmText: 'Vaciar Catálogo',
+                cancelText: 'Cancelar',
+                type: 'danger'
+            });
+            if (!confirmed) return;
+        }
         
         setMaintenanceLoading(true);
         try {
@@ -229,11 +256,45 @@ export default function AdminDashboard() {
             toast.warning('No puedes eliminar tu propia cuenta de administrador desde aquí.');
             return;
         }
-        if (!confirm(`¿Estás seguro de que deseas eliminar este elemento?`)) return;
+
+        const typeLabels: Record<string, { title: string, message: string }> = {
+            mezclas: {
+                title: 'Eliminar Mezcla',
+                message: '¿Estás seguro de que deseas eliminar esta mezcla de shisha? Esta acción no se puede deshacer.'
+            },
+            'marketplace/products': {
+                title: 'Eliminar Producto',
+                message: '¿Estás seguro de que deseas eliminar este producto del marketplace? Esta acción no se puede deshacer.'
+            },
+            bares: {
+                title: 'Eliminar Lounge/Bar',
+                message: '¿Estás seguro de que deseas eliminar este establecimiento de la guía de bares? Esta acción no se puede deshacer.'
+            },
+            users: {
+                title: 'Eliminar Usuario',
+                message: '¿Estás seguro de que deseas eliminar a este usuario de HookaHub? Se eliminará toda su información permanentemente.'
+            }
+        };
+
+        const config = typeLabels[type] || {
+            title: 'Eliminar Elemento',
+            message: '¿Estás seguro de que deseas eliminar este elemento?'
+        };
+
+        const confirmed = await confirm({
+            title: config.title,
+            message: config.message,
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+
+        if (!confirmed) return;
 
         try {
             await api.delete(`/${type}/${id}`);
             fetchData();
+            toast.success('Elemento eliminado con éxito');
         } catch (e) {
             toast.error('Error al eliminar');
         }
