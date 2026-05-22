@@ -203,7 +203,7 @@ export default function CreateMezcla() {
                     </div>
 
                     {/* Basic Info */}
-                    <div className="relative z-10 space-y-8">
+                    <div className="relative z-20 space-y-8">
                         <div className="space-y-4">
                             <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1 flex items-center gap-2">
                                 <Sparkles size={14} /> Identidad de la mezcla
