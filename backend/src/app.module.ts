@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MezclasModule } from './mezclas/mezclas.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -25,7 +23,7 @@ import { TobaccoScraperModule } from './tobacco-scraper/tobacco-scraper.module';
     TobaccoScraperModule,
     ScheduleModule.forRoot(),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
