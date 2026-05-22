@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AddSellerReviewDto } from './dto/user-actions.dto';
 
 @Injectable()
 export class UsersService {
@@ -189,5 +190,54 @@ export class UsersService {
       });
       return { following: true };
     }
+  }
+
+  async addReview(vendedorId: number, dto: AddSellerReviewDto) {
+    const product = await this.prisma.product.findUnique({
+      where: { id: dto.productoId },
+    });
+    if (!product) {
+      throw new BadRequestException('El producto no existe');
+    }
+    if (product.vendedorId !== vendedorId) {
+      throw new BadRequestException('El producto no pertenece a este vendedor');
+    }
+    if (product.compradorId !== dto.compradorId) {
+      throw new BadRequestException('No tienes permiso para valorar a este vendedor por este producto');
+    }
+    if (
+      product.transaccionEstado !== 'COMPLETADO' &&
+      product.transaccionEstado !== 'DISPUTADO'
+    ) {
+      throw new BadRequestException(
+        'Solo se puede valorar al vendedor una vez finalizada o disputada la transacción',
+      );
+    }
+
+    const existingReview = await this.prisma.sellerReview.findUnique({
+      where: { productoId: dto.productoId },
+    });
+    if (existingReview) {
+      throw new BadRequestException('Ya has valorado este producto');
+    }
+
+    let finalPuntuacion = dto.puntuacion;
+    if (product.transaccionEstado === 'DISPUTADO') {
+      finalPuntuacion = 1;
+    }
+
+    if (finalPuntuacion < 1 || finalPuntuacion > 5) {
+      throw new BadRequestException('La puntuación debe estar entre 1 y 5');
+    }
+
+    return this.prisma.sellerReview.create({
+      data: {
+        vendedorId,
+        compradorId: dto.compradorId,
+        productoId: dto.productoId,
+        puntuacion: finalPuntuacion,
+        comentario: dto.comentario,
+      },
+    });
   }
 }

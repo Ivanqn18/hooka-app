@@ -57,9 +57,17 @@ export default function MixOfTheWeek() {
                             </button>
                         </Link>
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-black text-white border border-white/10">
-                                {mix.author?.nombre?.[0] || 'A'}
-                            </div>
+                            {mix.author?.avatarUrl ? (
+                                <img 
+                                    src={imageUrl(mix.author.avatarUrl)} 
+                                    alt={mix.author?.nombre || 'autor'} 
+                                    className="w-10 h-10 rounded-xl object-cover border border-white/10"
+                                />
+                            ) : (
+                                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-black text-white border border-white/10">
+                                    {mix.author?.nombre?.[0] || 'A'}
+                                </div>
+                            )}
                             <span className="text-sm font-bold text-shisha-text-muted">
                                 Por {mix.author?.nombre || 'Alquimista Maestro'}
                             </span>

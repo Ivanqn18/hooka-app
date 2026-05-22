@@ -50,6 +50,12 @@ export default function ProductDetail() {
         fetchProductData();
     }, [id]);
 
+    useEffect(() => {
+        if (product?.transaccionEstado === 'DISPUTADO') {
+            setRating(1);
+        }
+    }, [product?.transaccionEstado]);
+
     const handleReviewSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setReviewStatus('loading');
@@ -57,6 +63,7 @@ export default function ProductDetail() {
         try {
             await api.post(`/users/${product.vendedorId}/reviews`, {
                 compradorId: currentUserId,
+                productoId: Number(id),
                 puntuacion: rating,
                 comentario: reviewComment
             });
@@ -323,7 +330,7 @@ export default function ProductDetail() {
                             </div>
                         </div>
 
-                        {currentUserId && currentUserId !== seller.id && (
+                        {currentUserId && currentUserId === product.compradorId && (product.transaccionEstado === 'COMPLETADO' || product.transaccionEstado === 'DISPUTADO') && !product.review && (
                             <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-6 md:mt-0">
                                 {reviewStatus === 'success' ? (
                                     <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl text-emerald-400 text-xs font-bold animate-fade-in text-center md:text-left">
@@ -331,12 +338,18 @@ export default function ProductDetail() {
                                     </div>
                                 ) : (
                                     <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
+                                        {product.transaccionEstado === 'DISPUTADO' && (
+                                            <div className="text-[10px] font-bold text-rose-500 uppercase tracking-wider mb-1 max-w-xs text-center md:text-left">
+                                                ⚠️ Incidencia reportada. La valoración está fijada en 1 estrella.
+                                            </div>
+                                        )}
                                         <div className="flex gap-2 justify-center md:justify-start">
                                             {[1, 2, 3, 4, 5].map(num => (
                                                 <button
                                                     key={num} type="button"
+                                                    disabled={product.transaccionEstado === 'DISPUTADO'}
                                                     onClick={() => setRating(num)}
-                                                    className={`p-1 transition-transform hover:scale-125 ${rating >= num ? 'text-amber-400' : 'text-shisha-text-dim/30'}`}
+                                                    className={`p-1 transition-transform ${product.transaccionEstado !== 'DISPUTADO' ? 'hover:scale-125' : 'opacity-50'} ${rating >= num ? 'text-amber-400' : 'text-shisha-text-dim/30'}`}
                                                 >
                                                     <Star size={24} fill={rating >= num ? 'currentColor' : 'transparent'} />
                                                 </button>
@@ -345,7 +358,7 @@ export default function ProductDetail() {
                                         <div className="relative w-full">
                                             <textarea
                                                 className="px-5 py-4 rounded-xl bg-white/5 border border-white/5 text-white text-sm font-medium w-full md:w-80 h-24 focus:border-shisha-ember/50 outline-none transition-all resize-none"
-                                                placeholder="Opinión rápida sobre el vendedor..."
+                                                placeholder={product.transaccionEstado === 'DISPUTADO' ? "Describe la incidencia o problema con el pedido..." : "Opinión rápida sobre el vendedor..."}
                                                 value={reviewComment}
                                                 onChange={e => setReviewComment(e.target.value)}
                                                 required

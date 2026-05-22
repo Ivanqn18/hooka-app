@@ -45,6 +45,8 @@ model User {
   // Market Reviews
   reviewsReceived SellerReview[]  @relation("SellerReviews")
   reviewsGiven    SellerReview[]  @relation("BuyerReviews")
+  productsBought   Product[]       @relation("BuyerProducts")
+  reportsSubmitted ProductReport[]
 
   following UserFollow[] @relation("Following")
   followers UserFollow[] @relation("Followers")
@@ -140,9 +142,15 @@ model Product {
   longitud    Decimal?        @db.Decimal(11, 8)
   createdAt   DateTime        @default(now()) @map("created_at")
 
+  compradorId       Int?               @map("comprador_id")
+  transaccionEstado TransactionStatus? @map("transaccion_estado")
+
   // Relations
-  seller User   @relation(fields: [vendedorId], references: [id], onDelete: Cascade)
-  chats  Chat[]
+  seller    User             @relation(fields: [vendedorId], references: [id], onDelete: Cascade)
+  comprador User?            @relation("BuyerProducts", fields: [compradorId], references: [id], onDelete: SetNull)
+  chats     Chat[]
+  reports   ProductReport[]
+  review    SellerReview?
 
   @@map("Productos")
 }
@@ -163,10 +171,17 @@ enum ProductStatus {
   VENDIDO
 }
 
+enum TransactionStatus {
+  PENDIENTE
+  COMPLETADO
+  DISPUTADO
+}
+
 model SellerReview {
   id           Int      @id @default(autoincrement())
   vendedorId   Int      @map("vendedor_id")
   compradorId  Int      @map("comprador_id")
+  productoId   Int?     @unique @map("producto_id")
   puntuacion   Int      // 1-5 estrellas
   comentario   String?  @db.Text
   createdAt    DateTime @default(now()) @map("created_at")
@@ -174,8 +189,23 @@ model SellerReview {
   // Relations
   vendedor     User     @relation("SellerReviews", fields: [vendedorId], references: [id], onDelete: Cascade)
   comprador    User     @relation("BuyerReviews", fields: [compradorId], references: [id], onDelete: Cascade)
+  producto     Product? @relation(fields: [productoId], references: [id], onDelete: Cascade)
 
   @@map("SellerReviews")
+}
+
+model ProductReport {
+  id             Int      @id @default(autoincrement())
+  productoId     Int      @map("producto_id")
+  reportadoPorId Int      @map("reportado_por_id")
+  motivo         String   @db.Text
+  resuelto       Boolean  @default(false)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  producto     Product @relation(fields: [productoId], references: [id], onDelete: Cascade)
+  reportadoPor User    @relation(fields: [reportadoPorId], references: [id], onDelete: Cascade)
+
+  @@map("ProductReports")
 }
 
 // 5. CHAT

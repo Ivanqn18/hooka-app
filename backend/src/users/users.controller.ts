@@ -20,7 +20,7 @@ import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from '../auth/admin.guard';
 import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
-import { AddStashDto } from './dto/user-actions.dto';
+import { AddStashDto, AddSellerReviewDto } from './dto/user-actions.dto';
 
 const avatarStorage = diskStorage({
   destination: './uploads/avatars',
@@ -123,5 +123,14 @@ export class UsersController {
     @Body('followerId', ParseIntPipe) followerId: number,
   ) {
     return this.usersService.toggleFollow(followerId, followingId);
+  }
+
+  @Post(':id/reviews')
+  @UseGuards(JwtAuthGuard)
+  addReview(
+    @Param('id', ParseIntPipe) vendedorId: number,
+    @Body() dto: AddSellerReviewDto,
+  ) {
+    return this.usersService.addReview(vendedorId, dto);
   }
 }

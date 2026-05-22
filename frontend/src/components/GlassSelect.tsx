@@ -153,11 +153,10 @@ export default function GlassSelect({
                 />
             </button>
 
-            {/* Dropdown Options Menu */}
             <div
                 ref={optionsRef}
                 role="listbox"
-                className={`absolute left-0 w-full mt-2 bg-shisha-surface/95 border border-white/10 rounded-2xl shadow-2xl z-[150] max-h-60 overflow-y-auto backdrop-blur-xl transition-all duration-200 origin-top transform ${
+                className={`absolute left-0 w-full mt-2 bg-[#0c0d14] border border-white/10 rounded-2xl shadow-2xl z-[150] max-h-60 overflow-y-auto backdrop-blur-xl transition-all duration-200 origin-top transform ${
                     isOpen 
                         ? 'opacity-100 scale-100 pointer-events-auto' 
                         : 'opacity-0 scale-95 pointer-events-none'

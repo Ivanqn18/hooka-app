@@ -11,6 +11,8 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -19,6 +21,8 @@ import { MarketplaceService } from './marketplace.service';
 import { CreateMarketplaceDto } from './dto/create-marketplace.dto';
 import { UpdateMarketplaceDto } from './dto/update-marketplace.dto';
 import { ImageCompressionInterceptor } from '../common/interceptors/image-compression.interceptor';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 // Configuración de almacenamiento para Multer
 const storage = diskStorage({
@@ -95,6 +99,37 @@ export class MarketplaceController {
   @Delete('products/:id')
   removeProduct(@Param('id', ParseIntPipe) id: number) {
     return this.marketplaceService.removeProduct(id);
+  }
+
+  @Post('products/:id/confirm-receipt')
+  @UseGuards(JwtAuthGuard)
+  confirmReceipt(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: any,
+  ) {
+    return this.marketplaceService.confirmReceipt(id, req.user.id);
+  }
+
+  @Post('products/:id/report')
+  @UseGuards(JwtAuthGuard)
+  reportProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('motivo') motivo: string,
+    @Req() req: any,
+  ) {
+    return this.marketplaceService.reportProduct(id, req.user.id, motivo);
+  }
+
+  @Get('reports')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  getReports() {
+    return this.marketplaceService.getReports();
+  }
+
+  @Patch('reports/:id/resolve')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  resolveReport(@Param('id', ParseIntPipe) id: number) {
+    return this.marketplaceService.resolveReport(id);
   }
 }
 
