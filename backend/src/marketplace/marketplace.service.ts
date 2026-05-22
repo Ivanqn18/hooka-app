@@ -3,15 +3,26 @@ import {
   NotFoundException,
   ForbiddenException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class MarketplaceService {
+  private readonly logger = new Logger(MarketplaceService.name);
+
   constructor(private prisma: PrismaService) {}
 
-  createProduct(data: any) {
-    return this.prisma.product.create({ data });
+  async createProduct(data: any) {
+    this.logger.log(`Creating product with data: ${JSON.stringify(data)}`);
+    try {
+      const result = await this.prisma.product.create({ data });
+      this.logger.log(`Product created successfully with id: ${result.id}`);
+      return result;
+    } catch (error) {
+      this.logger.error(`Failed to create product: ${error.message}`, error.stack);
+      throw error;
+    }
   }
 
   async findAllProducts(query?: any) {
