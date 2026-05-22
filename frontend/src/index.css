@@ -22,6 +22,8 @@
   --animate-glow-pulse: glowPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
   --animate-reveal-up: revealUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
   --animate-shimmer: shimmer 2s linear infinite;
+  --animate-toast-in: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-toast-out: toastOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   @keyframes floatSlow {
     0% { transform: translateY(0) scale(1) rotate(0deg); }
@@ -38,6 +40,18 @@
   @keyframes shimmer {
     from { background-position: 200% 0; }
     to { background-position: -200% 0; }
+  }
+  @keyframes toastIn {
+    from { transform: translateX(110%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes toastOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(110%); opacity: 0; }
+  }
+  @keyframes shrink {
+    from { width: 100%; }
+    to { width: 0%; }
   }
 }
 

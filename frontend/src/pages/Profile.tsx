@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { Settings, Save, ShoppingBag, FlaskConical, LayoutGrid, Star, ShieldCheck, Mail, Users, Upload } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
@@ -15,6 +16,7 @@ const BG_COLORS = [
 
 export default function Profile() {
     const { user, updateUser } = useAuth();
+    const toast = useToast();
     const navigate = useNavigate();
 
     const [stats, setStats] = useState({ totalMezclas: 0, productosActivos: 0 });
@@ -104,7 +106,7 @@ export default function Profile() {
             setIsEditing(false);
         } catch (error) {
             console.error(error);
-            alert("Error al guardar el perfil");
+            toast.error("Error al guardar el perfil");
         }
     };
 
@@ -387,6 +389,15 @@ export default function Profile() {
                                     <div className="flex items-center gap-3">
                                         <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim bg-white/5 px-2 py-0.5 rounded">{product.categoria}</span>
                                         <span className="text-lg font-black text-emerald-400">{Number(product.precio).toFixed(2)}€</span>
+                                        {product.estado && (
+                                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
+                                                product.estado === 'DISPONIBLE' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                                product.estado === 'RESERVADO' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 
+                                                'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                                            }`}>
+                                                {product.estado}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </Link>

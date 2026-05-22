@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 import {
     Trash2, AlertTriangle, ShieldCheck, LayoutDashboard,
     Flame, ShoppingCart, MapPin, CheckCircle, Users,
@@ -10,13 +12,16 @@ import api from '../services/api';
 
 export default function AdminDashboard() {
     const { user } = useAuth();
-    const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares' | 'users' | 'tabacos'>('overview');
+    const toast = useToast();
+    const { confirm } = useConfirm();
+    const [activeTab, setActiveTab] = useState<'overview' | 'mezclas' | 'productos' | 'bares' | 'users' | 'tabacos' | 'disputas'>('overview');
 
     const [mezclas, setMezclas] = useState<any[]>([]);
     const [users, setUsers] = useState<any[]>([]);
     const [productos, setProductos] = useState<any[]>([]);
     const [bares, setBares] = useState<any[]>([]);
     const [pendingBares, setPendingBares] = useState<any[]>([]);
+    const [disputas, setDisputas] = useState<any[]>([]);
 
     // Tabacos state
     const [brands, setBrands] = useState<any[]>([]);
@@ -101,17 +106,17 @@ export default function AdminDashboard() {
             setNewBrandName('');
             fetchBrands();
             fetchAllBrands();
-            alert('Marca creada con éxito');
+            toast.success('Marca creada con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al crear la marca');
+            toast.error('Error al crear la marca');
         }
     };
 
     const handleCreateTaste = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTaste.name.trim() || !newTaste.brandId) {
-            alert('El nombre del sabor y la marca son requeridos');
+            toast.warning('El nombre del sabor y la marca son requeridos');
             return;
         }
         try {
@@ -124,57 +129,82 @@ export default function AdminDashboard() {
             setNewTaste({ name: '', brandId: '', linea: '', descripcion: '' });
             fetchBrands();
             fetchAllBrands();
-            alert('Sabor creado con éxito');
+            toast.success('Sabor creado con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al crear el sabor');
+            toast.error('Error al crear el sabor');
         }
     };
 
     const handleDeleteBrand = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar esta marca? Se eliminarán todos sus sabores asociados.')) return;
+        const confirmed = await confirm({
+            title: 'Eliminar Marca',
+            message: '¿Estás seguro de eliminar esta marca? Se eliminarán todos sus sabores asociados.',
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/tobaccos/brands/${id}`);
             fetchBrands();
             fetchAllBrands();
+            toast.success('Marca eliminada con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al eliminar la marca');
+            toast.error('Error al eliminar la marca');
         }
     };
 
     const handleDeleteTaste = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar este sabor?')) return;
+        const confirmed = await confirm({
+            title: 'Eliminar Sabor',
+            message: '¿Estás seguro de eliminar este sabor?',
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/tobaccos/tastes/${id}`);
             fetchBrands();
             fetchAllBrands();
+            toast.success('Sabor eliminado con éxito');
         } catch (e) {
             console.error(e);
-            alert('Error al eliminar el sabor');
+            toast.error('Error al eliminar el sabor');
         }
     };
 
     const handleMaintenanceAction = async (action: 'seed' | 'scan-boe' | 'clear') => {
-        if (action === 'clear' && !confirm('¿Estás seguro de vaciar COMPLETAMENTE el catálogo de tabacos? Esto no se puede deshacer.')) return;
+        if (action === 'clear') {
+            const confirmed = await confirm({
+                title: 'Vaciar Catálogo de Tabacos',
+                message: '¿Estás seguro de vaciar COMPLETAMENTE el catálogo de tabacos? Esto no se puede deshacer.',
+                confirmText: 'Vaciar Catálogo',
+                cancelText: 'Cancelar',
+                type: 'danger'
+            });
+            if (!confirmed) return;
+        }
         
         setMaintenanceLoading(true);
         try {
             if (action === 'seed') {
                 await api.post('/tobaccos/seed');
-                alert('Semillado del catálogo completado con éxito.');
+                toast.success('Semillado del catálogo completado con éxito.');
             } else if (action === 'scan-boe') {
                 const res: any = await api.post('/tobaccos/scan-boe');
-                alert(`Escaneo de BOE finalizado. Sabores añadidos: ${res.addedTastes || 0}`);
+                toast.success(`Escaneo de BOE finalizado. Sabores añadidos: ${res.addedTastes || 0}`);
             } else if (action === 'clear') {
                 await api.post('/tobaccos/clear');
-                alert('Catálogo vaciado.');
+                toast.success('Catálogo vaciado.');
             }
             fetchBrands();
             fetchAllBrands();
         } catch (e) {
             console.error(e);
-            alert('Error al ejecutar la acción de mantenimiento.');
+            toast.error('Error al ejecutar la acción de mantenimiento.');
         } finally {
             setMaintenanceLoading(false);
         }
@@ -220,20 +250,69 @@ export default function AdminDashboard() {
         api.get('/users', { params: { limit: 100 } })
             .then((res: any) => setUsers(extractData(res)))
             .catch(err => console.error("Error fetching users:", err));
+
+        api.get('/marketplace/reports')
+            .then((res: any) => setDisputas(extractData(res)))
+            .catch(err => console.error("Error fetching reports:", err));
+    };
+
+    const handleResolveReport = async (id: number) => {
+        try {
+            await api.patch(`/marketplace/reports/${id}/resolve`);
+            fetchData();
+            toast.success('Incidencia marcada como resuelta.');
+        } catch (e) {
+            console.error(e);
+            toast.error('Error al resolver la incidencia.');
+        }
     };
 
     const handleDelete = async (id: number, type: 'mezclas' | 'marketplace/products' | 'bares' | 'users') => {
         if (type === 'users' && id === user?.id) {
-            alert('No puedes eliminar tu propia cuenta de administrador desde aquí.');
+            toast.warning('No puedes eliminar tu propia cuenta de administrador desde aquí.');
             return;
         }
-        if (!confirm(`¿Estás seguro de que deseas eliminar este elemento?`)) return;
+
+        const typeLabels: Record<string, { title: string, message: string }> = {
+            mezclas: {
+                title: 'Eliminar Mezcla',
+                message: '¿Estás seguro de que deseas eliminar esta mezcla de shisha? Esta acción no se puede deshacer.'
+            },
+            'marketplace/products': {
+                title: 'Eliminar Producto',
+                message: '¿Estás seguro de que deseas eliminar este producto del marketplace? Esta acción no se puede deshacer.'
+            },
+            bares: {
+                title: 'Eliminar Lounge/Bar',
+                message: '¿Estás seguro de que deseas eliminar este establecimiento de la guía de bares? Esta acción no se puede deshacer.'
+            },
+            users: {
+                title: 'Eliminar Usuario',
+                message: '¿Estás seguro de que deseas eliminar a este usuario de HookaHub? Se eliminará toda su información permanentemente.'
+            }
+        };
+
+        const config = typeLabels[type] || {
+            title: 'Eliminar Elemento',
+            message: '¿Estás seguro de que deseas eliminar este elemento?'
+        };
+
+        const confirmed = await confirm({
+            title: config.title,
+            message: config.message,
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+
+        if (!confirmed) return;
 
         try {
             await api.delete(`/${type}/${id}`);
             fetchData();
+            toast.success('Elemento eliminado con éxito');
         } catch (e) {
-            alert('Error al eliminar');
+            toast.error('Error al eliminar');
         }
     };
 
@@ -242,7 +321,7 @@ export default function AdminDashboard() {
             await api.patch(`/bares/${id}/status`, { status });
             fetchData();
         } catch (e) {
-            alert('Error al actualizar');
+            toast.error('Error al actualizar');
         }
     };
 
@@ -256,9 +335,9 @@ export default function AdminDashboard() {
             });
             setNewBar({ nombre: '', direccion: '', latitud: '', longitud: '', descripcion: '', imagenUrl: '' });
             fetchData();
-            alert('¡Lounge registrado!');
+            toast.success('¡Lounge registrado!');
         } catch (e) {
-            alert('Error al registrar');
+            toast.error('Error al registrar');
         }
     };
 
@@ -328,13 +407,14 @@ export default function AdminDashboard() {
                         </div>
                     </div>
 
-                    <nav className="grid grid-cols-3 lg:flex lg:flex-col gap-1.5 sm:gap-2 w-full">
+                    <nav className="grid grid-cols-4 lg:flex lg:flex-col gap-1.5 sm:gap-2 w-full">
                         <NavButton tab="overview" icon={LayoutDashboard} label="Gral" lgLabel="General" />
                         <NavButton tab="mezclas" icon={Flame} label="Mix" lgLabel="Mezclas" />
                         <NavButton tab="productos" icon={ShoppingCart} label="Shop" lgLabel="Mercado" />
                         <NavButton tab="bares" icon={MapPin} label="Maps" lgLabel="Lounges" />
                         <NavButton tab="users" icon={Users} label="Users" lgLabel="Usuarios" />
                         <NavButton tab="tabacos" icon={Database} label="Catalog" lgLabel="Tabacos" />
+                        <NavButton tab="disputas" icon={AlertTriangle} label="Alerts" lgLabel="Disputas" />
                     </nav>
 
                     <div className="mt-6 md:mt-10 pt-6 md:pt-8 border-t border-white/5 hidden md:block">
@@ -379,6 +459,7 @@ export default function AdminDashboard() {
                         {activeTab === 'bares' && <MapPin className="w-[120px] h-[120px]" />}
                         {activeTab === 'users' && <Users className="w-[120px] h-[120px]" />}
                         {activeTab === 'tabacos' && <Database className="w-[120px] h-[120px]" />}
+                        {activeTab === 'disputas' && <AlertTriangle className="w-[120px] h-[120px]" />}
                     </div>
 
                     <div className="relative z-10">
@@ -389,25 +470,42 @@ export default function AdminDashboard() {
                                     <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Actualizado en tiempo real</span>
                                 </div>
 
-                                {pendingBares.length > 0 ? (
-                                    <div className="bg-amber-500/10 border border-amber-500/20 p-5 md:p-8 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row items-center gap-4 md:gap-6 animate-pulse-subtle">
-                                        <div className="w-12 h-12 md:w-14 md:h-14 bg-amber-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-amber-500 shrink-0">
-                                            <AlertTriangle size={28} />
+                                <div className="flex flex-col gap-4">
+                                    {pendingBares.length > 0 && (
+                                        <div className="bg-amber-500/10 border border-amber-500/20 p-5 md:p-8 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row items-center gap-4 md:gap-6 animate-pulse-subtle">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 bg-amber-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-amber-500 shrink-0">
+                                                <Clock size={28} />
+                                            </div>
+                                            <div className="text-center md:text-left">
+                                                <h3 className="text-lg md:text-xl font-black text-white mb-0.5 md:mb-1">Acción Requerida</h3>
+                                                <p className="text-shisha-text-muted text-xs md:text-sm font-medium">Hay <strong>{pendingBares.length}</strong> solicitudes de nuevos lounges esperando auditoría.</p>
+                                            </div>
+                                            <button onClick={() => setActiveTab('bares')} className="w-full md:w-auto md:ml-auto px-5 py-3 bg-white text-black font-black text-[10px] md:text-xs uppercase tracking-widest rounded-xl hover:bg-amber-500 hover:text-white transition-all shadow-xl">Revisar Ahora</button>
                                         </div>
-                                        <div className="text-center md:text-left">
-                                            <h3 className="text-lg md:text-xl font-black text-white mb-0.5 md:mb-1">Acción Requerida</h3>
-                                            <p className="text-shisha-text-muted text-xs md:text-sm font-medium">Hay <strong>{pendingBares.length}</strong> solicitudes de nuevos lounges esperando auditoría.</p>
+                                    )}
+
+                                    {disputas.filter(d => !d.resuelto).length > 0 && (
+                                        <div className="bg-rose-500/10 border border-rose-500/20 p-5 md:p-8 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row items-center gap-4 md:gap-6 animate-pulse-subtle">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 bg-rose-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-rose-500 shrink-0">
+                                                <AlertTriangle size={28} />
+                                            </div>
+                                            <div className="text-center md:text-left">
+                                                <h3 className="text-lg md:text-xl font-black text-white mb-0.5 md:mb-1">Disputas Activas</h3>
+                                                <p className="text-shisha-text-muted text-xs md:text-sm font-medium">Hay <strong>{disputas.filter(d => !d.resuelto).length}</strong> reportes de incidencias esperando ser resueltos en el mercado.</p>
+                                            </div>
+                                            <button onClick={() => setActiveTab('disputas')} className="w-full md:w-auto md:ml-auto px-5 py-3 bg-white text-black font-black text-[10px] md:text-xs uppercase tracking-widest rounded-xl hover:bg-rose-500 hover:text-white transition-all shadow-xl">Revisar Disputas</button>
                                         </div>
-                                        <button onClick={() => setActiveTab('bares')} className="w-full md:w-auto md:ml-auto px-5 py-3 bg-white text-black font-black text-[10px] md:text-xs uppercase tracking-widest rounded-xl hover:bg-amber-500 hover:text-white transition-all shadow-xl">Revisar Ahora</button>
-                                    </div>
-                                ) : (
-                                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 md:p-8 rounded-2xl md:rounded-[2rem] flex items-center gap-4">
-                                        <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-emerald-500 shrink-0">
-                                            <CheckCircle size={20} />
+                                    )}
+
+                                    {pendingBares.length === 0 && disputas.filter(d => !d.resuelto).length === 0 && (
+                                        <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 md:p-8 rounded-2xl md:rounded-[2rem] flex items-center gap-4">
+                                            <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-emerald-500 shrink-0">
+                                                <CheckCircle size={20} />
+                                            </div>
+                                            <p className="text-emerald-400 text-xs md:text-sm font-black uppercase tracking-widest">Toda la plataforma está en orden sin incidencias</p>
                                         </div>
-                                        <p className="text-emerald-400 text-xs md:text-sm font-black uppercase tracking-widest">Toda la infraestructura está en orden</p>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
 
                                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
                                     <div className="space-y-6">
@@ -503,6 +601,13 @@ export default function AdminDashboard() {
                                                     <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-1.5">
                                                         <h4 className="text-sm sm:text-xl font-black text-white group-hover:text-emerald-400 transition-colors leading-snug truncate">{p.titulo}</h4>
                                                         <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-emerald-500 text-white text-[9px] sm:text-[10px] font-black rounded-md sm:rounded-lg shrink-0">{Number(p.precio)}€</span>
+                                                        {p.estado && p.estado !== 'DISPONIBLE' && (
+                                                            <span className={`px-2 py-0.5 text-[9px] sm:text-[10px] font-black rounded uppercase tracking-widest shrink-0 ${
+                                                                p.estado === 'RESERVADO' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                                                            }`}>
+                                                                {p.estado}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     <div className="flex items-center gap-2 sm:gap-3 text-shisha-text-dim text-[9px] sm:text-[10px] font-black uppercase tracking-widest leading-none truncate">
                                                         <span>{p.categoria}</span>
@@ -713,7 +818,7 @@ export default function AdminDashboard() {
                                         <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">Catálogo de Tabacos</h2>
                                         <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-shisha-ember">Mantenimiento de marcas, sabores e importador oficial</p>
                                     </div>
-                                    <div className="grid grid-cols-3 md:flex md:flex-wrap gap-2 w-full md:w-auto">
+                                    <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 w-full md:w-auto">
                                         <button 
                                             disabled={maintenanceLoading}
                                             onClick={() => handleMaintenanceAction('seed')} 
@@ -723,18 +828,6 @@ export default function AdminDashboard() {
                                                 <>
                                                     <span className="md:hidden">Seed</span>
                                                     <span className="hidden md:inline">Importar Catálogo (Seed)</span>
-                                                </>
-                                            )}
-                                        </button>
-                                        <button 
-                                            disabled={maintenanceLoading}
-                                            onClick={() => handleMaintenanceAction('scan-boe')} 
-                                            className="px-2 md:px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-black text-[8px] sm:text-[9px] uppercase tracking-widest rounded-xl transition-all disabled:opacity-50 text-center flex items-center justify-center"
-                                        >
-                                            {maintenanceLoading ? '...' : (
-                                                <>
-                                                    <span className="md:hidden">BOE</span>
-                                                    <span className="hidden md:inline">Escanear BOE</span>
                                                 </>
                                             )}
                                         </button>
@@ -1009,6 +1102,134 @@ export default function AdminDashboard() {
                                                 Siguiente
                                             </button>
                                         </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'disputas' && (
+                            <div className="space-y-8 animate-reveal-up">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">Centro de Disputas</h2>
+                                    <div className="px-3.5 py-1.5 bg-white/5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-shisha-text-dim w-fit">
+                                        {disputas.length} incidencias reportadas
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-6">
+                                    {disputas.length === 0 ? (
+                                        <div className="py-16 text-center">
+                                            <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-emerald-400 border border-emerald-500/20 shadow-lg">
+                                                <CheckCircle size={24} />
+                                            </div>
+                                            <h4 className="text-lg font-black text-white mb-1">¡Sin Incidencias!</h4>
+                                            <p className="text-shisha-text-muted text-xs font-medium max-w-sm mx-auto">No se han registrado reportes ni disputas de transacciones en el mercado.</p>
+                                        </div>
+                                    ) : (
+                                        disputas.map((d: any) => (
+                                            <div key={d.id} className={`glass-panel p-5 md:p-8 rounded-2xl md:rounded-[2rem] border-white/5 bg-white/[0.01] hover:border-white/10 transition-all flex flex-col gap-6 ${d.resuelto ? 'opacity-70' : 'border-rose-500/20 bg-rose-500/[0.01]'}`}>
+                                                {/* Dispute Header */}
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`p-2 rounded-xl shrink-0 ${d.resuelto ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
+                                                            <AlertTriangle size={18} />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-sm font-black text-white uppercase tracking-wider">Disputa #{d.id}</h4>
+                                                            <p className="text-[9px] font-bold text-shisha-text-dim uppercase tracking-wider">Fecha: {new Date(d.createdAt).toLocaleString()}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${
+                                                            d.resuelto 
+                                                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                                                                : 'bg-rose-500/10 text-rose-400 border border-rose-500/20 animate-pulse'
+                                                        }`}>
+                                                            {d.resuelto ? 'Resuelta' : 'Pendiente'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Content Details */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    {/* Product and Motive */}
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <span className="text-[9px] font-black text-shisha-text-dim uppercase tracking-widest mb-1.5 block">Artículo Relacionado</span>
+                                                            {d.producto ? (
+                                                                <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-xl">
+                                                                    <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/5 bg-white/5 shrink-0">
+                                                                        {d.producto.imagenUrl ? (
+                                                                            <img src={imageUrl(d.producto.imagenUrl)} className="w-full h-full object-cover" alt="" />
+                                                                        ) : (
+                                                                            <div className="w-full h-full flex items-center justify-center text-shisha-text-dim">
+                                                                                <ShoppingCart size={16} />
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="overflow-hidden">
+                                                                        <h5 className="text-xs font-bold text-white truncate leading-snug">{d.producto.titulo}</h5>
+                                                                        <p className="text-[9px] font-bold text-shisha-text-dim uppercase">{Number(d.producto.precio).toFixed(2)}€ • {d.producto.categoria}</p>
+                                                                    </div>
+                                                                </div>
+                                                            ) : (
+                                                                <p className="text-xs font-bold text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">Producto eliminado</p>
+                                                            )}
+                                                        </div>
+
+                                                        <div>
+                                                            <span className="text-[9px] font-black text-rose-400 uppercase tracking-widest mb-1.5 block">Motivo Reportado</span>
+                                                            <p className="text-xs font-medium text-shisha-text-muted leading-relaxed bg-white/5 border border-white/5 p-4 rounded-xl italic">
+                                                                "{d.motivo}"
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Parties involved */}
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <span className="text-[9px] font-black text-shisha-text-dim uppercase tracking-widest mb-1.5 block">Comprador (Reportado por)</span>
+                                                            <div className="p-3 bg-white/5 border border-white/5 rounded-xl space-y-1">
+                                                                <p className="text-xs font-bold text-white">{d.reportadoPor?.nombre || 'N/A'}</p>
+                                                                <p className="text-[9px] font-medium text-shisha-text-dim font-mono">{d.reportadoPor?.email || 'N/A'}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <span className="text-[9px] font-black text-shisha-text-dim uppercase tracking-widest mb-1.5 block">Vendedor</span>
+                                                            {d.producto?.seller ? (
+                                                                <div className="p-3 bg-white/5 border border-white/5 rounded-xl space-y-1">
+                                                                    <p className="text-xs font-bold text-white">{d.producto.seller.nombre}</p>
+                                                                    <p className="text-[9px] font-medium text-shisha-text-dim font-mono">{d.producto.seller.email}</p>
+                                                                </div>
+                                                            ) : (
+                                                                <p className="text-xs font-medium text-shisha-text-dim bg-white/5 p-3 rounded-xl">Vendedor no disponible</p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Actions */}
+                                                <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-white/5">
+                                                    {d.producto && (
+                                                        <button
+                                                            onClick={() => handleDelete(d.productoId, 'marketplace/products')}
+                                                            className="px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/20 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all"
+                                                        >
+                                                            Eliminar Artículo
+                                                        </button>
+                                                    )}
+                                                    {!d.resuelto && (
+                                                        <button
+                                                            onClick={() => handleResolveReport(d.id)}
+                                                            className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20"
+                                                        >
+                                                            Resolver Disputa
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))
                                     )}
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -106,7 +106,85 @@ export class MarketplaceService {
       where: { id },
       include: {
         seller: { select: { id: true, nombre: true, avatarUrl: true } },
+        comprador: { select: { id: true, nombre: true, avatarUrl: true } },
+        reports: true,
+        review: true,
       },
+    });
+  }
+
+  async confirmReceipt(productId: number, userId: number) {
+    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+    if (product.compradorId !== userId) {
+      throw new ForbiddenException('No tienes permiso para confirmar la recepción de este producto');
+    }
+    return this.prisma.product.update({
+      where: { id: productId },
+      data: {
+        estado: 'VENDIDO',
+        transaccionEstado: 'COMPLETADO',
+      },
+    });
+  }
+
+  async reportProduct(productId: number, userId: number, motivo: string) {
+    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+    if (product.compradorId !== userId) {
+      throw new ForbiddenException('No tienes permiso para reportar una incidencia sobre este producto');
+    }
+    if (!motivo || motivo.trim() === '') {
+      throw new BadRequestException('El motivo del reporte no puede estar vacío');
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const report = await tx.productReport.create({
+        data: {
+          productoId: productId,
+          reportadoPorId: userId,
+          motivo,
+        },
+      });
+
+      await tx.product.update({
+        where: { id: productId },
+        data: {
+          transaccionEstado: 'DISPUTADO',
+        },
+      });
+
+      return report;
+    });
+  }
+
+  async getReports() {
+    return this.prisma.productReport.findMany({
+      include: {
+        producto: {
+          include: {
+            seller: { select: { id: true, nombre: true, email: true } },
+            comprador: { select: { id: true, nombre: true, email: true } },
+          },
+        },
+        reportadoPor: { select: { id: true, nombre: true, email: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async resolveReport(reportId: number) {
+    const report = await this.prisma.productReport.findUnique({ where: { id: reportId } });
+    if (!report) {
+      throw new NotFoundException('Incidencia no encontrada');
+    }
+    return this.prisma.productReport.update({
+      where: { id: reportId },
+      data: { resuelto: true },
     });
   }
 

@@ -41,7 +41,13 @@ export class ChatService {
       },
       include: {
         product: {
-          select: { id: true, titulo: true, imagenUrl: true, vendedorId: true },
+          select: {
+            id: true,
+            titulo: true,
+            imagenUrl: true,
+            vendedorId: true,
+            seller: { select: { id: true, nombre: true, avatarUrl: true } },
+          },
         },
         buyer: { select: { id: true, nombre: true, avatarUrl: true } },
       },

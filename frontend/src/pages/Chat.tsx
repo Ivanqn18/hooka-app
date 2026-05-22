@@ -13,6 +13,8 @@ export default function Chat() {
     const [text, setText] = useState('');
     const [showOfferModal, setShowOfferModal] = useState(false);
     const [offerAmount, setOfferAmount] = useState('');
+    const [showDisputeModal, setShowDisputeModal] = useState(false);
+    const [disputeReason, setDisputeReason] = useState('');
     const socketRef = useRef<Socket | null>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const { user } = useAuth();
@@ -51,8 +53,18 @@ export default function Chat() {
         socketRef.current.on('newMessage', (msg: any) => {
             setMessages(prev => [...prev, msg]);
             if (msg.emisorId !== currentUserId) {
-                // Si recibimos un mensaje nuevo y tenemos el chat abierto, lo marcamos como leido
                 socketRef.current?.emit('markAsRead', { chatId: Number(id), usuarioLecturaId: currentUserId });
+            }
+            
+            const texto = msg.texto || '';
+            if (
+                texto.startsWith('[OFERTA_ACEPTADA:') || 
+                texto.startsWith('[TRANSACCION_') || 
+                texto.startsWith('[OFERTA_RECHAZADA:')
+            ) {
+                api.get(`/chats/${id}`)
+                    .then((data: any) => setChatInfo(data))
+                    .catch(console.error);
             }
         });
 
@@ -106,22 +118,26 @@ export default function Chat() {
     };
 
     const handleAcceptOffer = async (amount: string) => {
-        // Emitir mensaje de oferta aceptada
         socketRef.current?.emit('sendMessage', {
             chatId: Number(id),
             emisorId: currentUserId,
             texto: `[OFERTA_ACEPTADA:${amount}€]`
         });
 
-        // Actualizar estado del producto a RESERVADO en el marketplace
         if (chatInfo?.productoId) {
             try {
-                await api.patch(`/marketplace/products/${chatInfo.productoId}`, { estado: 'RESERVADO' });
+                await api.patch(`/marketplace/products/${chatInfo.productoId}`, {
+                    estado: 'RESERVADO',
+                    compradorId: chatInfo.interesadoId,
+                    transaccionEstado: 'PENDIENTE'
+                });
                 setChatInfo((prev: any) => ({
                     ...prev,
                     product: {
                         ...prev.product,
-                        estado: 'RESERVADO'
+                        estado: 'RESERVADO',
+                        compradorId: chatInfo.interesadoId,
+                        transaccionEstado: 'PENDIENTE'
                     }
                 }));
             } catch (err) {
@@ -131,20 +147,99 @@ export default function Chat() {
     };
 
     const handleRejectOffer = (amount: string) => {
-        // Emitir mensaje de oferta rechazada
         socketRef.current?.emit('sendMessage', {
             chatId: Number(id),
             emisorId: currentUserId,
             texto: `[OFERTA_RECHAZADA:${amount}€]`
         });
         
-        // Abrir modal para contraoferta
         setShowOfferModal(true);
         setOfferAmount('');
     };
 
+    const handleConfirmReceipt = async () => {
+        if (!chatInfo?.productoId) return;
+        try {
+            await api.post(`/marketplace/products/${chatInfo.productoId}/confirm-receipt`);
+            
+            socketRef.current?.emit('sendMessage', {
+                chatId: Number(id),
+                emisorId: currentUserId,
+                texto: `[TRANSACCION_COMPLETADA]`
+            });
+
+            api.get(`/chats/${id}`)
+                .then((data: any) => setChatInfo(data))
+                .catch(console.error);
+        } catch (err) {
+            console.error("Error al confirmar recepción", err);
+        }
+    };
+
+    const handleReportDispute = async () => {
+        if (!chatInfo?.productoId || !disputeReason.trim()) return;
+        try {
+            await api.post(`/marketplace/products/${chatInfo.productoId}/report`, { motivo: disputeReason });
+            
+            socketRef.current?.emit('sendMessage', {
+                chatId: Number(id),
+                emisorId: currentUserId,
+                texto: `[TRANSACCION_DISPUTADA]`
+            });
+
+            setShowDisputeModal(false);
+            setDisputeReason('');
+
+            api.get(`/chats/${id}`)
+                .then((data: any) => setChatInfo(data))
+                .catch(console.error);
+        } catch (err) {
+            console.error("Error al reportar disputa", err);
+        }
+    };
+
     const renderMessageContent = (m: any, index: number, isMe: boolean) => {
         const texto = m.texto || '';
+
+        if (texto === '[TRANSACCION_COMPLETADA]') {
+            return (
+                <div className="glass-panel p-5 rounded-3xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col gap-2 max-w-xs animate-reveal-up mx-auto my-2">
+                    <div className="flex items-center gap-2 text-emerald-400 font-black text-xs justify-center">
+                        <CheckCheck size={14} />
+                        <span>TRANSACCIÓN COMPLETADA</span>
+                    </div>
+                    <p className="text-[10px] text-emerald-300/80 font-medium leading-tight text-center">
+                        El comprador ha confirmado la recepción del artículo. El producto está oficialmente vendido.
+                    </p>
+                    <Link 
+                        to={`/market/product/${chatInfo?.productoId}`}
+                        className="mt-1 text-center text-[9px] font-black uppercase tracking-widest text-emerald-400 hover:underline"
+                    >
+                        Dejar una valoración
+                    </Link>
+                </div>
+            );
+        }
+
+        if (texto === '[TRANSACCION_DISPUTADA]') {
+            return (
+                <div className="glass-panel p-5 rounded-3xl border border-rose-500/40 bg-rose-500/10 flex flex-col gap-2 max-w-xs animate-reveal-up mx-auto my-2">
+                    <div className="flex items-center gap-2 text-rose-400 font-black text-xs justify-center">
+                        <X size={14} />
+                        <span>INCIDENCIA REPORTADA</span>
+                    </div>
+                    <p className="text-[10px] text-rose-300/80 font-medium leading-tight text-center">
+                        El comprador ha reportado un problema con la transacción. El caso está en revisión por soporte técnico.
+                    </p>
+                    <Link 
+                        to={`/market/product/${chatInfo?.productoId}`}
+                        className="mt-1 text-center text-[9px] font-black uppercase tracking-widest text-rose-400 hover:underline"
+                    >
+                        Ver detalles de la disputa
+                    </Link>
+                </div>
+            );
+        }
 
         // 1. Oferta Aceptada
         const acceptedMatch = texto.match(/^\[OFERTA_ACEPTADA:(\d+(?:\.\d+)?)€\]$/);
@@ -251,6 +346,36 @@ export default function Chat() {
                         </div>
                     </div>
                 </header>
+
+                {chatInfo?.interesadoId === currentUserId &&
+                 chatInfo?.product?.estado === 'RESERVADO' &&
+                 chatInfo?.product?.transaccionEstado === 'PENDIENTE' && (
+                    <div className="mx-4 md:mx-8 mt-4 p-4 md:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-reveal-up shrink-0 z-10">
+                        <div className="space-y-1">
+                            <h4 className="text-white font-black text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                Transacción en Proceso
+                            </h4>
+                            <p className="text-[11px] text-shisha-text-dim">
+                                Has reservado este artículo. Confirma cuando lo hayas recibido o reporta una incidencia si hay algún problema.
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={handleConfirmReceipt}
+                                className="flex-1 sm:flex-initial px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-black font-black text-[9px] uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-1.5"
+                            >
+                                <CheckCheck size={12} /> Confirmar Recepción
+                            </button>
+                            <button
+                                onClick={() => setShowDisputeModal(true)}
+                                className="flex-1 sm:flex-initial px-4 py-2 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white border border-rose-500/20 font-black text-[9px] uppercase tracking-widest rounded-xl transition-all active:scale-95 flex items-center justify-center gap-1.5"
+                            >
+                                <X size={12} /> Incidencia
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Messages Area */}
                 <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 md:p-8 flex flex-col gap-3 md:gap-6 custom-scrollbar bg-white/[0.01]">
@@ -360,6 +485,57 @@ export default function Chat() {
                                     disabled={!offerAmount || isNaN(Number(offerAmount)) || Number(offerAmount) <= 0}
                                     className="flex-1 py-4 px-6 rounded-2xl bg-amber-500 hover:bg-amber-600 text-black font-black text-[10px] uppercase tracking-widest shadow-xl shadow-amber-500/20 transition-all disabled:opacity-30 active:scale-95"
                                 >Enviar Oferta 🔥</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Disputa */}
+            {showDisputeModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-fade-in bg-shisha-bg/60 backdrop-blur-md" onClick={() => setShowDisputeModal(false)}>
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="glass-panel w-full max-w-sm p-10 rounded-[3rem] border-white/10 shadow-3xl animate-reveal-up flex flex-col gap-8 relative overflow-hidden"
+                    >
+                        <div className="absolute top-0 right-0 p-10 text-rose-500/5 rotate-12 scale-150 pointer-events-none">
+                            <X size={120} />
+                        </div>
+
+                        <div className="relative z-10">
+                            <div className="flex justify-between items-center mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-rose-500/10 rounded-xl flex items-center justify-center text-rose-500 border border-rose-500/20">
+                                        <X size={20} />
+                                    </div>
+                                    <h3 className="text-xl font-black text-white tracking-tight">Incidencia</h3>
+                                </div>
+                                <button onClick={() => setShowDisputeModal(false)} className="text-shisha-text-dim hover:text-white transition-colors">
+                                    <X size={20} />
+                                </button>
+                            </div>
+
+                            <p className="text-[11px] font-black uppercase tracking-widest text-shisha-text-dim mb-6">Explica el problema con la transacción</p>
+
+                            <div className="mb-6">
+                                <textarea
+                                    value={disputeReason}
+                                    onChange={(e) => setDisputeReason(e.target.value)}
+                                    placeholder="Ej: El vendedor no envía el producto..."
+                                    className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none focus:border-rose-500 transition-all text-sm h-32 resize-none placeholder:text-shisha-text-dim/30 font-medium"
+                                />
+                            </div>
+
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => setShowDisputeModal(false)}
+                                    className="flex-1 py-4 px-6 rounded-2xl bg-white/5 text-shisha-text-dim hover:text-white font-black text-[10px] uppercase tracking-widest border border-white/5 transition-all"
+                                >Cancelar</button>
+                                <button
+                                    onClick={handleReportDispute}
+                                    disabled={!disputeReason.trim()}
+                                    className="flex-1 py-4 px-6 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-black text-[10px] uppercase tracking-widest shadow-xl shadow-rose-500/20 transition-all disabled:opacity-30 active:scale-95"
+                                >Reportar ⚠️</button>
                             </div>
                         </div>
                     </div>

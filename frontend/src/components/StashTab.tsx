@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { Trash2, Plus, Tag, Pipette, Package, Star } from 'lucide-react';
 import api from '../services/api';
+import GlassSelect from './GlassSelect';
 
 interface XmlFormat {
     grams: string;
@@ -20,6 +22,7 @@ interface XmlBrand {
 
 export default function StashTab() {
     const { user, logout } = useAuth();
+    const toast = useToast();
     const [stash, setStash] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [xmlBrands, setXmlBrands] = useState<XmlBrand[]>([]);
@@ -81,15 +84,15 @@ export default function StashTab() {
         if (duplicate) {
             if (duplicate.tipo === tipo) {
                 if (tipo === 'HAVE') {
-                    alert('Este tabaco ya está en tu estantería');
+                    toast.warning('Este tabaco ya está en tu estantería');
                 } else {
-                    alert('Este tabaco ya está en tu lista de deseos');
+                    toast.warning('Este tabaco ya está en tu lista de deseos');
                 }
             } else {
                 if (tipo === 'HAVE') {
-                    alert('Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.');
+                    toast.warning('Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.');
                 } else {
-                    alert('Este tabaco ya está en tu estantería. ¡Ya lo tienes!');
+                    toast.warning('Este tabaco ya está en tu estantería. ¡Ya lo tienes!');
                 }
             }
             return;
@@ -104,9 +107,9 @@ export default function StashTab() {
         } catch (error: any) {
             if (error.response?.status === 401 || error.response?.status === 404) {
                 logout();
-                alert('Se detectó un problema con tu sesión. Inicia sesión de nuevo.');
+                toast.error('Se detectó un problema con tu sesión. Inicia sesión de nuevo.');
             } else {
-                alert('No se pudo añadir al almacén: ' + (error.response?.data?.message || ''));
+                toast.error('No se pudo añadir al almacén: ' + (error.response?.data?.message || ''));
             }
         }
     };
@@ -217,14 +220,14 @@ export default function StashTab() {
 
                     {/* Tipo */}
                     <div className="md:w-48">
-                        <select
+                        <GlassSelect
                             value={tipo}
-                            onChange={e => setTipo(e.target.value)}
-                            className="w-full px-4 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-bold focus:border-shisha-ember/50 outline-none transition-all appearance-none cursor-pointer"
-                        >
-                            <option value="HAVE" className="bg-shisha-bg text-black md:text-white">📦 Lo tengo</option>
-                            <option value="WANT" className="bg-shisha-bg text-black md:text-white">⭐ Lo quiero</option>
-                        </select>
+                            onChange={setTipo}
+                            options={[
+                                { value: 'HAVE', label: 'Lo tengo', icon: <span className="mr-1">📦</span> },
+                                { value: 'WANT', label: 'Lo quiero', icon: <span className="mr-1">⭐</span> }
+                            ]}
+                        />
                     </div>
 
                     {/* Botón */}

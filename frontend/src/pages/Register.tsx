@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Facehash, stringHash } from 'facehash';
 import { useAuth } from '../context/AuthContext';
-import { UserPlus, Mail, Lock, User, Upload, ArrowRight } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Upload, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import api from '../services/api';
 
 const BG_COLORS = [
@@ -15,6 +15,7 @@ export default function Register() {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
     const [error, setError] = useState('');
@@ -38,6 +39,12 @@ export default function Register() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-+=/[\]\\|~`';]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setError('La contraseña debe tener al menos 8 caracteres e incluir una letra mayúscula, un número y un carácter especial.');
+            return;
+        }
 
         const formData = new FormData();
         formData.append('nombre', nombre);
@@ -160,14 +167,21 @@ export default function Register() {
                         <div className="relative group">
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-shisha-text-dim group-focus-within:text-shisha-neon transition-colors" size={16} />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                minLength={6}
+                                minLength={8}
                                 placeholder="••••••••"
-                                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/5 border border-white/5 text-white placeholder:text-shisha-text-dim focus:bg-white/10 focus:border-shisha-neon/40 outline-none transition-all font-medium text-sm"
+                                className="w-full pl-11 pr-12 py-3 rounded-2xl bg-white/5 border border-white/5 text-white placeholder:text-shisha-text-dim focus:bg-white/10 focus:border-shisha-neon/40 outline-none transition-all font-medium text-sm"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-shisha-text-dim hover:text-white transition-colors"
+                            >
+                                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                            </button>
                         </div>
                     </div>
 

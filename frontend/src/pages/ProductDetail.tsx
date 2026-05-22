@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { imageUrl } from '../utils/imageUrl';
 import { ArrowLeft, MessageCircle, Tag, Star, Eye, Calendar, Sparkles, ShieldCheck, UserPlus, UserCheck, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import SellerProfileModal from '../components/SellerProfileModal';
 import api from '../services/api';
 
@@ -13,6 +14,7 @@ export default function ProductDetail() {
     const [seller, setSeller] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const { user } = useAuth();
+    const toast = useToast();
     const currentUserId = user?.id;
     const [isSellerModalOpen, setIsSellerModalOpen] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
@@ -48,6 +50,12 @@ export default function ProductDetail() {
         fetchProductData();
     }, [id]);
 
+    useEffect(() => {
+        if (product?.transaccionEstado === 'DISPUTADO') {
+            setRating(1);
+        }
+    }, [product?.transaccionEstado]);
+
     const handleReviewSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setReviewStatus('loading');
@@ -55,6 +63,7 @@ export default function ProductDetail() {
         try {
             await api.post(`/users/${product.vendedorId}/reviews`, {
                 compradorId: currentUserId,
+                productoId: Number(id),
                 puntuacion: rating,
                 comentario: reviewComment
             });
@@ -87,13 +96,13 @@ export default function ProductDetail() {
 
     const handleContactSeller = async () => {
         if (!currentUserId) {
-            alert("Necesitas iniciar sesión para contactar con el vendedor.");
+            toast.warning("Necesitas iniciar sesión para contactar con el vendedor.");
             navigate('/login');
             return;
         }
 
         if (product.vendedorId === currentUserId) {
-            alert("No puedes abrir un chat contigo mismo.");
+            toast.warning("No puedes abrir un chat contigo mismo.");
             return;
         }
 
@@ -105,7 +114,18 @@ export default function ProductDetail() {
             navigate(`/chat/${chat.id}`);
         } catch (err: any) {
             console.error("Error al crear el chat", err);
-            alert("Hubo un error al intentar abrir el chat. Si la base de datos se reinició, tu sesión podría ser inválida. Intenta cerrar sesión y volver a entrar.");
+            toast.error("Hubo un error al intentar abrir el chat. Si la base de datos se reinició, tu sesión podría ser inválida. Intenta cerrar sesión y volver a entrar.");
+        }
+    };
+
+    const handleUpdateStatus = async (nuevoEstado: string) => {
+        try {
+            await api.patch(`/marketplace/products/${id}`, { estado: nuevoEstado });
+            setProduct((prev: any) => ({ ...prev, estado: nuevoEstado }));
+            toast.success(`Producto marcado como ${nuevoEstado}`);
+        } catch (e) {
+            console.error(e);
+            toast.error("Error al actualizar el estado del producto");
         }
     };
 
@@ -155,7 +175,11 @@ export default function ProductDetail() {
                     </div>
                     <div className="absolute top-6 right-6 md:top-8 md:right-8">
                         <div className={`px-3 py-1.5 md:px-4 md:py-2 glass-panel rounded-xl md:rounded-2xl border-white/10 shadow-3xl text-[10px] font-black uppercase tracking-widest ${
-                            product.estado === 'DISPONIBLE' ? 'text-emerald-400' : 'text-shisha-text-dim'
+                            product.estado === 'DISPONIBLE' 
+                                ? 'text-emerald-400' 
+                                : product.estado === 'RESERVADO' 
+                                ? 'text-amber-400' 
+                                : 'text-rose-500'
                         }`}>
                             {product.estado}
                         </div>
@@ -200,13 +224,38 @@ export default function ProductDetail() {
                             </div>
                         </div>
                         
-                        <button 
-                            onClick={handleContactSeller} 
-                            className="w-full md:w-auto px-6 md:px-10 py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-3xl shadow-2xl shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group"
-                        >
-                            <MessageCircle className="w-5 h-5" />
-                            <span className="text-sm md:text-lg">Contactar Vendedor</span>
-                        </button>
+                        {product.vendedorId === currentUserId ? (
+                            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Estado del producto:</span>
+                                <div className="flex rounded-xl bg-white/5 p-1 border border-white/5 w-full sm:w-auto">
+                                    {(['DISPONIBLE', 'RESERVADO', 'VENDIDO'] as const).map((est) => (
+                                        <button
+                                            key={est}
+                                            onClick={() => handleUpdateStatus(est)}
+                                            className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+                                                product.estado === est
+                                                    ? est === 'DISPONIBLE'
+                                                        ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
+                                                        : est === 'RESERVADO'
+                                                        ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+                                                        : 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+                                                    : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
+                                            }`}
+                                        >
+                                            {est}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <button 
+                                onClick={handleContactSeller} 
+                                className="w-full md:w-auto px-6 md:px-10 py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-3xl shadow-2xl shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group"
+                            >
+                                <MessageCircle className="w-5 h-5" />
+                                <span className="text-sm md:text-lg">Contactar Vendedor</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -281,7 +330,7 @@ export default function ProductDetail() {
                             </div>
                         </div>
 
-                        {currentUserId && currentUserId !== seller.id && (
+                        {currentUserId && currentUserId === product.compradorId && (product.transaccionEstado === 'COMPLETADO' || product.transaccionEstado === 'DISPUTADO') && !product.review && (
                             <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-6 md:mt-0">
                                 {reviewStatus === 'success' ? (
                                     <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl text-emerald-400 text-xs font-bold animate-fade-in text-center md:text-left">
@@ -289,12 +338,18 @@ export default function ProductDetail() {
                                     </div>
                                 ) : (
                                     <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
+                                        {product.transaccionEstado === 'DISPUTADO' && (
+                                            <div className="text-[10px] font-bold text-rose-500 uppercase tracking-wider mb-1 max-w-xs text-center md:text-left">
+                                                ⚠️ Incidencia reportada. La valoración está fijada en 1 estrella.
+                                            </div>
+                                        )}
                                         <div className="flex gap-2 justify-center md:justify-start">
                                             {[1, 2, 3, 4, 5].map(num => (
                                                 <button
                                                     key={num} type="button"
+                                                    disabled={product.transaccionEstado === 'DISPUTADO'}
                                                     onClick={() => setRating(num)}
-                                                    className={`p-1 transition-transform hover:scale-125 ${rating >= num ? 'text-amber-400' : 'text-shisha-text-dim/30'}`}
+                                                    className={`p-1 transition-transform ${product.transaccionEstado !== 'DISPUTADO' ? 'hover:scale-125' : 'opacity-50'} ${rating >= num ? 'text-amber-400' : 'text-shisha-text-dim/30'}`}
                                                 >
                                                     <Star size={24} fill={rating >= num ? 'currentColor' : 'transparent'} />
                                                 </button>
@@ -303,7 +358,7 @@ export default function ProductDetail() {
                                         <div className="relative w-full">
                                             <textarea
                                                 className="px-5 py-4 rounded-xl bg-white/5 border border-white/5 text-white text-sm font-medium w-full md:w-80 h-24 focus:border-shisha-ember/50 outline-none transition-all resize-none"
-                                                placeholder="Opinión rápida sobre el vendedor..."
+                                                placeholder={product.transaccionEstado === 'DISPUTADO' ? "Describe la incidencia o problema con el pedido..." : "Opinión rápida sobre el vendedor..."}
                                                 value={reviewComment}
                                                 onChange={e => setReviewComment(e.target.value)}
                                                 required

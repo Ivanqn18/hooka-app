@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Plus, Tag, MapPin, Navigation, Star, MessageCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import Pagination from '../components/Pagination';
 import { imageUrl } from '../utils/imageUrl';
 import api from '../services/api';
@@ -13,6 +14,7 @@ export default function MarketplaceList() {
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
     const { user } = useAuth();
+    const toast = useToast();
     const currentUserId = user?.id;
 
     // Filtros de distancia
@@ -60,7 +62,7 @@ export default function MarketplaceList() {
                 },
                 (error) => {
                     console.error(error);
-                    alert("No pudimos obtener tu ubicación.");
+                    toast.warning("No pudimos obtener tu ubicación.");
                     setLocationLoading(false);
                 }
             );
@@ -70,13 +72,13 @@ export default function MarketplaceList() {
     const handleQuickContact = async (e: React.MouseEvent, productId: number, sellerId: number) => {
         e.preventDefault(); // Prevent Link navigation
         if (!currentUserId) {
-            alert("Necesitas iniciar sesión para contactar con el vendedor.");
+            toast.warning("Necesitas iniciar sesión para contactar con el vendedor.");
             navigate('/login');
             return;
         }
 
         if (sellerId === currentUserId) {
-            alert("No puedes abrir un chat contigo mismo.");
+            toast.warning("No puedes abrir un chat contigo mismo.");
             return;
         }
         try {
@@ -87,7 +89,7 @@ export default function MarketplaceList() {
             navigate(`/chat/${chat.id}`);
         } catch (err: any) {
             console.error("Error al crear el chat", err);
-            alert("Hubo un error al intentar abrir el chat. Inicia sesión de nuevo si se reinició la base de datos.");
+            toast.error("Hubo un error al intentar abrir el chat. Inicia sesión de nuevo si se reinició la base de datos.");
         }
     };
 
@@ -183,6 +185,15 @@ export default function MarketplaceList() {
                                             <Tag className="w-2.5 h-2.5 md:w-3 md:h-3" /> {p.categoria}
                                         </span>
                                     </div>
+                                    {p.estado && p.estado !== 'DISPONIBLE' && (
+                                        <div className="absolute top-3 right-3 md:top-4 md:right-4">
+                                            <span className={`px-2 py-1 md:px-3 md:py-1.5 glass-panel rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-2xl border-white/10 ${
+                                                p.estado === 'RESERVADO' ? 'text-amber-400 border-amber-500/20' : 'text-rose-500 border-rose-500/20'
+                                            }`}>
+                                                {p.estado}
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4">
                                         <div className="px-3 py-1.5 md:px-4 md:py-2 glass-panel rounded-xl md:rounded-2xl shadow-3xl">
                                             <span className="text-lg md:text-xl font-black text-white">{Number(p.precio).toFixed(0)}€</span>

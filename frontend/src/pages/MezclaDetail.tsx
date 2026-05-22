@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, HeartOff, ArrowLeft, Send, Trash2, MessageCircle, Info, Beaker, Flame, Sparkles, User, Calendar, UserPlus, UserCheck, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 import Pagination from '../components/Pagination';
 import { imageUrl } from '../utils/imageUrl';
 import PublicProfileModal from '../components/PublicProfileModal';
@@ -11,6 +13,8 @@ export default function MezclaDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
+    const toast = useToast();
+    const { confirm } = useConfirm();
     const currentUserId = user?.id;
     const [mix, setMix] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -78,7 +82,10 @@ export default function MezclaDetail() {
     }, [id, commentPage]);
 
     const handleLike = async () => {
-        if (!user) return alert("Debes iniciar sesión para dar me gusta");
+        if (!user) {
+            toast.warning("Debes iniciar sesión para dar me gusta");
+            return;
+        }
         try {
             await api.post(`/mezclas/${id}/like`, { userId: user.id });
             const updated: any = await api.get(`/mezclas/${id}`);
@@ -89,7 +96,10 @@ export default function MezclaDetail() {
     };
 
     const handleDislike = async () => {
-        if (!user) return alert("Debes iniciar sesión para valorar");
+        if (!user) {
+            toast.warning("Debes iniciar sesión para valorar");
+            return;
+        }
         try {
             await api.post(`/mezclas/${id}/dislike`, { userId: user.id });
             const updated: any = await api.get(`/mezclas/${id}`);
@@ -137,11 +147,21 @@ export default function MezclaDetail() {
 
     const handleDeleteComment = async (commentId: number) => {
         if (!user) return;
+        const confirmed = await confirm({
+            title: 'Eliminar Comentario',
+            message: '¿Estás seguro de que deseas eliminar este comentario? Esta acción no se puede deshacer.',
+            confirmText: 'Eliminar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/mezclas/comments/${commentId}`, { data: { userId: user.id } });
             setComments(prev => prev.filter(c => c.id !== commentId));
+            toast.success('Comentario eliminado');
         } catch (e) {
             console.error(e);
+            toast.error('Error al eliminar el comentario');
         }
     };
 

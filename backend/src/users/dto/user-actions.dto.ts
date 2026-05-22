@@ -32,6 +32,10 @@ export class AddSellerReviewDto {
   compradorId: number;
 
   @IsNumber()
+  @Type(() => Number)
+  productoId: number;
+
+  @IsNumber()
   puntuacion: number;
 
   @IsString()

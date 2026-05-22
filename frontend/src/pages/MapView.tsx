@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import { MapPin, Star, Plus, X, Search, ChevronRight, Navigation, Sparkles, Map as MapIcon, Info, Compass } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import L from 'leaflet';
 import { imageUrl } from '../utils/imageUrl';
 
@@ -37,6 +38,7 @@ function MapClickHandler({ onMapClick, active }) {
 
 export default function MapView() {
     const { user } = useAuth();
+    const toast = useToast();
     const [bars, setBars] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -85,11 +87,11 @@ export default function MapView() {
                 setSuggestions(data);
                 setShowSuggestions(true);
             } else {
-                alert("No se encontraron resultados para esta dirección. Prueba a hacer clic directamente en el mapa.");
+                toast.warning("No se encontraron resultados para esta dirección. Prueba a hacer clic directamente en el mapa.");
             }
         } catch (e) {
             console.error(e);
-            alert("Error al buscar la dirección.");
+            toast.error("Error al buscar la dirección.");
         } finally {
             setGeocoding(false);
         }
@@ -119,7 +121,7 @@ export default function MapView() {
     const handleAddSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.latitud === null) {
-            alert("Selecciona una ubicación en el mapa o busca la dirección.");
+            toast.warning("Selecciona una ubicación en el mapa o busca la dirección.");
             return;
         }
 
