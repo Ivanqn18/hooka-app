@@ -124,10 +124,6 @@ export class UsersController {
   ) {
     return this.usersService.toggleFollow(followerId, followingId);
   }
-<<<<<<< HEAD
-}
-=======
-
   @Post(':id/reviews')
   @UseGuards(JwtAuthGuard)
   addReview(
@@ -137,4 +133,3 @@ export class UsersController {
     return this.usersService.addReview(vendedorId, dto);
   }
 }
->>>>>>> 23202954326ed6932b777c1b7cea9b27029757ed

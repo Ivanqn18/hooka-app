@@ -103,10 +103,7 @@ export class MarketplaceController {
 
   @Post('products/:id/confirm-receipt')
   @UseGuards(JwtAuthGuard)
-  confirmReceipt(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() req: any,
-  ) {
+  confirmReceipt(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
     return this.marketplaceService.confirmReceipt(id, req.user.id);
   }
 

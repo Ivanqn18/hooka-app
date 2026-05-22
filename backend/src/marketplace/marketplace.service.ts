@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -114,12 +119,16 @@ export class MarketplaceService {
   }
 
   async confirmReceipt(productId: number, userId: number) {
-    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+    });
     if (!product) {
       throw new NotFoundException('Producto no encontrado');
     }
     if (product.compradorId !== userId) {
-      throw new ForbiddenException('No tienes permiso para confirmar la recepción de este producto');
+      throw new ForbiddenException(
+        'No tienes permiso para confirmar la recepción de este producto',
+      );
     }
     return this.prisma.product.update({
       where: { id: productId },
@@ -131,15 +140,21 @@ export class MarketplaceService {
   }
 
   async reportProduct(productId: number, userId: number, motivo: string) {
-    const product = await this.prisma.product.findUnique({ where: { id: productId } });
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+    });
     if (!product) {
       throw new NotFoundException('Producto no encontrado');
     }
     if (product.compradorId !== userId) {
-      throw new ForbiddenException('No tienes permiso para reportar una incidencia sobre este producto');
+      throw new ForbiddenException(
+        'No tienes permiso para reportar una incidencia sobre este producto',
+      );
     }
     if (!motivo || motivo.trim() === '') {
-      throw new BadRequestException('El motivo del reporte no puede estar vacío');
+      throw new BadRequestException(
+        'El motivo del reporte no puede estar vacío',
+      );
     }
 
     return this.prisma.$transaction(async (tx) => {
@@ -178,7 +193,9 @@ export class MarketplaceService {
   }
 
   async resolveReport(reportId: number) {
-    const report = await this.prisma.productReport.findUnique({ where: { id: reportId } });
+    const report = await this.prisma.productReport.findUnique({
+      where: { id: reportId },
+    });
     if (!report) {
       throw new NotFoundException('Incidencia no encontrada');
     }

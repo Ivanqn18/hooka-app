@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 import {
   IsString,
   IsEmail,
   IsOptional,
   MaxLength,
   MinLength,
+  Matches,
 } from 'class-validator';
-=======
-import { IsString, IsEmail, IsOptional, MaxLength, MinLength, Matches } from 'class-validator';
->>>>>>> 23202954326ed6932b777c1b7cea9b27029757ed
 
 export class CreateUserDto {
   @IsEmail()
@@ -22,7 +19,8 @@ export class CreateUserDto {
   @IsString()
   @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
   @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-+=/[\]\\|~`';])/, {
-    message: 'La contraseña debe incluir al menos una letra mayúscula, un número y un carácter especial',
+    message:
+      'La contraseña debe incluir al menos una letra mayúscula, un número y un carácter especial',
   })
   password: string;
 

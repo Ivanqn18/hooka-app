@@ -209,9 +209,6 @@ export class UsersService {
       return { following: true };
     }
   }
-<<<<<<< HEAD
-}
-=======
 
   async addReview(vendedorId: number, dto: AddSellerReviewDto) {
     const product = await this.prisma.product.findUnique({
@@ -224,7 +221,9 @@ export class UsersService {
       throw new BadRequestException('El producto no pertenece a este vendedor');
     }
     if (product.compradorId !== dto.compradorId) {
-      throw new BadRequestException('No tienes permiso para valorar a este vendedor por este producto');
+      throw new BadRequestException(
+        'No tienes permiso para valorar a este vendedor por este producto',
+      );
     }
     if (
       product.transaccionEstado !== 'COMPLETADO' &&
@@ -262,4 +261,3 @@ export class UsersService {
     });
   }
 }
->>>>>>> 23202954326ed6932b777c1b7cea9b27029757ed
