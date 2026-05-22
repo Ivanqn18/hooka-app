@@ -35,9 +35,10 @@ const storage = diskStorage({
 
 @Controller('marketplace')
 export class MarketplaceController {
-  constructor(private readonly marketplaceService: MarketplaceService) { }
+  constructor(private readonly marketplaceService: MarketplaceService) {}
 
   @Post('products')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor('imagen', {
       storage,
@@ -58,12 +59,13 @@ export class MarketplaceController {
   )
   createProduct(
     @Body() createProductDto: CreateMarketplaceDto,
+    @Req() req: any,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     const data = { ...createProductDto };
-    
-    // Convertir vendedorId a número (viene como string en multipart)
-    if (data.vendedorId) data.vendedorId = Number(data.vendedorId);
+
+    // Establecer vendedorId desde el token de autenticación
+    data.vendedorId = req.user.id;
     if (data.precio) data.precio = Number(data.precio);
     if (data.latitud) data.latitud = Number(data.latitud);
     if (data.longitud) data.longitud = Number(data.longitud);
@@ -71,9 +73,9 @@ export class MarketplaceController {
     if (file) {
       (data as any).imagenUrl = `/uploads/products/${file.filename}`;
     } else {
-        throw new BadRequestException('La imagen del producto es obligatoria');
+      throw new BadRequestException('La imagen del producto es obligatoria');
     }
-    
+
     return this.marketplaceService.createProduct(data as any);
   }
 
@@ -103,10 +105,7 @@ export class MarketplaceController {
 
   @Post('products/:id/confirm-receipt')
   @UseGuards(JwtAuthGuard)
-  confirmReceipt(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() req: any,
-  ) {
+  confirmReceipt(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
     return this.marketplaceService.confirmReceipt(id, req.user.id);
   }
 
@@ -132,4 +131,3 @@ export class MarketplaceController {
     return this.marketplaceService.resolveReport(id);
   }
 }
-

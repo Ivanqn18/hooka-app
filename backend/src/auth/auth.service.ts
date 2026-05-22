@@ -20,17 +20,18 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   private async generateTokens(user: any): Promise<TokenPair> {
     const payload = { sub: user.id, email: user.email };
-    
+
     const accessToken = await this.jwtService.signAsync(payload, {
       expiresIn: '7d',
     });
-    
+
     const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'secretKey',
+      secret:
+        process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'secretKey',
       expiresIn: '7d',
     });
 
@@ -87,9 +88,12 @@ export class AuthService {
 
     try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
-        secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'secretKey',
+        secret:
+          process.env.JWT_REFRESH_SECRET ||
+          process.env.JWT_SECRET ||
+          'secretKey',
       });
-      
+
       const user = await this.usersService.findOne(payload.sub);
       if (!user) {
         throw new UnauthorizedException('Usuario no encontrado');
@@ -123,4 +127,3 @@ export class AuthService {
     }
   }
 }
-

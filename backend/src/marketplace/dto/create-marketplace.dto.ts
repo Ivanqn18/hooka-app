@@ -1,11 +1,23 @@
-import { IsString, IsNumber, IsEnum, IsOptional, IsDecimal, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsOptional,
+  IsDecimal,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { ProductCategory, ProductStatus, TransactionStatus } from '@prisma/client';
+import {
+  ProductCategory,
+  ProductStatus,
+  TransactionStatus,
+} from '@prisma/client';
 
 export class CreateMarketplaceDto {
   @IsNumber()
+  @IsOptional()
   @Type(() => Number)
-  vendedorId: number;
+  vendedorId?: number;
 
   @IsString()
   @MaxLength(100)

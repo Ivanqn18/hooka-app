@@ -13,17 +13,19 @@ export class BoeScannerService {
   private readonly boeSearchBaseUrl =
     'https://www.boe.es/buscar/boe.php?campo%5B0%5D=ORI&dato%5B0%5D=Comisionado+para+el+Mercado+de+Tabacos&operador%5B0%5D=and&campo%5B1%5D=TIT&dato%5B1%5D=precios+de+las+labores+de+tabaco&operador%5B1%5D=and&campo%5B2%5D=DEM&dato%5B2%5D=&operador%5B2%5D=and&campo%5B3%5D=DOC&dato%5B3%5D=&operador%5B3%5D=and&campo%5B4%5D=NBO&dato%5B4%5D=&operador%5B4%5D=and&campo%5B5%5D=FPU&dato%5B5%5D=20240101%2D20261231&operador%5B5%5D=and&page_hits=50&sort_field%5B0%5D=FPU&sort_order%5B0%5D=desc&accion=Buscar';
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   @Cron('0 17 * * 5') // Se ejecuta todos los viernes a las 17:00
   async parseNewTobaccoPrices(): Promise<number> {
     let addedTastes = 0;
-    this.logger.log('Iniciando exploración del BOE basada en el buscador de resoluciones...');
+    this.logger.log(
+      'Iniciando exploración del BOE basada en el buscador de resoluciones...',
+    );
 
-     const browser = await puppeteer.launch({ 
+    const browser = await puppeteer.launch({
       headless: true,
       executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 
@@ -38,15 +40,21 @@ export class BoeScannerService {
         const link = $(el).attr('href');
         if (link && link.includes('doc.php?id=')) {
           const docId = link.split('id=')[1];
-          linksExtraidos.push(`https://www.boe.es/diario_boe/txt.php?id=${docId}`);
+          linksExtraidos.push(
+            `https://www.boe.es/diario_boe/txt.php?id=${docId}`,
+          );
         }
       });
 
-      this.logger.log(`Encontradas ${linksExtraidos.length} resoluciones en la primera página de búsqueda.`);
-      
+      this.logger.log(
+        `Encontradas ${linksExtraidos.length} resoluciones en la primera página de búsqueda.`,
+      );
+
       // Limitar a las 15 más recientes para optimizar rendimiento y evitar bloqueos WAF
       const linksToParse = linksExtraidos.slice(0, 15);
-      this.logger.log(`Procediendo a escanear las ${linksToParse.length} resoluciones más recientes...`);
+      this.logger.log(
+        `Procediendo a escanear las ${linksToParse.length} resoluciones más recientes...`,
+      );
 
       for (const urlTxt of linksToParse) {
         try {
@@ -121,19 +129,31 @@ export class BoeScannerService {
           let flavorGuess = fullName.substring(brandGuess.length).trim();
 
           const lowerName = fullName.toLowerCase();
-          if (lowerName.startsWith('sayes!') || lowerName.startsWith('say es!')) {
+          if (
+            lowerName.startsWith('sayes!') ||
+            lowerName.startsWith('say es!')
+          ) {
             brandGuess = 'SAYes!';
             flavorGuess = fullName.substring(fullName.indexOf('!') + 1).trim();
           } else if (lowerName.startsWith('al fakher')) {
             brandGuess = 'Al Fakher';
             flavorGuess = fullName.substring(9).trim();
-          } else if (lowerName.startsWith('187 tobacco') || lowerName.startsWith('187 strassenbande')) {
+          } else if (
+            lowerName.startsWith('187 tobacco') ||
+            lowerName.startsWith('187 strassenbande')
+          ) {
             brandGuess = '187 Tobacco';
-            flavorGuess = fullName.substring(words[0].length + words[1].length + 1).trim();
+            flavorGuess = fullName
+              .substring(words[0].length + words[1].length + 1)
+              .trim();
           } else if (lowerName.startsWith('aqua mentha')) {
             brandGuess = 'Aqua Mentha';
             flavorGuess = fullName.substring(11).trim();
-          } else if (words.length > 2 && (words[0].toLowerCase() === 'al' || words[0].toLowerCase() === 'hookah')) {
+          } else if (
+            words.length > 2 &&
+            (words[0].toLowerCase() === 'al' ||
+              words[0].toLowerCase() === 'hookah')
+          ) {
             brandGuess = `${words[0]} ${words[1]}`;
             flavorGuess = fullName.substring(brandGuess.length).trim();
           }
@@ -142,7 +162,12 @@ export class BoeScannerService {
             const priceStr = match[3].replace(',', '.');
             const price = parseFloat(priceStr);
 
-            const success = await this.injectToPrisma(brandGuess, flavorGuess, price, grams);
+            const success = await this.injectToPrisma(
+              brandGuess,
+              flavorGuess,
+              price,
+              grams,
+            );
             if (success) addedInThisBoe++;
           }
         }
@@ -192,7 +217,7 @@ export class BoeScannerService {
         const formatString = grams ? `${grams}g` : '50g';
 
         const existingFormat = await this.prisma.tasteFormat.findFirst({
-          where: { tasteId: existingTaste.id, formato: formatString }
+          where: { tasteId: existingTaste.id, formato: formatString },
         });
 
         if (!existingFormat) {
@@ -201,12 +226,12 @@ export class BoeScannerService {
               tasteId: existingTaste.id,
               formato: formatString,
               precio: price,
-            }
+            },
           });
         } else {
           await this.prisma.tasteFormat.update({
             where: { id: existingFormat.id },
-            data: { precio: price }
+            data: { precio: price },
           });
         }
       }

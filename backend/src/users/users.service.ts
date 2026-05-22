@@ -4,7 +4,7 @@ import { AddSellerReviewDto } from './dto/user-actions.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async findAll(limit: number, page: number) {
     const [users, total] = await this.prisma.$transaction([
@@ -54,9 +54,9 @@ export class UsersService {
         following: true,
         reviewsReceived: {
           include: { comprador: true },
-          orderBy: { createdAt: 'desc' }
-        }
-      }
+          orderBy: { createdAt: 'desc' },
+        },
+      },
     });
 
     if (user) {
@@ -65,8 +65,12 @@ export class UsersService {
 
       // Calculamos la puntuación media (rating) al vuelo
       const reviews = (user as any).reviewsReceived || [];
-      const totalScore = reviews.reduce((acc: number, rev: any) => acc + (rev.puntuacion || 0), 0);
-      (user as any).rating = reviews.length > 0 ? totalScore / reviews.length : 0;
+      const totalScore = reviews.reduce(
+        (acc: number, rev: any) => acc + (rev.puntuacion || 0),
+        0,
+      );
+      (user as any).rating =
+        reviews.length > 0 ? totalScore / reviews.length : 0;
       (user as any).reviewCount = reviews.length;
     }
     return user;
@@ -74,8 +78,12 @@ export class UsersService {
 
   async getUserStats(id: number) {
     try {
-      const totalMezclas = await this.prisma.mix.count({ where: { autorId: id } });
-      const productosActivos = await this.prisma.product.count({ where: { vendedorId: id } });
+      const totalMezclas = await this.prisma.mix.count({
+        where: { autorId: id },
+      });
+      const productosActivos = await this.prisma.product.count({
+        where: { vendedorId: id },
+      });
       return { totalMezclas, productosActivos };
     } catch (e) {
       return { totalMezclas: 0, productosActivos: 0 };
@@ -110,7 +118,8 @@ export class UsersService {
 
   async addStash(data: any) {
     const normalizedNombre = data.nombreTabaco.trim();
-    const normalizedMarca = data.marca && data.marca.trim() !== '' ? data.marca.trim() : null;
+    const normalizedMarca =
+      data.marca && data.marca.trim() !== '' ? data.marca.trim() : null;
 
     // Obtener los elementos actuales del stash del usuario
     const stashItems = await this.prisma.userStash.findMany({
@@ -118,9 +127,12 @@ export class UsersService {
     });
 
     // Buscar duplicados (sin importar mayúsculas/minúsculas ni espacios)
-    const duplicate = stashItems.find(item => 
-      item.nombreTabaco.trim().toLowerCase() === normalizedNombre.toLowerCase() &&
-      (item.marca || '').trim().toLowerCase() === (normalizedMarca || '').toLowerCase()
+    const duplicate = stashItems.find(
+      (item) =>
+        item.nombreTabaco.trim().toLowerCase() ===
+          normalizedNombre.toLowerCase() &&
+        (item.marca || '').trim().toLowerCase() ===
+          (normalizedMarca || '').toLowerCase(),
     );
 
     if (duplicate) {
@@ -128,13 +140,19 @@ export class UsersService {
         if (data.tipo === 'HAVE') {
           throw new BadRequestException('Este tabaco ya está en tu estantería');
         } else {
-          throw new BadRequestException('Este tabaco ya está en tu lista de deseos');
+          throw new BadRequestException(
+            'Este tabaco ya está en tu lista de deseos',
+          );
         }
       } else {
         if (data.tipo === 'HAVE') {
-          throw new BadRequestException('Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.');
+          throw new BadRequestException(
+            'Este tabaco ya está en tu lista de deseos. Quítalo de allí primero.',
+          );
         } else {
-          throw new BadRequestException('Este tabaco ya está en tu estantería. ¡Ya lo tienes!');
+          throw new BadRequestException(
+            'Este tabaco ya está en tu estantería. ¡Ya lo tienes!',
+          );
         }
       }
     }
@@ -203,7 +221,9 @@ export class UsersService {
       throw new BadRequestException('El producto no pertenece a este vendedor');
     }
     if (product.compradorId !== dto.compradorId) {
-      throw new BadRequestException('No tienes permiso para valorar a este vendedor por este producto');
+      throw new BadRequestException(
+        'No tienes permiso para valorar a este vendedor por este producto',
+      );
     }
     if (
       product.transaccionEstado !== 'COMPLETADO' &&

@@ -32,7 +32,7 @@ const avatarStorage = diskStorage({
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   @UseGuards(JwtAuthGuard, AdminGuard)
@@ -54,10 +54,7 @@ export class UsersController {
 
   @Put(':id')
   @UseGuards(JwtAuthGuard)
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: any,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: any) {
     return this.usersService.update(id, data);
   }
 
@@ -69,7 +66,9 @@ export class UsersController {
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
           return cb(
-            new BadRequestException('Solo se permiten imágenes jpg, jpeg, png, webp'),
+            new BadRequestException(
+              'Solo se permiten imágenes jpg, jpeg, png, webp',
+            ),
             false,
           );
         }
@@ -83,7 +82,8 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    if (!file) throw new BadRequestException('No se ha proporcionado ningún archivo');
+    if (!file)
+      throw new BadRequestException('No se ha proporcionado ningún archivo');
     const avatarUrl = `/uploads/avatars/${file.filename}`;
     return this.usersService.update(id, { avatarUrl });
   }
@@ -124,7 +124,6 @@ export class UsersController {
   ) {
     return this.usersService.toggleFollow(followerId, followingId);
   }
-
   @Post(':id/reviews')
   @UseGuards(JwtAuthGuard)
   addReview(

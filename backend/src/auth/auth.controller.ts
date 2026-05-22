@@ -37,7 +37,7 @@ function getCookieOptions(maxAge: number) {
     httpOnly: true,
     path: '/',
     maxAge,
-    sameSite: 'lax' as 'lax',
+    sameSite: 'lax' as const,
     secure: true, // Always true - browsers reject secure cookies on HTTP anyway
   };
 }
@@ -46,7 +46,7 @@ function getCookieOptions(maxAge: number) {
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   private setAuthCookies(
     res: express.Response,
@@ -61,14 +61,14 @@ export class AuthController {
     res.clearCookie('token', {
       httpOnly: true,
       path: '/',
-      sameSite: 'lax' as 'lax',
-      secure: true
+      sameSite: 'lax' as const,
+      secure: true,
     });
     res.clearCookie('refresh_token', {
       httpOnly: true,
       path: '/',
-      sameSite: 'lax' as 'lax',
-      secure: true
+      sameSite: 'lax' as const,
+      secure: true,
     });
   }
 

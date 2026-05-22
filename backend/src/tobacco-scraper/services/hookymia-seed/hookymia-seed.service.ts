@@ -5,7 +5,7 @@ import { PrismaService } from '../../../prisma/prisma.service';
 export class HookymiaSeedService {
   private readonly logger = new Logger(HookymiaSeedService.name);
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async scrapeAndSeed() {
     this.logger.log(
@@ -15,7 +15,7 @@ export class HookymiaSeedService {
     const seedData = [
       {
         brand: 'Adalya',
-        price: 3.30,
+        price: 3.3,
         flavors: [
           'Love 66',
           'Lady Killer',
@@ -95,7 +95,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Al Fakher',
-        price: 3.50,
+        price: 3.5,
         flavors: [
           'Double Apple',
           'Double Apple Mint',
@@ -236,7 +236,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Darkside',
-        price: 4.50,
+        price: 4.5,
         flavors: [
           'Supernova',
           'Falling Star',
@@ -940,7 +940,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Blackburn',
-        price: 5.00,
+        price: 5.0,
         flavors: [
           'Lemon Shock',
           'Peach Killer',
@@ -996,7 +996,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Blaze',
-        price: 5.50,
+        price: 5.5,
         flavors: [
           'Lym Hype',
           'Preach',
@@ -1018,7 +1018,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Blyat',
-        price: 6.00,
+        price: 6.0,
         flavors: [
           'Clipporizz',
           'Cono Verde',
@@ -1029,7 +1029,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Anda',
-        price: 5.50,
+        price: 5.5,
         flavors: [
           'Temptation',
           'Tiki Taka',
@@ -1047,7 +1047,7 @@ export class HookymiaSeedService {
       },
       {
         brand: 'Dozaj Black',
-        price: 5.00,
+        price: 5.0,
         flavors: [
           'Black Double Apple',
           'Black Grape',
@@ -1105,36 +1105,117 @@ export class HookymiaSeedService {
 
         // Heurística de formato y precio base oficial en España (BOE/General)
         let explicitFormat = '50g';
-        let explicitPrice = (item as any).price || 3.50;
+        let explicitPrice = (item as any).price || 3.5;
 
         switch (item.brand) {
-          case 'SAYes!': explicitFormat = '100g'; explicitPrice = 11.95; break;
-          case 'Blackburn': explicitFormat = '100g'; explicitPrice = 14.95; break;
-          case 'Darkside': explicitFormat = '30g'; explicitPrice = 4.50; break;
-          case 'MustHave': explicitFormat = '30g'; explicitPrice = 4.50; break;
-          case 'Element': explicitFormat = '30g'; explicitPrice = 4.50; break;
-          case 'Blaze': explicitFormat = '50g'; explicitPrice = 5.70; break;
-          case 'Anda': explicitFormat = '50g'; explicitPrice = 4.00; break;
-          case 'Blyat': explicitFormat = '50g'; explicitPrice = 5.50; break;
-          case 'Hookain': explicitFormat = '50g'; explicitPrice = 3.95; break;
-          case '187 Tobacco': explicitFormat = '50g'; explicitPrice = 3.95; break;
-          case 'Starbuzz': explicitFormat = '100g'; explicitPrice = 12.50; break;
-          case 'Fumari': explicitFormat = '100g'; explicitPrice = 11.50; break;
-          case 'Tangiers': explicitFormat = '250g'; explicitPrice = 25.00; break;
-          case 'Nameless': explicitFormat = '50g'; explicitPrice = 4.00; break;
-          case 'Serbetli': explicitFormat = '50g'; explicitPrice = 3.30; break;
-          case 'Zomo': explicitFormat = '50g'; explicitPrice = 3.30; break;
-          case 'Revoshi': explicitFormat = '50g'; explicitPrice = 3.30; break;
-          case 'Dozaj': explicitFormat = '50g'; explicitPrice = 3.50; break;
-          case 'Dozaj Black': explicitFormat = '50g'; explicitPrice = 3.80; break;
-          case 'Overdozz': explicitFormat = '50g'; explicitPrice = 3.60; break;
-          case 'Taboo': explicitFormat = '50g'; explicitPrice = 3.30; break;
-          case 'Adalya': explicitFormat = '50g'; explicitPrice = 3.30; break;
-          case 'Al Fakher': explicitFormat = '50g'; explicitPrice = 3.50; break;
-          case 'Al Waha': explicitFormat = '50g'; explicitPrice = 3.20; break;
-          case 'Azure': explicitFormat = '50g'; explicitPrice = 4.50; break;
-          case 'Social Smoke': explicitFormat = '50g'; explicitPrice = 10.00; break;
-          case 'XRacher': explicitFormat = '50g'; explicitPrice = 3.80; break;
+          case 'SAYes!':
+            explicitFormat = '100g';
+            explicitPrice = 11.95;
+            break;
+          case 'Blackburn':
+            explicitFormat = '100g';
+            explicitPrice = 14.95;
+            break;
+          case 'Darkside':
+            explicitFormat = '30g';
+            explicitPrice = 4.5;
+            break;
+          case 'MustHave':
+            explicitFormat = '30g';
+            explicitPrice = 4.5;
+            break;
+          case 'Element':
+            explicitFormat = '30g';
+            explicitPrice = 4.5;
+            break;
+          case 'Blaze':
+            explicitFormat = '50g';
+            explicitPrice = 5.7;
+            break;
+          case 'Anda':
+            explicitFormat = '50g';
+            explicitPrice = 4.0;
+            break;
+          case 'Blyat':
+            explicitFormat = '50g';
+            explicitPrice = 5.5;
+            break;
+          case 'Hookain':
+            explicitFormat = '50g';
+            explicitPrice = 3.95;
+            break;
+          case '187 Tobacco':
+            explicitFormat = '50g';
+            explicitPrice = 3.95;
+            break;
+          case 'Starbuzz':
+            explicitFormat = '100g';
+            explicitPrice = 12.5;
+            break;
+          case 'Fumari':
+            explicitFormat = '100g';
+            explicitPrice = 11.5;
+            break;
+          case 'Tangiers':
+            explicitFormat = '250g';
+            explicitPrice = 25.0;
+            break;
+          case 'Nameless':
+            explicitFormat = '50g';
+            explicitPrice = 4.0;
+            break;
+          case 'Serbetli':
+            explicitFormat = '50g';
+            explicitPrice = 3.3;
+            break;
+          case 'Zomo':
+            explicitFormat = '50g';
+            explicitPrice = 3.3;
+            break;
+          case 'Revoshi':
+            explicitFormat = '50g';
+            explicitPrice = 3.3;
+            break;
+          case 'Dozaj':
+            explicitFormat = '50g';
+            explicitPrice = 3.5;
+            break;
+          case 'Dozaj Black':
+            explicitFormat = '50g';
+            explicitPrice = 3.8;
+            break;
+          case 'Overdozz':
+            explicitFormat = '50g';
+            explicitPrice = 3.6;
+            break;
+          case 'Taboo':
+            explicitFormat = '50g';
+            explicitPrice = 3.3;
+            break;
+          case 'Adalya':
+            explicitFormat = '50g';
+            explicitPrice = 3.3;
+            break;
+          case 'Al Fakher':
+            explicitFormat = '50g';
+            explicitPrice = 3.5;
+            break;
+          case 'Al Waha':
+            explicitFormat = '50g';
+            explicitPrice = 3.2;
+            break;
+          case 'Azure':
+            explicitFormat = '50g';
+            explicitPrice = 4.5;
+            break;
+          case 'Social Smoke':
+            explicitFormat = '50g';
+            explicitPrice = 10.0;
+            break;
+          case 'XRacher':
+            explicitFormat = '50g';
+            explicitPrice = 3.8;
+            break;
         }
 
         if (!existingTaste) {
@@ -1152,13 +1233,13 @@ export class HookymiaSeedService {
               tasteId: newTaste.id,
               formato: explicitFormat,
               precio: explicitPrice,
-            }
+            },
           });
           addedTastes++;
         } else {
           // Check if format exists
           const existingFormat = await this.prisma.tasteFormat.findFirst({
-            where: { tasteId: existingTaste.id, formato: explicitFormat }
+            where: { tasteId: existingTaste.id, formato: explicitFormat },
           });
 
           if (!existingFormat) {
@@ -1167,12 +1248,12 @@ export class HookymiaSeedService {
                 tasteId: existingTaste.id,
                 formato: explicitFormat,
                 precio: explicitPrice,
-              }
+              },
             });
           } else {
             await this.prisma.tasteFormat.update({
               where: { id: existingFormat.id },
-              data: { precio: explicitPrice }
+              data: { precio: explicitPrice },
             });
           }
         }

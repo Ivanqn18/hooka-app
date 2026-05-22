@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Delete, Query, Body, Param, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Query,
+  Body,
+  Param,
+  ParseIntPipe,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HookymiaSeedService } from './services/hookymia-seed/hookymia-seed.service';
 import { BoeScannerService } from './services/boe-scanner/boe-scanner.service';
@@ -11,7 +21,7 @@ export class TobaccoScraperController {
     private readonly seedService: HookymiaSeedService,
     private readonly boeScanner: BoeScannerService,
     private readonly xmlCatalog: XmlCatalogService,
-  ) { }
+  ) {}
 
   // GET /tobaccos (Endpoint para la App Web Frontend -> El catalogo, con paginación)
   @Get()
@@ -34,8 +44,8 @@ export class TobaccoScraperController {
         where,
         include: {
           tastes: {
-            include: { formats: true }
-          }
+            include: { formats: true },
+          },
         },
         orderBy: { name: 'asc' },
         skip,
@@ -141,7 +151,9 @@ export class TobaccoScraperController {
     @Body('descripcion') descripcion?: string,
   ) {
     if (!name || !brandId) {
-      throw new BadRequestException('El nombre del sabor y el brandId son requeridos');
+      throw new BadRequestException(
+        'El nombre del sabor y el brandId son requeridos',
+      );
     }
     return this.prisma.taste.create({
       data: {
