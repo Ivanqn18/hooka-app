@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsEnum, IsOptional, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsOptional,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { StashType } from '@prisma/client';
 

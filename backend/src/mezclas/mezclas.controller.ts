@@ -30,11 +30,10 @@ const storage = diskStorage({
 
 @Controller('mezclas')
 export class MezclasController {
-  constructor(private readonly mezclasService: MezclasService) { }
+  constructor(private readonly mezclasService: MezclasService) {}
 
   @Post()
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -50,19 +49,22 @@ export class MezclasController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   create(
     @Body() createMezclaDto: CreateMezclaDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     // Parsear campos JSON que vienen como string en multipart/form-data
-    const ingredientes = typeof (createMezclaDto as any).ingredientes === 'string'
-      ? JSON.parse((createMezclaDto as any).ingredientes)
-      : createMezclaDto.ingredientes;
+    const ingredientes =
+      typeof (createMezclaDto as any).ingredientes === 'string'
+        ? JSON.parse((createMezclaDto as any).ingredientes)
+        : createMezclaDto.ingredientes;
 
-    const tagIds = typeof (createMezclaDto as any).tagIds === 'string'
-      ? JSON.parse((createMezclaDto as any).tagIds)
-      : (createMezclaDto.tagIds ?? []);
+    const tagIds =
+      typeof (createMezclaDto as any).tagIds === 'string'
+        ? JSON.parse((createMezclaDto as any).tagIds)
+        : (createMezclaDto.tagIds ?? []);
 
     const data: any = {
       ...createMezclaDto,
@@ -79,7 +81,6 @@ export class MezclasController {
 
   @Put(':id')
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -95,19 +96,22 @@ export class MezclasController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateMezclaDto: any,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    const rawIngredientes = typeof updateMezclaDto.ingredientes === 'string'
-      ? JSON.parse(updateMezclaDto.ingredientes)
-      : updateMezclaDto.ingredientes;
+    const rawIngredientes =
+      typeof updateMezclaDto.ingredientes === 'string'
+        ? JSON.parse(updateMezclaDto.ingredientes)
+        : updateMezclaDto.ingredientes;
 
-    const rawTagIds = typeof updateMezclaDto.tagIds === 'string'
-      ? JSON.parse(updateMezclaDto.tagIds)
-      : (updateMezclaDto.tagIds ?? []);
+    const rawTagIds =
+      typeof updateMezclaDto.tagIds === 'string'
+        ? JSON.parse(updateMezclaDto.tagIds)
+        : (updateMezclaDto.tagIds ?? []);
 
     const ingredientes = Array.isArray(rawIngredientes)
       ? rawIngredientes.map((ing: any) => ({
@@ -124,7 +128,7 @@ export class MezclasController {
       ingredientes,
       tagIds,
     };
-    
+
     // Convertir autorId a numero (viene como string en form-data)
     if (data.autorId !== undefined) {
       data.autorId = Number(data.autorId);
@@ -221,4 +225,3 @@ export class MezclasController {
     return this.mezclasService.remove(id);
   }
 }
-

@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class MezclasService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createMezclaDto: any) {
     const { ingredientes, tagIds, ...datos } = createMezclaDto;
@@ -16,10 +16,10 @@ export class MezclasService {
         },
         ...(tagIds && tagIds.length > 0
           ? {
-            tags: {
-              create: tagIds.map((tagId: number) => ({ tagId })),
-            },
-          }
+              tags: {
+                create: tagIds.map((tagId: number) => ({ tagId })),
+              },
+            }
           : {}),
       },
       include: { ingredients: true, tags: { include: { tag: true } } },
@@ -48,16 +48,15 @@ export class MezclasService {
         },
         ...(tagIds && tagIds.length > 0
           ? {
-            tags: {
-              create: tagIds.map((tagId: number) => ({ tagId })),
-            },
-          }
+              tags: {
+                create: tagIds.map((tagId: number) => ({ tagId })),
+              },
+            }
           : {}),
       },
       include: { ingredients: true, tags: { include: { tag: true } } },
     });
   }
-
 
   async getMezclaDeLaSemana() {
     const hace30Dias = new Date();

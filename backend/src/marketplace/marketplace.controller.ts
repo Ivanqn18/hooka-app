@@ -31,11 +31,10 @@ const storage = diskStorage({
 
 @Controller('marketplace')
 export class MarketplaceController {
-  constructor(private readonly marketplaceService: MarketplaceService) { }
+  constructor(private readonly marketplaceService: MarketplaceService) {}
 
   @Post('products')
   @UseInterceptors(
-    ImageCompressionInterceptor,
     FileInterceptor('imagen', {
       storage,
       fileFilter: (req, file, cb) => {
@@ -51,13 +50,14 @@ export class MarketplaceController {
       },
       limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB LIMIT
     }),
+    ImageCompressionInterceptor,
   )
   createProduct(
     @Body() createProductDto: CreateMarketplaceDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     const data = { ...createProductDto };
-    
+
     // Convertir vendedorId a número (viene como string en multipart)
     if (data.vendedorId) data.vendedorId = Number(data.vendedorId);
     if (data.precio) data.precio = Number(data.precio);
@@ -67,9 +67,9 @@ export class MarketplaceController {
     if (file) {
       (data as any).imagenUrl = `/uploads/products/${file.filename}`;
     } else {
-        throw new BadRequestException('La imagen del producto es obligatoria');
+      throw new BadRequestException('La imagen del producto es obligatoria');
     }
-    
+
     return this.marketplaceService.createProduct(data as any);
   }
 
@@ -97,4 +97,3 @@ export class MarketplaceController {
     return this.marketplaceService.removeProduct(id);
   }
 }
-

@@ -10,6 +10,11 @@ import { XmlCatalogService } from './services/xml-catalog/xml-catalog.service';
 @Module({
   imports: [ScheduleModule.forRoot(), PrismaModule],
   controllers: [TobaccoScraperController],
-  providers: [HookymiaSeedService, BoeScannerService, TobaccoCronService, XmlCatalogService],
+  providers: [
+    HookymiaSeedService,
+    BoeScannerService,
+    TobaccoCronService,
+    XmlCatalogService,
+  ],
 })
 export class TobaccoScraperModule {}

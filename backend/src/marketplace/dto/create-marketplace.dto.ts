@@ -1,4 +1,11 @@
-import { IsString, IsNumber, IsEnum, IsOptional, IsDecimal, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsOptional,
+  IsDecimal,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductCategory, ProductStatus } from '@prisma/client';
 

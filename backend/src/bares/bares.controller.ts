@@ -57,4 +57,3 @@ export class BaresController {
     return this.baresService.remove(id);
   }
 }
-

@@ -8,4 +8,4 @@ import { PrismaModule } from '../prisma/prisma.module';
   controllers: [MezclasController],
   providers: [MezclasService],
 })
-export class MezclasModule { }
+export class MezclasModule {}

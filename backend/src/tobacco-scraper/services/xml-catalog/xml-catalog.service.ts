@@ -36,10 +36,12 @@ export class XmlCatalogService {
       path.resolve(__dirname, '..', '..', '..', '..', 'tabacosxml.xml'),
     ];
 
-    const xmlPath = candidates.find(p => fs.existsSync(p)) ?? '';
+    const xmlPath = candidates.find((p) => fs.existsSync(p)) ?? '';
 
     if (!xmlPath) {
-      this.logger.warn(`tabacosxml.xml no encontrado. Rutas probadas: ${candidates.join(', ')}`);
+      this.logger.warn(
+        `tabacosxml.xml no encontrado. Rutas probadas: ${candidates.join(', ')}`,
+      );
       return [];
     }
 
@@ -66,7 +68,11 @@ export class XmlCatalogService {
     this.cachedCatalog = brands
       .filter((b: any) => b.name)
       .map((b: any) => {
-        const products: any[] = Array.isArray(b.product) ? b.product : b.product ? [b.product] : [];
+        const products: any[] = Array.isArray(b.product)
+          ? b.product
+          : b.product
+            ? [b.product]
+            : [];
         const tasteMap = new Map<string, XmlTaste>();
 
         products.forEach((p: any) => {
@@ -85,11 +91,12 @@ export class XmlCatalogService {
           tasteMap.get(flavorName)!.formats.push({ grams, price });
         });
 
-        const tastes: XmlTaste[] = Array.from(tasteMap.values())
-          .sort((a, b) => a.name.localeCompare(b.name));
+        const tastes: XmlTaste[] = Array.from(tasteMap.values()).sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
 
         // Ordenar formatos por gramos (ascendente)
-        tastes.forEach(t => {
+        tastes.forEach((t) => {
           t.formats.sort((a, b) => {
             const ga = parseInt(a.grams) || 0;
             const gb = parseInt(b.grams) || 0;
@@ -107,7 +114,7 @@ export class XmlCatalogService {
 
     this.logger.log(
       `XML cargado: ${this.cachedCatalog.length} marcas, ` +
-      `${this.cachedCatalog.reduce((acc, b) => acc + b.tastes.length, 0)} sabores.`,
+        `${this.cachedCatalog.reduce((acc, b) => acc + b.tastes.length, 0)} sabores.`,
     );
 
     return this.cachedCatalog;

@@ -13,11 +13,18 @@ import { Server, Socket } from 'socket.io';
   path: '/socket.io',
   cors: {
     // Función dinámica para que lea FRONTEND_URL cuando ya está disponible el entorno
-    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    origin: (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void,
+    ) => {
       const allowed = process.env.FRONTEND_URL
         ? [process.env.FRONTEND_URL, 'http://localhost:5173']
         : true; // en dev aceptamos cualquier origen
-      if (allowed === true || !origin || (Array.isArray(allowed) && allowed.includes(origin))) {
+      if (
+        allowed === true ||
+        !origin ||
+        (Array.isArray(allowed) && allowed.includes(origin))
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`Origin ${origin} not allowed by Socket.IO CORS`));
