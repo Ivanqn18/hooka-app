@@ -111,6 +111,17 @@ export default function ProductDetail() {
         }
     };
 
+    const handleUpdateStatus = async (nuevoEstado: string) => {
+        try {
+            await api.patch(`/marketplace/products/${id}`, { estado: nuevoEstado });
+            setProduct((prev: any) => ({ ...prev, estado: nuevoEstado }));
+            toast.success(`Producto marcado como ${nuevoEstado}`);
+        } catch (e) {
+            console.error(e);
+            toast.error("Error al actualizar el estado del producto");
+        }
+    };
+
     if (loading) {
         return (
             <div className="py-20 flex flex-col items-center justify-center gap-4 animate-reveal-up text-center">
@@ -157,7 +168,11 @@ export default function ProductDetail() {
                     </div>
                     <div className="absolute top-6 right-6 md:top-8 md:right-8">
                         <div className={`px-3 py-1.5 md:px-4 md:py-2 glass-panel rounded-xl md:rounded-2xl border-white/10 shadow-3xl text-[10px] font-black uppercase tracking-widest ${
-                            product.estado === 'DISPONIBLE' ? 'text-emerald-400' : 'text-shisha-text-dim'
+                            product.estado === 'DISPONIBLE' 
+                                ? 'text-emerald-400' 
+                                : product.estado === 'RESERVADO' 
+                                ? 'text-amber-400' 
+                                : 'text-rose-500'
                         }`}>
                             {product.estado}
                         </div>
@@ -202,13 +217,38 @@ export default function ProductDetail() {
                             </div>
                         </div>
                         
-                        <button 
-                            onClick={handleContactSeller} 
-                            className="w-full md:w-auto px-6 md:px-10 py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-3xl shadow-2xl shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group"
-                        >
-                            <MessageCircle className="w-5 h-5" />
-                            <span className="text-sm md:text-lg">Contactar Vendedor</span>
-                        </button>
+                        {product.vendedorId === currentUserId ? (
+                            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim">Estado del producto:</span>
+                                <div className="flex rounded-xl bg-white/5 p-1 border border-white/5 w-full sm:w-auto">
+                                    {(['DISPONIBLE', 'RESERVADO', 'VENDIDO'] as const).map((est) => (
+                                        <button
+                                            key={est}
+                                            onClick={() => handleUpdateStatus(est)}
+                                            className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+                                                product.estado === est
+                                                    ? est === 'DISPONIBLE'
+                                                        ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
+                                                        : est === 'RESERVADO'
+                                                        ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+                                                        : 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+                                                    : 'text-shisha-text-dim hover:text-white hover:bg-white/5'
+                                            }`}
+                                        >
+                                            {est}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <button 
+                                onClick={handleContactSeller} 
+                                className="w-full md:w-auto px-6 md:px-10 py-4 md:py-5 bg-shisha-ember hover:bg-shisha-ember-deep text-white font-black rounded-xl md:rounded-3xl shadow-2xl shadow-shisha-ember/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group"
+                            >
+                                <MessageCircle className="w-5 h-5" />
+                                <span className="text-sm md:text-lg">Contactar Vendedor</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
