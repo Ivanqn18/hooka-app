@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { Trash2, Plus, Tag, Pipette, Package, Star } from 'lucide-react';
 import api from '../services/api';
+import GlassSelect from './GlassSelect';
 
 interface XmlFormat {
     grams: string;
@@ -219,14 +220,14 @@ export default function StashTab() {
 
                     {/* Tipo */}
                     <div className="md:w-48">
-                        <select
+                        <GlassSelect
                             value={tipo}
-                            onChange={e => setTipo(e.target.value)}
-                            className="w-full px-4 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-bold focus:border-shisha-ember/50 outline-none transition-all appearance-none cursor-pointer"
-                        >
-                            <option value="HAVE" className="bg-shisha-bg text-black md:text-white">📦 Lo tengo</option>
-                            <option value="WANT" className="bg-shisha-bg text-black md:text-white">⭐ Lo quiero</option>
-                        </select>
+                            onChange={setTipo}
+                            options={[
+                                { value: 'HAVE', label: 'Lo tengo', icon: <span className="mr-1">📦</span> },
+                                { value: 'WANT', label: 'Lo quiero', icon: <span className="mr-1">⭐</span> }
+                            ]}
+                        />
                     </div>
 
                     {/* Botón */}

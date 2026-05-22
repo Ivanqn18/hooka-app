@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { MapPin, Navigation, Tag, Euro, ShoppingBag, Sparkles, AlertCircle } from 'lucide-react';
 import api from '../services/api';
+import GlassSelect from '../components/GlassSelect';
 
 export default function CreateProduct() {
     const navigate = useNavigate();
@@ -186,16 +187,15 @@ export default function CreateProduct() {
 
                     <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1">Categoría</label>
-                        <div className="relative">
-                            <select 
-                                value={formData.categoria} 
-                                onChange={e => setFormData({ ...formData, categoria: e.target.value })} 
-                                className="w-full px-5 md:px-6 py-3.5 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-bold appearance-none focus:border-shisha-ember/50 outline-none transition-all cursor-pointer text-sm md:text-base"
-                            >
-                                {categories.map(c => <option key={c} value={c} className="bg-shisha-surface text-black md:text-white">{c.replace('_', ' ')}</option>)}
-                            </select>
-                            <Tag className="absolute right-5 md:right-6 top-1/2 -translate-y-1/2 text-shisha-text-dim pointer-events-none" size={16} />
-                        </div>
+                        <GlassSelect 
+                            value={formData.categoria} 
+                            onChange={val => setFormData({ ...formData, categoria: val })} 
+                            icon={<Tag size={16} />}
+                            options={categories.map(c => ({
+                                value: c,
+                                label: c.replace('_', ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')
+                            }))}
+                        />
                     </div>
                 </div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import GlassSelect from '../components/GlassSelect';
 import { 
     Flame, Plus, Tag, MessageSquare, Info, 
     Sparkles, Trash2, Sliders, Pipette,
@@ -235,16 +236,17 @@ export default function CreateMezcla() {
                             <label className="text-[10px] font-black uppercase tracking-[0.2em] text-shisha-ember ml-1 flex items-center gap-2">
                                 <Flame size={14} /> Cazoleta Recomendada
                             </label>
-                            <select 
+                            <GlassSelect 
                                 value={formData.cazoletaRecomendada} 
-                                onChange={e => setFormData({ ...formData, cazoletaRecomendada: e.target.value })} 
-                                className="w-full px-8 py-5 rounded-2xl bg-white/5 border border-white/5 text-white font-bold focus:border-shisha-ember/50 outline-none transition-all appearance-none cursor-pointer"
-                            >
-                                <option value="" className="bg-shisha-bg text-shisha-text-dim">Seleccionar tipo...</option>
-                                <option value="Phunnel" className="bg-shisha-bg text-white">Phunnel</option>
-                                <option value="Tradi" className="bg-shisha-bg text-white">Tradi</option>
-                                <option value="Killer" className="bg-shisha-bg text-white">Killer</option>
-                            </select>
+                                onChange={val => setFormData({ ...formData, cazoletaRecomendada: val })}
+                                placeholder="Seleccionar tipo..."
+                                options={[
+                                    { value: '', label: 'Seleccionar tipo...' },
+                                    { value: 'Phunnel', label: 'Phunnel' },
+                                    { value: 'Tradi', label: 'Tradi' },
+                                    { value: 'Killer', label: 'Killer' }
+                                ]}
+                            />
                         </div>
                     </div>
 
