@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 import { Trash2, Plus, Tag, Pipette, Package, Star } from 'lucide-react';
 import api from '../services/api';
 import GlassSelect from './GlassSelect';
@@ -23,6 +24,7 @@ interface XmlBrand {
 export default function StashTab() {
     const { user, logout } = useAuth();
     const toast = useToast();
+    const { confirm } = useConfirm();
     const [stash, setStash] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [xmlBrands, setXmlBrands] = useState<XmlBrand[]>([]);
@@ -115,10 +117,23 @@ export default function StashTab() {
     };
 
     const handleRemove = async (id: number) => {
+        const confirmed = await confirm({
+            title: 'Quitar del Almacén',
+            message: '¿Estás seguro de que deseas quitar este tabaco de tu almacén?',
+            confirmText: 'Quitar',
+            cancelText: 'Cancelar',
+            type: 'danger'
+        });
+        if (!confirmed) return;
+
         try {
             await api.delete(`/users/stash/${id}`);
             setStash(prev => prev.filter(item => item.id !== id));
-        } catch (error) { console.error(error); }
+            toast.success('Tabaco quitado del almacén');
+        } catch (error) { 
+            console.error(error); 
+            toast.error('Error al quitar el tabaco');
+        }
     };
 
     const estanteria = stash.filter(item => item.tipo === 'HAVE');
