@@ -73,10 +73,10 @@ export default function Profile() {
             .catch(err => console.error("Error fetching user mixes:", err));
 
         // Obtener los productos del usuario
-        api.get('/marketplace/products', { params: { limit: 100 } })
+        api.get('/marketplace/products', { params: { limit: 100, vendedorId: user.id } })
             .then((res: any) => {
                 const allProducts = Array.isArray(res) ? res : res.data || [];
-                setUserProducts(allProducts.filter((p: any) => p.vendedorId === user.id));
+                setUserProducts(allProducts);
             })
             .catch(err => console.error("Error fetching user products:", err));
 

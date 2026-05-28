@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -6,6 +6,14 @@ export class ChatService {
   constructor(private prisma: PrismaService) {}
 
   async getOrCreateChat(productoId: number, interesadoId: number) {
+    const product = await this.prisma.product.findUnique({
+      where: { id: productoId },
+    });
+
+    if (product && product.estado === 'VENDIDO') {
+      throw new ForbiddenException('Este producto ya ha sido vendido y no admite nuevos chats.');
+    }
+
     let chat = await this.prisma.chat.findFirst({
       where: { productoId, interesadoId },
       include: {
@@ -74,6 +82,15 @@ export class ChatService {
   }
 
   async createMessage(chatId: number, emisorId: number, texto: string) {
+    const chat = await this.prisma.chat.findUnique({
+      where: { id: chatId },
+      include: { product: true },
+    });
+
+    if (chat && chat.product && chat.product.estado === 'VENDIDO') {
+      throw new ForbiddenException('El chat está cerrado porque el producto ya ha sido vendido.');
+    }
+
     const message = await this.prisma.message.create({
       data: { chatId, emisorId, texto },
       include: { sender: { select: { id: true, nombre: true } } },
@@ -82,11 +99,6 @@ export class ChatService {
     await this.prisma.chat.update({
       where: { id: chatId },
       data: { updatedAt: new Date() },
-    });
-
-    const chat = await this.prisma.chat.findUnique({
-      where: { id: chatId },
-      include: { product: { select: { vendedorId: true } } },
     });
 
     if (chat && chat.product && chat.product.vendedorId) {

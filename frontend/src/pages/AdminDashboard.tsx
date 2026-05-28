@@ -235,7 +235,7 @@ export default function AdminDashboard() {
             .then((res: any) => setMezclas(extractData(res)))
             .catch(err => console.error("Error fetching mezclas:", err));
 
-        api.get('/marketplace/products', { params: { limit: 100 } })
+        api.get('/marketplace/products', { params: { limit: 100, all: 'true' } })
             .then((res: any) => setProductos(extractData(res)))
             .catch(err => console.error("Error fetching products:", err));
 

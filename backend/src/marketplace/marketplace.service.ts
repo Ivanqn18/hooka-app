@@ -39,11 +39,34 @@ export class MarketplaceService {
     const limit = rawLimit ? parseInt(rawLimit, 10) : 12;
     const skip = (page - 1) * limit;
 
+    // Procesar criterios de búsqueda para Prisma
+    const whereClause: any = {};
+
+    if (restQuery.vendedorId) {
+      whereClause.vendedorId = parseInt(restQuery.vendedorId, 10);
+    }
+    if (restQuery.categoria) {
+      whereClause.categoria = restQuery.categoria;
+    }
+    if (restQuery.estado) {
+      whereClause.estado = restQuery.estado;
+    } else if (!restQuery.vendedorId && restQuery.all !== 'true' && restQuery.all !== true) {
+      // Excluir productos vendidos por defecto si no es vista de vendedor o admin
+      whereClause.estado = { not: 'VENDIDO' };
+    }
+
+    // Mantener otros filtros adicionales en la consulta si los hubiera
+    for (const key of Object.keys(restQuery)) {
+      if (key !== 'vendedorId' && key !== 'categoria' && key !== 'estado' && key !== 'all') {
+        whereClause[key] = restQuery[key];
+      }
+    }
+
     // Si hay filtro geográfico, necesitamos todos los resultados primero
     // para filtrar por Haversine, luego paginar manualmente
     if (lat && lng && radius) {
       let products = await this.prisma.product.findMany({
-        where: restQuery,
+        where: whereClause,
         include: {
           seller: {
             select: {
@@ -89,7 +112,7 @@ export class MarketplaceService {
     // Sin filtro geográfico: paginación directa con Prisma
     const [products, total] = await Promise.all([
       this.prisma.product.findMany({
-        where: restQuery,
+        where: whereClause,
         include: {
           seller: {
             select: {
@@ -104,7 +127,7 @@ export class MarketplaceService {
         skip,
         take: limit,
       }),
-      this.prisma.product.count({ where: restQuery }),
+      this.prisma.product.count({ where: whereClause }),
     ]);
 
     const data = products.map((p) => this.addSellerRating(p));

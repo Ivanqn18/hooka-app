@@ -408,30 +408,41 @@ export default function Chat() {
                 </div>
 
                 {/* Input Bar */}
-                <div className="px-3 md:px-8 py-3 md:py-6 border-t border-white/5 bg-white/[0.02] shrink-0 space-y-3 md:space-y-4">
-                    <button 
-                        onClick={handleOffer} 
-                        className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white border border-amber-500/20 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all group shadow-lg active:scale-95"
-                    >
-                        <Tag size={12} className="group-hover:rotate-12 transition-transform" />
-                        Oferta Comercial
-                    </button>
-
-                    <form onSubmit={handleSend} className="flex gap-2 md:gap-3">
-                        <input
-                            value={text}
-                            onChange={e => setText(e.target.value)}
-                            placeholder="Mensaje..."
-                            className="flex-1 px-3.5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base"
-                        />
+                {chatInfo?.product?.estado === 'VENDIDO' ? (
+                    <div className="px-4 md:px-8 py-6 border-t border-white/5 bg-rose-500/5 text-center flex flex-col items-center justify-center gap-2 shrink-0 animate-reveal-up">
+                        <span className="flex items-center gap-2 text-rose-400 font-black text-sm uppercase tracking-wider">
+                            <X size={16} className="animate-pulse" /> Este chat está cerrado
+                        </span>
+                        <p className="text-xs text-shisha-text-dim max-w-md font-medium">
+                            El producto asociado a esta negociación ya ha sido vendido. No se pueden enviar más mensajes en este canal.
+                        </p>
+                    </div>
+                ) : (
+                    <div className="px-3 md:px-8 py-3 md:py-6 border-t border-white/5 bg-white/[0.02] shrink-0 space-y-3 md:space-y-4">
                         <button 
-                            type="submit" 
-                            className="w-12 h-12 md:w-14 md:h-14 bg-shisha-ember hover:bg-shisha-ember-deep text-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl shadow-shisha-ember/20 transition-all hover:-translate-y-1 active:scale-90 shrink-0"
+                            onClick={handleOffer} 
+                            className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white border border-amber-500/20 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all group shadow-lg active:scale-95"
                         >
-                            <Send className="w-5 h-5 md:w-6 md:h-6" />
+                            <Tag size={12} className="group-hover:rotate-12 transition-transform" />
+                            Oferta Comercial
                         </button>
-                    </form>
-                </div>
+
+                        <form onSubmit={handleSend} className="flex gap-2 md:gap-3">
+                            <input
+                                value={text}
+                                onChange={e => setText(e.target.value)}
+                                placeholder="Mensaje..."
+                                className="flex-1 px-3.5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/5 text-white font-medium focus:border-shisha-ember/50 outline-none transition-all placeholder:text-shisha-text-dim/30 text-sm md:text-base"
+                            />
+                            <button 
+                                type="submit" 
+                                className="w-12 h-12 md:w-14 md:h-14 bg-shisha-ember hover:bg-shisha-ember-deep text-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl shadow-shisha-ember/20 transition-all hover:-translate-y-1 active:scale-90 shrink-0"
+                            >
+                                <Send className="w-5 h-5 md:w-6 md:h-6" />
+                            </button>
+                        </form>
+                    </div>
+                )}
             </div>
 
             {/* Modal de Oferta */}
