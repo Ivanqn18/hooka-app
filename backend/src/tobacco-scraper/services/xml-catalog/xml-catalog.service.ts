@@ -42,7 +42,7 @@ export class XmlCatalogService {
       orderBy: { name: 'asc' },
     });
 
-    if (dbBrands.length > 0) {
+    if (dbBrands.length >= 50) {
       return dbBrands.map((b) => {
         const tastes = b.tastes.map((t) => {
           const formats = t.formats.map((f) => ({
@@ -73,8 +73,8 @@ export class XmlCatalogService {
       });
     }
 
-    // 2. Si la base de datos está vacía, leemos del XML, la poblamos y retornamos el XML parseado
-    this.logger.log('Base de datos de tabacos vacía. Iniciando carga/auto-seed desde tabacosxml.xml...');
+    // 2. Si la base de datos está vacía o incompleta, leemos del XML, la poblamos y retornamos el XML parseado
+    this.logger.log('Base de datos de tabacos vacía o incompleta. Iniciando carga/auto-seed desde tabacosxml.xml...');
     const xmlBrands = this.parseXmlCatalog();
     if (xmlBrands.length > 0) {
       // Lanzamos el semillado en segundo plano sin bloquear el hilo principal de la petición
