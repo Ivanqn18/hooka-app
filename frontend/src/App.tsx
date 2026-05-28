@@ -177,6 +177,7 @@ function App() {
           <Route path="/marketplace/:id" element={<ProductDetail />} />
           <Route path="/mapa" element={<MapView />} />
           <Route path="/bar/:id" element={<BarDetail />} />
+          <Route path="/tobaccos" element={<TobaccoCatalog />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/mezcla/nueva" element={<CreateMezcla />} />
@@ -185,7 +186,6 @@ function App() {
             <Route path="/chat/:id" element={<Chat />} />
             <Route path="/chats" element={<ChatsList />} />
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/tobaccos" element={<TobaccoCatalog />} />
             <Route path="/stash" element={<StashPage />} />
             <Route path="/perfil" element={<Profile />} />
           </Route>
