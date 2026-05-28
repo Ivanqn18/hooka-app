@@ -2,6 +2,9 @@ import { Injectable, BadRequestException, OnModuleInit } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddSellerReviewDto } from './dto/user-actions.dto';
 import * as bcrypt from 'bcrypt';
+import * as fs from 'fs';
+import * as path from 'path';
+import { ANCESTRAL_AVATAR_BASE64 } from './ancestral-avatar';
 
 @Injectable()
 export class UsersService implements OnModuleInit {
@@ -9,6 +12,19 @@ export class UsersService implements OnModuleInit {
 
   async onModuleInit() {
     try {
+      // Asegurar que la imagen del avatar exista en el sistema de archivos
+      const avatarsDir = path.join(process.cwd(), 'uploads/avatars');
+      const imgPath = path.join(avatarsDir, 'ancestral.jpg');
+      
+      if (!fs.existsSync(avatarsDir)) {
+        fs.mkdirSync(avatarsDir, { recursive: true });
+      }
+
+      if (!fs.existsSync(imgPath)) {
+        fs.writeFileSync(imgPath, Buffer.from(ANCESTRAL_AVATAR_BASE64, 'base64'));
+        console.log('Imagen de avatar "ancestral.jpg" recreada desde Base64.');
+      }
+
       await this.ensureDefaultAuthor();
       console.log('Usuario default "Alquimista Ancestral" verificado/creado con éxito.');
     } catch (error) {
@@ -44,6 +60,7 @@ export class UsersService implements OnModuleInit {
 
     return defaultAuthor;
   }
+
 
   async findAll(limit: number, page: number) {
     const [users, total] = await this.prisma.$transaction([
