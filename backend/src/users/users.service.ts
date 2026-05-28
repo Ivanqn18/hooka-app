@@ -12,7 +12,6 @@ export class UsersService implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      // Asegurar que la imagen del avatar exista en el sistema de archivos
       const avatarsDir = path.join(process.cwd(), 'uploads/avatars');
       const imgPath = path.join(avatarsDir, 'ancestral.jpg');
       
@@ -49,7 +48,6 @@ export class UsersService implements OnModuleInit {
         },
       });
     } else if (defaultAuthor.avatarUrl !== '/uploads/avatars/ancestral.jpg') {
-      // Si ya existe pero tiene otro avatar, actualizamos su avatarUrl a la nueva imagen
       defaultAuthor = await this.prisma.user.update({
         where: { id: defaultAuthor.id },
         data: {
@@ -68,7 +66,6 @@ export class UsersService implements OnModuleInit {
         take: limit,
         skip: (page - 1) * limit,
         orderBy: { createdAt: 'desc' },
-        // Excluimos el password del resultado por seguridad
         select: {
           id: true,
           email: true,
@@ -81,7 +78,6 @@ export class UsersService implements OnModuleInit {
       this.prisma.user.count(),
     ]);
 
-    // Devolvemos un objeto que el frontend puede procesar con su función `extractData`
     return {
       data: users,
       total,
@@ -116,10 +112,8 @@ export class UsersService implements OnModuleInit {
     });
 
     if (user) {
-      // Removemos la contraseña de la respuesta por seguridad
       delete (user as any).password;
 
-      // Calculamos la puntuación media (rating) al vuelo
       const reviews = (user as any).reviewsReceived || [];
       const totalScore = reviews.reduce(
         (acc: number, rev: any) => acc + (rev.puntuacion || 0),
@@ -173,17 +167,14 @@ export class UsersService implements OnModuleInit {
       );
     }
 
-    // Obtener o crear el usuario default "Alquimista Ancestral"
     const defaultAuthor = await this.ensureDefaultAuthor();
 
-    // Evitar que se intente eliminar al Alquimista Ancestral
     if (id === defaultAuthor.id) {
       throw new BadRequestException(
         'No se puede eliminar el usuario del sistema "Alquimista Ancestral".',
       );
     }
 
-    // Reasignar las mezclas del usuario a eliminar al autor default
     await this.prisma.mix.updateMany({
       where: { autorId: id },
       data: { autorId: defaultAuthor.id },
@@ -193,8 +184,6 @@ export class UsersService implements OnModuleInit {
       where: { id },
     });
   }
-
-  // ========== STASH ==========
 
   async getStash(userId: number) {
     return this.prisma.userStash.findMany({
@@ -208,12 +197,10 @@ export class UsersService implements OnModuleInit {
     const normalizedMarca =
       data.marca && data.marca.trim() !== '' ? data.marca.trim() : null;
 
-    // Obtener los elementos actuales del stash del usuario
     const stashItems = await this.prisma.userStash.findMany({
       where: { usuarioId: data.usuarioId },
     });
 
-    // Buscar duplicados (sin importar mayúsculas/minúsculas ni espacios)
     const duplicate = stashItems.find(
       (item) =>
         item.nombreTabaco.trim().toLowerCase() ===
@@ -259,8 +246,6 @@ export class UsersService implements OnModuleInit {
       where: { id },
     });
   }
-
-  // ========== FOLLOW ==========
 
   async toggleFollow(followerId: number, followingId: number) {
     if (followerId === followingId) {

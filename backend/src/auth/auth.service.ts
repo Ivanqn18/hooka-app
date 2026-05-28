@@ -7,7 +7,6 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-// Store invalidated refresh tokens (in production use Redis)
 const invalidatedRefreshTokens = new Set<string>();
 
 export interface TokenPair {
@@ -99,7 +98,6 @@ export class AuthService {
         throw new UnauthorizedException('Usuario no encontrado');
       }
 
-      // Invalidate old refresh token
       invalidatedRefreshTokens.add(refreshToken);
 
       return this.generateTokens(user);

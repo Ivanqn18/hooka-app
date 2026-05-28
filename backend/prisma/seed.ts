@@ -4,10 +4,10 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log('🌱 Iniciando la creación de datos de prueba...');
+    console.log('Iniciando la creación de datos de prueba...');
 
     // Limpiar la base de datos (orden correcto: hijos primero, padres después)
-    console.log('🧹 Limpiando base de datos...');
+    console.log('Limpiando base de datos...');
     await prisma.notification.deleteMany();
     await prisma.mixTag.deleteMany();
     await prisma.mixComment.deleteMany();
@@ -26,7 +26,7 @@ async function main() {
 
 
     // 1. Crear Usuarios
-    console.log('👤 Creando usuarios...');
+    console.log('Creando usuarios...');
     const passwordHash = await bcrypt.hash('ImIvans18', 10);
     const adminHash = await bcrypt.hash('ImIvans18', 10);
 
