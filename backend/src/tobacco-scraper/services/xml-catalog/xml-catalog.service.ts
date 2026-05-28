@@ -85,6 +85,22 @@ export class XmlCatalogService {
     return xmlBrands;
   }
 
+  async seedCatalogFromXml() {
+    this.logger.log('Borrando catálogo anterior de tabacos...');
+    await this.prisma.brand.deleteMany({});
+    
+    this.logger.log('Cargando marcas desde tabacosxml.xml...');
+    const xmlBrands = this.parseXmlCatalog();
+    if (xmlBrands.length > 0) {
+      await this.seedDbFromXml(xmlBrands);
+    }
+    
+    return {
+      message: 'Catálogo cargado con éxito desde XML',
+      brandsCount: xmlBrands.length,
+    };
+  }
+
   /**
    * Parseador interno de XML para fallback
    */

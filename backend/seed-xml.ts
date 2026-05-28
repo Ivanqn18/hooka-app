@@ -46,84 +46,96 @@ async function main() {
     const brandName = b['@_name'];
     if (!brandName) continue;
     
-    // Insertar o recuperar Marca en la BDD
-    const brandDb = await prisma.brand.upsert({
-      where: { name: brandName },
-      update: {},
-      create: { name: brandName }
-    });
-    brandCount++;
-    console.log(`\nMarca procesada: ${brandName}`);
-    
-    // Procesar los productos (si existen)
-    if (!b.product) continue;
-    
-    const products = Array.isArray(b.product) ? b.product : [b.product];
-    
-    for (const p of products) {
-      const fullProductName = p['@_name']; // Ej: "Nash Bali (100 g)"
-      const priceStr = p['@_price']; // Ej: "15,95"
+    try {
+      // Insertar o recuperar Marca en la BDD
+      const brandDb = await prisma.brand.upsert({
+        where: { name: brandName },
+        update: {},
+        create: { name: brandName }
+      });
+      brandCount++;
+      console.log(`\nMarca procesada: ${brandName}`);
       
-      if (!fullProductName || !priceStr) continue;
+      // Procesar los productos (si existen)
+      if (!b.product) continue;
       
-      // Parsear nombre, gramaje y precio
-      // Se asume el formato: Nombre del Sabor (XX g)
-      const match = fullProductName.match(/(.+?)\s*\(([\d,.]+)\s*g\)/i);
-      let flavorName = fullProductName;
-      let gramsStr = '50g'; // Default fallback
+      const products = Array.isArray(b.product) ? b.product : [b.product];
       
-      if (match) {
-        // En tu XML a veces el nombre del producto incluye la marca al principio, vamos a intentar limpiarlo
-        // Ej: "Nash Bali" -> Si la marca es "Nash", el sabor puro es "Bali"
-        let rawFlavor = match[1].trim();
-        if (rawFlavor.toLowerCase().startsWith(brandName.toLowerCase())) {
-            rawFlavor = rawFlavor.substring(brandName.length).trim();
+      for (const p of products) {
+        try {
+          const fullProductName = p['@_name']; // Ej: "Nash Bali (100 g)"
+          const priceStr = p['@_price']; // Ej: "15,95"
+          
+          if (!fullProductName || !priceStr) continue;
+          
+          // Parsear nombre, gramaje y precio
+          // Se asume el formato: Nombre del Sabor (XX g)
+          const match = fullProductName.match(/(.+?)\s*\(([\d,.]+)\s*g\)/i);
+          let flavorName = fullProductName;
+          let gramsStr = '50g'; // Default fallback
+          
+          if (match) {
+            // En tu XML a veces el nombre del producto incluye la marca al principio, vamos a intentar limpiarlo
+            // Ej: "Nash Bali" -> Si la marca es "Nash", el sabor puro es "Bali"
+            let rawFlavor = match[1].trim();
+            if (rawFlavor.toLowerCase().startsWith(brandName.toLowerCase())) {
+                rawFlavor = rawFlavor.substring(brandName.length).trim();
+            }
+            
+            flavorName = rawFlavor || match[1].trim(); 
+            gramsStr = `${match[2].trim().replace(',', '.')}g`;
+          }
+          
+          const price = parseFloat(priceStr.replace(',', '.'));
+          if (isNaN(price)) {
+            console.warn(`  Precio inválido para ${fullProductName}: ${priceStr}`);
+            continue;
+          }
+          
+          // Insertar o recuperar Sabor (Taste)
+          // Buscamos si ya existe el sabor para esa marca
+          let tasteDb = await prisma.taste.findFirst({
+            where: { name: flavorName, brandId: brandDb.id }
+          });
+          
+          if (!tasteDb) {
+            tasteDb = await prisma.taste.create({
+              data: {
+                name: flavorName,
+                brandId: brandDb.id,
+                linea: 'Standard',
+                descripcion: 'Cargado desde XML base'
+              }
+            });
+          }
+          
+          // Añadir o actualizar el formato y precio
+          const formatDb = await prisma.tasteFormat.findFirst({
+            where: { tasteId: tasteDb.id, formato: gramsStr }
+          });
+          
+          if (!formatDb) {
+            await prisma.tasteFormat.create({
+              data: {
+                tasteId: tasteDb.id,
+                formato: gramsStr,
+                precio: price
+              }
+            });
+          } else {
+            await prisma.tasteFormat.update({
+              where: { id: formatDb.id },
+              data: { precio: price }
+            });
+          }
+          
+          productCount++;
+        } catch (productError) {
+          console.error(`  Error procesando producto "${p['@_name']}" en marca ${brandName}:`, productError);
         }
-        
-        flavorName = rawFlavor || match[1].trim(); 
-        gramsStr = `${match[2].trim().replace(',', '.')}g`;
       }
-      
-      const price = parseFloat(priceStr.replace(',', '.'));
-      
-      // Insertar o recuperar Sabor (Taste)
-      // Buscamos si ya existe el sabor para esa marca
-      let tasteDb = await prisma.taste.findFirst({
-        where: { name: flavorName, brandId: brandDb.id }
-      });
-      
-      if (!tasteDb) {
-        tasteDb = await prisma.taste.create({
-          data: {
-            name: flavorName,
-            brandId: brandDb.id,
-            linea: 'Standard',
-            descripcion: 'Cargado desde XML base'
-          }
-        });
-      }
-      
-      // Añadir o actualizar el formato y precio
-      const formatDb = await prisma.tasteFormat.findFirst({
-        where: { tasteId: tasteDb.id, formato: gramsStr }
-      });
-      
-      if (!formatDb) {
-        await prisma.tasteFormat.create({
-          data: {
-            tasteId: tasteDb.id,
-            formato: gramsStr,
-            precio: price
-          }
-        });
-      } else {
-        await prisma.tasteFormat.update({
-          where: { id: formatDb.id },
-          data: { precio: price }
-        });
-      }
-      
-      productCount++;
+    } catch (brandError) {
+      console.error(`Error procesando marca ${brandName}:`, brandError);
     }
   }
   

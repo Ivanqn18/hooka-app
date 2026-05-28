@@ -104,7 +104,7 @@ export class TobaccoScraperController {
   // POST /tobaccos/seed
   @Post('seed')
   async forceSeed() {
-    return this.seedService.scrapeAndSeed();
+    return this.xmlCatalog.seedCatalogFromXml();
   }
 
   // POST /tobaccos/clear
