@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { XMLParser } from 'fast-xml-parser';
@@ -20,17 +20,27 @@ export interface XmlBrandCatalog {
 }
 
 @Injectable()
-export class XmlCatalogService {
+export class XmlCatalogService implements OnModuleInit {
   private readonly logger = new Logger(XmlCatalogService.name);
 
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Devuelve el catálogo de marcas y sabores leído de la base de datos.
-   * Si la base de datos está vacía, lee e inserta el XML base de forma asíncrona.
-   */
+  async onModuleInit() {
+    try {
+      const count = await this.prisma.brand.count();
+      if (count === 0) {
+        this.logger.log('Base de datos de tabacos vacía en el inicio. Ejecutando semillado automático desde XML...');
+        const xmlBrands = this.parseXmlCatalog();
+        if (xmlBrands.length > 0) {
+          await this.seedDbFromXml(xmlBrands);
+        }
+      }
+    } catch (err) {
+      this.logger.error('Error al inicializar el catálogo de tabacos en el arranque:', err);
+    }
+  }
+
   async getLightCatalog(): Promise<XmlBrandCatalog[]> {
-    // 1. Intentamos leer de la base de datos
     const dbBrands = await this.prisma.brand.findMany({
       include: {
         tastes: {
@@ -42,47 +52,34 @@ export class XmlCatalogService {
       orderBy: { name: 'asc' },
     });
 
-    if (dbBrands.length >= 50) {
-      return dbBrands.map((b) => {
-        const tastes = b.tastes.map((t) => {
-          const formats = t.formats.map((f) => ({
-            grams: f.formato,
-            price: f.precio.toString(),
-          }));
+    return dbBrands.map((b) => {
+      const tastes = b.tastes.map((t) => {
+        const formats = t.formats.map((f) => ({
+          grams: f.formato,
+          price: f.precio.toString(),
+        }));
 
-          // Ordenar formatos por gramos (ascendente)
-          formats.sort((a, b) => {
-            const ga = parseInt(a.grams) || 0;
-            const gb = parseInt(b.grams) || 0;
-            return ga - gb;
-          });
-
-          return {
-            name: t.name,
-            formats,
-          };
+        // Ordenar formatos por gramos (ascendente)
+        formats.sort((a, b) => {
+          const ga = parseInt(a.grams) || 0;
+          const gb = parseInt(b.grams) || 0;
+          return ga - gb;
         });
 
-        // Ordenar sabores alfabéticamente
-        tastes.sort((a, b) => a.name.localeCompare(b.name));
-
         return {
-          name: b.name,
-          tastes,
+          name: t.name,
+          formats,
         };
       });
-    }
 
-    // 2. Si la base de datos está vacía o incompleta, leemos del XML, la poblamos y retornamos el XML parseado
-    this.logger.log('Base de datos de tabacos vacía o incompleta. Iniciando carga/auto-seed desde tabacosxml.xml...');
-    const xmlBrands = this.parseXmlCatalog();
-    if (xmlBrands.length > 0) {
-      // Lanzamos el semillado en segundo plano sin bloquear el hilo principal de la petición
-      this.seedDbFromXml(xmlBrands).catch((err) => {
-        this.logger.error('Error semillando base de datos en segundo plano:', err);
-      });
-    }
-    return xmlBrands;
+      // Ordenar sabores alfabéticamente
+      tastes.sort((a, b) => a.name.localeCompare(b.name));
+
+      return {
+        name: b.name,
+        tastes,
+      };
+    });
   }
 
   async seedCatalogFromXml() {
