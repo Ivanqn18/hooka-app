@@ -1,11 +1,49 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, OnModuleInit } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddSellerReviewDto } from './dto/user-actions.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements OnModuleInit {
   constructor(private prisma: PrismaService) {}
+
+  async onModuleInit() {
+    try {
+      await this.ensureDefaultAuthor();
+      console.log('Usuario default "Alquimista Ancestral" verificado/creado con éxito.');
+    } catch (error) {
+      console.error('Error al inicializar el usuario default "Alquimista Ancestral":', error);
+    }
+  }
+
+  async ensureDefaultAuthor() {
+    let defaultAuthor = await this.prisma.user.findUnique({
+      where: { email: 'ancestral@hookahub.com' },
+    });
+
+    if (!defaultAuthor) {
+      const passwordHash = await bcrypt.hash('system-account-locked-do-not-use-' + Math.random(), 10);
+      defaultAuthor = await this.prisma.user.create({
+        data: {
+          nombre: 'Alquimista Ancestral',
+          email: 'ancestral@hookahub.com',
+          password: passwordHash,
+          bio: 'El guardián de las mezclas perdidas del gremio.',
+          avatarUrl: '/uploads/avatars/ancestral.jpg',
+        },
+      });
+    } else if (defaultAuthor.avatarUrl !== '/uploads/avatars/ancestral.jpg') {
+      // Si ya existe pero tiene otro avatar, actualizamos su avatarUrl a la nueva imagen
+      defaultAuthor = await this.prisma.user.update({
+        where: { id: defaultAuthor.id },
+        data: {
+          avatarUrl: '/uploads/avatars/ancestral.jpg',
+        },
+      });
+    }
+
+    return defaultAuthor;
+  }
 
   async findAll(limit: number, page: number) {
     const [users, total] = await this.prisma.$transaction([
@@ -119,22 +157,7 @@ export class UsersService {
     }
 
     // Obtener o crear el usuario default "Alquimista Ancestral"
-    let defaultAuthor = await this.prisma.user.findUnique({
-      where: { email: 'ancestral@hookahub.com' },
-    });
-
-    if (!defaultAuthor) {
-      const passwordHash = await bcrypt.hash('system-account-locked-do-not-use-' + Math.random(), 10);
-      defaultAuthor = await this.prisma.user.create({
-        data: {
-          nombre: 'Alquimista Ancestral',
-          email: 'ancestral@hookahub.com',
-          password: passwordHash,
-          bio: 'El guardián de las mezclas perdidas del gremio.',
-          avatarUrl: 'https://cdn-icons-png.flaticon.com/512/3669/3669986.png',
-        },
-      });
-    }
+    const defaultAuthor = await this.ensureDefaultAuthor();
 
     // Evitar que se intente eliminar al Alquimista Ancestral
     if (id === defaultAuthor.id) {
