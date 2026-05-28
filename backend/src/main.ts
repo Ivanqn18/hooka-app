@@ -45,6 +45,7 @@ async function bootstrap() {
     join(process.cwd(), 'uploads/avatars'),
     join(process.cwd(), 'uploads/mezclas'),
     join(process.cwd(), 'uploads/products'),
+    join(process.cwd(), 'uploads/reviews'),
   ];
   for (const dir of uploadDirs) {
     if (!fs.existsSync(dir)) {

@@ -1,6 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddSellerReviewDto } from './dto/user-actions.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -102,6 +103,52 @@ export class UsersService {
   }
 
   async remove(id: number) {
+    const activeProductsCount = await this.prisma.product.count({
+      where: {
+        vendedorId: id,
+        estado: {
+          in: ['DISPONIBLE', 'RESERVADO'],
+        },
+      },
+    });
+
+    if (activeProductsCount > 0) {
+      throw new BadRequestException(
+        'No se puede eliminar el usuario porque tiene productos activos en venta. Elimina primero sus productos.',
+      );
+    }
+
+    // Obtener o crear el usuario default "Alquimista Ancestral"
+    let defaultAuthor = await this.prisma.user.findUnique({
+      where: { email: 'ancestral@hookahub.com' },
+    });
+
+    if (!defaultAuthor) {
+      const passwordHash = await bcrypt.hash('system-account-locked-do-not-use-' + Math.random(), 10);
+      defaultAuthor = await this.prisma.user.create({
+        data: {
+          nombre: 'Alquimista Ancestral',
+          email: 'ancestral@hookahub.com',
+          password: passwordHash,
+          bio: 'El guardián de las mezclas perdidas del gremio.',
+          avatarUrl: 'https://cdn-icons-png.flaticon.com/512/3669/3669986.png',
+        },
+      });
+    }
+
+    // Evitar que se intente eliminar al Alquimista Ancestral
+    if (id === defaultAuthor.id) {
+      throw new BadRequestException(
+        'No se puede eliminar el usuario del sistema "Alquimista Ancestral".',
+      );
+    }
+
+    // Reasignar las mezclas del usuario a eliminar al autor default
+    await this.prisma.mix.updateMany({
+      where: { autorId: id },
+      data: { autorId: defaultAuthor.id },
+    });
+
     return this.prisma.user.delete({
       where: { id },
     });

@@ -45,6 +45,7 @@ export class AddBarReviewDto {
   usuarioId: number;
 
   @IsNumber()
+  @Type(() => Number)
   puntuacion: number;
 
   @IsString()

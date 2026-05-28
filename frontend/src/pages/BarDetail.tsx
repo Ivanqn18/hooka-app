@@ -14,7 +14,20 @@ export default function BarDetail() {
     const [loading, setLoading] = useState(true);
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState('');
-    const [reviewImageUrl, setReviewImageUrl] = useState('');
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const fetchBar = () => {
         api.get(`/bares/${id}`)
@@ -35,20 +48,28 @@ export default function BarDetail() {
             return;
         }
 
+        const data = new FormData();
+        data.append('usuarioId', String(user.id));
+        data.append('puntuacion', String(rating));
+        data.append('comentario', comment);
+        if (selectedImage) {
+            data.append('imagen', selectedImage);
+        }
+
         try {
-            await api.post(`/bares/${id}/reviews`, {
-                usuarioId: user.id,
-                puntuacion: rating,
-                comentario: comment,
-                ...(reviewImageUrl && { imagenUrl: reviewImageUrl })
+            await api.post(`/bares/${id}/reviews`, data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
             setComment('');
-            setReviewImageUrl('');
+            setSelectedImage(null);
+            setImagePreview(null);
             setRating(5);
             fetchBar(); // Recargar reseñas
+            toast.success("¡Reseña publicada con éxito!");
         } catch (e) {
             console.error(e);
+            toast.error("Error al publicar la reseña");
         }
     };
 
@@ -204,16 +225,37 @@ export default function BarDetail() {
                              </div>
 
                              <div className="space-y-4">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim px-2">Adjuntar Evidencia (URL)</label>
-                                <div className="relative">
-                                    <Camera className="absolute left-4 top-1/2 -translate-y-1/2 text-shisha-text-dim" size={18} />
+                                <label className="text-[10px] font-black uppercase tracking-widest text-shisha-text-dim px-2">Adjuntar Evidencia (Imagen)</label>
+                                <div className="flex flex-col gap-3">
                                     <input 
-                                        type="url" 
-                                        value={reviewImageUrl} 
-                                        onChange={e => setReviewImageUrl(e.target.value)} 
-                                        placeholder="https://ejemplo.com/mifoto.jpg" 
-                                        className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white/5 border border-white/5 text-white placeholder:text-shisha-text-dim focus:bg-white/10 focus:border-shisha-ember/40 outline-none transition-all font-medium" 
+                                        type="file" 
+                                        id="review-image-upload" 
+                                        className="hidden" 
+                                        accept="image/*" 
+                                        onChange={handleImageChange} 
                                     />
+                                    <label 
+                                        htmlFor="review-image-upload" 
+                                        className="w-full flex items-center justify-center gap-2 px-4 py-4 bg-white/5 border border-white/5 text-shisha-text-muted rounded-2xl text-sm font-semibold hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-lg"
+                                    >
+                                        <Camera size={18} className="text-shisha-text-dim" />
+                                        {selectedImage ? "Cambiar Imagen" : "Subir Foto (Opcional)"}
+                                    </label>
+                                    
+                                    {imagePreview && (
+                                        <div className="relative w-full h-32 rounded-2xl overflow-hidden border border-white/10 animate-reveal-up group">
+                                            <img src={imagePreview} className="w-full h-full object-cover" alt="preview" />
+                                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => { setSelectedImage(null); setImagePreview(null); }}
+                                                    className="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95"
+                                                >
+                                                    Eliminar Imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                              </div>
                         </div>

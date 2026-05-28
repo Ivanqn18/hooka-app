@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { XMLParser } from 'fast-xml-parser';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 export interface XmlFormat {
   grams: string;
@@ -21,16 +22,73 @@ export interface XmlBrandCatalog {
 @Injectable()
 export class XmlCatalogService {
   private readonly logger = new Logger(XmlCatalogService.name);
-  private cachedCatalog: XmlBrandCatalog[] | null = null;
+
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Devuelve el catálogo de marcas y sabores leído directamente del XML.
-   * El resultado se cachea en memoria para evitar leer el fichero en cada petición.
+   * Devuelve el catálogo de marcas y sabores leído de la base de datos.
+   * Si la base de datos está vacía, lee e inserta el XML base de forma asíncrona.
    */
-  getLightCatalog(): XmlBrandCatalog[] {
-    if (this.cachedCatalog) return this.cachedCatalog;
+  async getLightCatalog(): Promise<XmlBrandCatalog[]> {
+    // 1. Intentamos leer de la base de datos
+    const dbBrands = await this.prisma.brand.findMany({
+      include: {
+        tastes: {
+          include: {
+            formats: true,
+          },
+        },
+      },
+      orderBy: { name: 'asc' },
+    });
 
-    // Candidatos de ruta: buscamos desde process.cwd() (backend/ o /app) y con __dirname
+    if (dbBrands.length > 0) {
+      return dbBrands.map((b) => {
+        const tastes = b.tastes.map((t) => {
+          const formats = t.formats.map((f) => ({
+            grams: f.formato,
+            price: f.precio.toString(),
+          }));
+
+          // Ordenar formatos por gramos (ascendente)
+          formats.sort((a, b) => {
+            const ga = parseInt(a.grams) || 0;
+            const gb = parseInt(b.grams) || 0;
+            return ga - gb;
+          });
+
+          return {
+            name: t.name,
+            formats,
+          };
+        });
+
+        // Ordenar sabores alfabéticamente
+        tastes.sort((a, b) => a.name.localeCompare(b.name));
+
+        return {
+          name: b.name,
+          tastes,
+        };
+      });
+    }
+
+    // 2. Si la base de datos está vacía, leemos del XML, la poblamos y retornamos el XML parseado
+    this.logger.log('Base de datos de tabacos vacía. Iniciando carga/auto-seed desde tabacosxml.xml...');
+    const xmlBrands = this.parseXmlCatalog();
+    if (xmlBrands.length > 0) {
+      // Lanzamos el semillado en segundo plano sin bloquear el hilo principal de la petición
+      this.seedDbFromXml(xmlBrands).catch((err) => {
+        this.logger.error('Error semillando base de datos en segundo plano:', err);
+      });
+    }
+    return xmlBrands;
+  }
+
+  /**
+   * Parseador interno de XML para fallback
+   */
+  private parseXmlCatalog(): XmlBrandCatalog[] {
     const candidates = [
       path.resolve(process.cwd(), 'tabacosxml.xml'),
       path.resolve(__dirname, '..', '..', '..', '..', 'tabacosxml.xml'),
@@ -65,7 +123,7 @@ export class XmlCatalogService {
 
     const brands: any[] = parsed?.shisha_tobaccos?.brand ?? [];
 
-    this.cachedCatalog = brands
+    const catalog = brands
       .filter((b: any) => b.name)
       .map((b: any) => {
         const products: any[] = Array.isArray(b.product)
@@ -113,15 +171,67 @@ export class XmlCatalogService {
       .sort((a, b) => a.name.localeCompare(b.name));
 
     this.logger.log(
-      `XML cargado: ${this.cachedCatalog.length} marcas, ` +
-        `${this.cachedCatalog.reduce((acc, b) => acc + b.tastes.length, 0)} sabores.`,
+      `XML cargado para fallback: ${catalog.length} marcas, ` +
+        `${catalog.reduce((acc, b) => acc + b.tastes.length, 0)} sabores.`,
     );
 
-    return this.cachedCatalog;
+    return catalog;
   }
 
-  /** Invalida el caché (útil si el XML se recarga en caliente) */
+  /**
+   * Poblado automático en segundo plano desde el catálogo de fallback XML
+   */
+  private async seedDbFromXml(brands: XmlBrandCatalog[]) {
+    this.logger.log(`Semillando ${brands.length} marcas en la base de datos...`);
+    for (const b of brands) {
+      try {
+        const brandDb = await this.prisma.brand.upsert({
+          where: { name: b.name },
+          update: {},
+          create: { name: b.name },
+        });
+
+        for (const t of b.tastes) {
+          let tasteDb = await this.prisma.taste.findFirst({
+            where: { name: t.name, brandId: brandDb.id },
+          });
+
+          if (!tasteDb) {
+            tasteDb = await this.prisma.taste.create({
+              data: {
+                name: t.name,
+                brandId: brandDb.id,
+                linea: 'Standard',
+                descripcion: 'Cargado desde XML base',
+              },
+            });
+          }
+
+          for (const f of t.formats) {
+            const formatDb = await this.prisma.tasteFormat.findFirst({
+              where: { tasteId: tasteDb.id, formato: f.grams },
+            });
+
+            if (!formatDb) {
+              await this.prisma.tasteFormat.create({
+                data: {
+                  tasteId: tasteDb.id,
+                  formato: f.grams,
+                  precio: parseFloat(f.price.replace(',', '.')),
+                },
+              });
+            }
+          }
+        }
+      } catch (err) {
+        this.logger.error(`Error semillando marca ${b.name} desde XML`, err);
+      }
+    }
+    this.logger.log('Semillado automático desde XML completado con éxito.');
+  }
+
+  /** Invalida el caché (mantenida por retrocompatibilidad) */
   invalidateCache() {
-    this.cachedCatalog = null;
+    // No-op ya que consultamos directamente de la base de datos
   }
 }

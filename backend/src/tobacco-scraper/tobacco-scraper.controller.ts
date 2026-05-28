@@ -87,9 +87,9 @@ export class TobaccoScraperController {
     }));
   }
 
-  // GET /tobaccos/light-catalog (Lee marcas y sabores directamente del tabacosxml.xml)
+  // GET /tobaccos/light-catalog (Lee marcas y sabores de la BDD con fallback a XML)
   @Get('light-catalog')
-  getLightCatalog() {
+  async getLightCatalog() {
     return this.xmlCatalog.getLightCatalog();
   }
 

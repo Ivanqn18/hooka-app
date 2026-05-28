@@ -311,8 +311,9 @@ export default function AdminDashboard() {
             await api.delete(`/${type}/${id}`);
             fetchData();
             toast.success('Elemento eliminado con éxito');
-        } catch (e) {
-            toast.error('Error al eliminar');
+        } catch (e: any) {
+            const errorMsg = e.response?.data?.message || 'Error al eliminar';
+            toast.error(errorMsg);
         }
     };
 
